@@ -34,3 +34,4 @@ def main():
         print_usage()
         sys.exit(84)
     client = Client(port, name, machine)
+    client.connect_to_server()
