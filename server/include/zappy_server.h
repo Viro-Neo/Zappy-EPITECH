@@ -8,4 +8,14 @@
 #ifndef _ZAPPY_SERVER_H_
     #define _ZAPPY_SERVER_H_
 
+typedef struct zappy_server_s {
+    int port;
+    int width;
+    int height;
+    int clientsNb;
+    int freq;
+} zappy_server_t;
+
+int parse_args(int argc, char *argv[], zappy_server_t *server);
+
 #endif

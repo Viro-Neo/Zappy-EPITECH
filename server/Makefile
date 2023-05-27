@@ -7,7 +7,8 @@
 
 NAME	=	../zappy_server
 
-SRCS	=	src/main.c
+SRCS	=	src/args.c \
+			src/main.c
 
 OBJS	=	$(SRCS:.c=.o)
 

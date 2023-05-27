@@ -5,7 +5,14 @@
 ** main.c
 */
 
-int main(void)
+#include "zappy_server.h"
+
+int main(int argc, char *argv[])
 {
+    zappy_server_t server;
+
+    if (!parse_args(argc, argv, &server)) {
+        return 84;
+    }
     return 0;
 }
