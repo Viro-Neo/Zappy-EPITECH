@@ -11,6 +11,9 @@ int main(int argc, char *argv[])
 {
     zappy_server_t server;
 
+    if (check_help(argc, argv)) {
+        return 0;
+    }
     if (!parse_args(argc, argv, &server)) {
         return 84;
     }

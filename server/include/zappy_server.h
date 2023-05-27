@@ -18,4 +18,6 @@ typedef struct zappy_server_s {
 
 int parse_args(int argc, char *argv[], zappy_server_t *server);
 
+int check_help(int argc, char *argv[]);
+
 #endif
