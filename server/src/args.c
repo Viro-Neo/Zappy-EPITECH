@@ -56,14 +56,14 @@ int parse_args(int argc, char *argv[], zappy_server_t *server)
     int c = 0;
 
     opterr = 0;
-    while ((c = getopt(argc, argv, "p:x:y:c:f:")) != -1) {
+    while ((c = getopt(argc, argv, "p:x:y:nc:f:")) != -1) {
         if (c == '?') {
             fprintf(stderr, "Invalid argument: -%c\n", optopt);
             return 0;
         }
-        if (!check_arg(server, c)) {
+        if (optarg && !check_arg(server, c)) {
             return 0;
         }
     }
-    return 1;
+    return parse_team_names(argv, server);
 }
