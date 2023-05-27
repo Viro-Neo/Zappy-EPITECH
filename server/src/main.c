@@ -2,12 +2,10 @@
 ** EPITECH PROJECT, 2023
 ** B-YEP-400-PAR-4-1-zappy-aurelien.duval
 ** File description:
-** main
+** main.c
 */
-
-#include <cstdio>
 
 int main(void)
 {
-    printf("Server\n");
+    return 0;
 }
