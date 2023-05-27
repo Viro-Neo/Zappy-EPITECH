@@ -23,10 +23,8 @@ static void display_help(void)
 
 int check_help(int argc, char *argv[])
 {
-    for (int i = 1; i < argc; ++i)
-    {
-        if (strcmp(argv[i], "-help") == 0)
-        {
+    for (int i = 1; i < argc; ++i) {
+        if (strcmp(argv[i], "-help") == 0) {
             display_help();
             return 1;
         }
