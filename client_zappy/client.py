@@ -30,3 +30,10 @@ class Client:
             # handle sending command
         responseThread.join()
         self.sock.close()
+
+    def write_response_to_socket(response, client_socket):
+        try:
+            client_socket.send(response.encode())
+            print("Response sent successfully.")
+        except socket.error as e:
+            print(f"Error sending response: {str(e)}")
