@@ -40,6 +40,8 @@ struct zappy_server_s {
 
 void game_loop(zappy_server_t *server);
 
+void listen_sockets(zappy_server_t *server);
+
 int start_server(zappy_server_t *server);
 void stop_server(zappy_server_t *server);
 

@@ -9,5 +9,7 @@
 
 void game_loop(zappy_server_t *server)
 {
-    (void)server;
+    while (1) {
+        listen_sockets(server);
+    }
 }
