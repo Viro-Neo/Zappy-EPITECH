@@ -16,7 +16,6 @@ class Client:
             print(f"connected to server {self.machine} on port {self.port}")
         except:
             print("Can't connect to server. Please try again later.\n")
-    
     def receive_server_response(self):
         while True:
             response = self.sock.recv(1024).decode()
