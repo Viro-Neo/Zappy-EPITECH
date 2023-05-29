@@ -7,7 +7,9 @@
 
 NAME	=	../zappy_server
 
-SRCS	=	src/args.c \
+SRCS	=	src/game/game_loop.c \
+			src/network/server.c \
+			src/args.c \
 			src/help.c \
 			src/main.c \
 			src/teams.c
