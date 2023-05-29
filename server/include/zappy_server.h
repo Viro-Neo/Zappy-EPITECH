@@ -11,12 +11,16 @@
     #define ZAPPY_SERVER_MAX_CLIENTS 100
     #define ZAPPY_SERVER_BUFFER_SIZE 1024
 
+    #include <arpa/inet.h>
+    #include <sys/select.h>
     #include <sys/types.h>
 
 typedef struct zappy_server_s zappy_server_t;
 
 typedef struct zappy_client_s {
     int sockfd;
+    char address[INET_ADDRSTRLEN];
+    uint16_t port;
     char buffer[ZAPPY_SERVER_BUFFER_SIZE];
     ssize_t pending;
     zappy_server_t *server;
@@ -40,7 +44,13 @@ struct zappy_server_s {
 
 void game_loop(zappy_server_t *server);
 
+void add_client(zappy_server_t *server, zappy_client_t *client, int sockfd
+, struct sockaddr_in *addr_in);
+void remove_client(zappy_client_t *client);
+
 void listen_sockets(zappy_server_t *server);
+
+void read_select(zappy_server_t *server, fd_set *readfds);
 
 int start_server(zappy_server_t *server);
 void stop_server(zappy_server_t *server);

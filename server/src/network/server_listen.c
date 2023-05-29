@@ -40,4 +40,5 @@ void listen_sockets(zappy_server_t *server)
 
     init_select(server, &readfds, &maxfd, &timeout);
     select(maxfd + 1, &readfds, NULL, NULL, &timeout);
+    read_select(server, &readfds);
 }

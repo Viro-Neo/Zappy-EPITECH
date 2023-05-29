@@ -8,7 +8,9 @@
 NAME	=	../zappy_server
 
 SRCS	=	src/game/game_loop.c \
+			src/network/client.c \
 			src/network/server_listen.c \
+			src/network/server_read.c \
 			src/network/server.c \
 			src/args.c \
 			src/help.c \
