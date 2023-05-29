@@ -10,28 +10,40 @@
 #include <unistd.h>
 #include "zappy_server.h"
 
-static void accept_client(zappy_server_t *server)
+static int accept_client(zappy_server_t *server)
 {
     struct sockaddr_in addr_in;
     socklen_t addrlen = sizeof(addr_in);
     int sockfd = accept(server->sockfd, (struct sockaddr*)&addr_in, &addrlen);
 
     if (sockfd < 0) {
-        return;
+        return 0;
     }
     for (int i = 0; i < ZAPPY_SERVER_MAX_CLIENTS; ++i) {
         if (server->clients[i].sockfd < 0) {
             add_client(server, &server->clients[i], sockfd, &addr_in);
-            return;
+            return 1;
         }
     }
     close(sockfd);
     printf("Server is full.\n");
+    return 1;
 }
 
-void read_select(zappy_server_t *server, fd_set *readfds)
+int read_select(zappy_server_t *server, fd_set *readfds)
 {
+    static zappy_client_t *client = NULL;
+
     if (FD_ISSET(server->sockfd, readfds)) {
-        accept_client(server);
+        if (!accept_client(server)) {
+            return 0;
+        }
     }
+    for (int i = 0; i < ZAPPY_SERVER_MAX_CLIENTS; ++i) {
+        client = &server->clients[i];
+        if (!(client->sockfd < 0) && FD_ISSET(client->sockfd, readfds)) {
+            read_client(client);
+        }
+    }
+    return 1;
 }

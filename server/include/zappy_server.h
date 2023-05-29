@@ -44,13 +44,15 @@ struct zappy_server_s {
 
 void game_loop(zappy_server_t *server);
 
+void read_client(zappy_client_t *client);
+
 void add_client(zappy_server_t *server, zappy_client_t *client, int sockfd
 , struct sockaddr_in *addr_in);
 void remove_client(zappy_client_t *client);
 
-void listen_sockets(zappy_server_t *server);
+int listen_sockets(zappy_server_t *server);
 
-void read_select(zappy_server_t *server, fd_set *readfds);
+int read_select(zappy_server_t *server, fd_set *readfds);
 
 int start_server(zappy_server_t *server);
 void stop_server(zappy_server_t *server);

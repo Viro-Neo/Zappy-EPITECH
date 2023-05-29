@@ -28,17 +28,21 @@ static void init_select(zappy_server_t *server, fd_set *readfds, int *maxfd, str
     FD_SET(server->sockfd, readfds);
     *maxfd = server->sockfd;
     timeout->tv_sec = 0;
-    timeout->tv_usec = 50000;
+    timeout->tv_usec = 0;
     set_client_fds(server, readfds, maxfd);
 }
 
-void listen_sockets(zappy_server_t *server)
+int listen_sockets(zappy_server_t *server)
 {
     static fd_set readfds;
     static int maxfd = 0;
     static struct timeval timeout;
+    static int fds = 0;
 
     init_select(server, &readfds, &maxfd, &timeout);
-    select(maxfd + 1, &readfds, NULL, NULL, &timeout);
-    read_select(server, &readfds);
+    fds = select(maxfd + 1, &readfds, NULL, NULL, &timeout);
+    if (fds > 0) {
+        return read_select(server, &readfds);
+    }
+    return !(fds < 0);
 }

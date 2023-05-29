@@ -15,7 +15,7 @@ void add_client(zappy_server_t *server, zappy_client_t *client, int sockfd
 {
     char *address = inet_ntoa(addr_in->sin_addr);
 
-    memset(server, 0, sizeof(*server));
+    memset(client, 0, sizeof(*client));
     client->sockfd = sockfd;
     memcpy(client->address, address, strlen(address));
     client->port = ntohs(addr_in->sin_port);

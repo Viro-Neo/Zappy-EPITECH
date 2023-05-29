@@ -5,11 +5,12 @@
 ** game_loop.c
 */
 
+#include <unistd.h>
 #include "zappy_server.h"
 
 void game_loop(zappy_server_t *server)
 {
-    while (1) {
-        listen_sockets(server);
+    while (listen_sockets(server)) {
+        usleep(50000);
     }
 }
