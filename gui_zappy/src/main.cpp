@@ -9,5 +9,10 @@
 
 int main(int ac, char **av)
 {
-    return 0;
+   try {
+       Gui gui(ac, av);
+   } catch (const std::exception &e) {
+       std::cerr << e.what() << std::endl;
+       return 84;
+   }
 }
