@@ -1,9 +1,11 @@
+from client import Client
+
 def send_forward_command(client):
-    command = "Forward"
+    command = "USER "
     client.write_response_to_socket(command)
 
     try:
-        response = client.sock.recv(1024).decode()
+        response = client.receive_server_response()
         if response == "ok" or response == "ko":
             print(response)
         else:
