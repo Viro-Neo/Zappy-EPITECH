@@ -2,3 +2,5 @@
 /B-YEP-400_zappy_GUI_protocol.pdf
 zappy_server
 .idea
+*_zappy/*o
+CMakeLists.txt
