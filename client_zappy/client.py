@@ -1,5 +1,4 @@
 import socket
-import threading
 
 class Client:
     def __init__(self, port, team, machine):
@@ -22,22 +21,20 @@ class Client:
         while True:
             try:
                 response = self.sock.recv(1024).decode()
-                print(f"Server response: {response}")
+                print(f"Server response: {response}", end = '')
+                return response
                 # Handle response here
+            except:
+                pass
+    
+    def get_response_continuously(self):
+        while True:
+            try:
+                response = self.receive_server_response()
+                print("Got a continuous response")
             except Exception as e:
                 print(f"Error receiving response: {str(e)}")
                 break
-
-    def network_loop(self):
-        response_thread = threading.Thread(target=self.receive_server_response)
-        response_thread.start()
-        
-        while True:
-            # Handle sending commands here
-            break  # Remove this line once sending commands is implemented
-
-        response_thread.join()
-        self.sock.close()
 
     def write_response_to_socket(self, response):
         try:

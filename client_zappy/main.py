@@ -2,7 +2,7 @@ import sys
 import getopt
 from client import Client
 from commands import send_forward_command
-
+from network_loop import network_loop
 
 def print_usage():
     print("USAGE:\t./zappy_ai -p port -n name -h machine"
@@ -38,4 +38,4 @@ def main():
         sys.exit(84)
     client = Client(port, name, machine)
     client.connect_to_server()
-    send_forward_command(client)
+    network_loop(client)
