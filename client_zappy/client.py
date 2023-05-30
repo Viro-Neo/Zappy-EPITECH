@@ -17,6 +17,10 @@ class Client:
             print(f"Error connecting to server: {str(e)}")
             exit(84)
 
+            sock.connect(server_address)
+            print(f"connected to server {self.machine} on port {self.port}")
+        except:
+            print("Can't connect to server. Please try again later.\n")
     def receive_server_response(self):
         while True:
             try:
