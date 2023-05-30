@@ -5,8 +5,11 @@
 ** server.c
 */
 
+#include <errno.h>
 #include <netinet/in.h>
 #include <sys/socket.h>
+#include <stdio.h>
+#include <string.h>
 #include <unistd.h>
 #include "zappy_server.h"
 
@@ -39,6 +42,7 @@ int start_server(zappy_server_t *server)
     if (create_socket(server)) {
         return 1;
     }
+    fprintf(stderr, "An internal error has occurred: %s", strerror(errno));
     return 0;
 }
 
