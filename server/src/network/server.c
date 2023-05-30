@@ -44,8 +44,7 @@ int start_server(zappy_server_t *server)
 
 void stop_server(zappy_server_t *server)
 {
-    if (!(server->sockfd < 0))
-    {
+    if (!(server->sockfd < 0)) {
         close(server->sockfd);
         server->sockfd = -1;
     }

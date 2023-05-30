@@ -22,7 +22,8 @@ static void set_client_fds(zappy_server_t *server, fd_set *readfds, int *maxfd)
     }
 }
 
-static void init_select(zappy_server_t *server, fd_set *readfds, int *maxfd, struct timeval *timeout)
+static void init_select(zappy_server_t *server, fd_set *readfds, int *maxfd
+, struct timeval *timeout)
 {
     FD_ZERO(readfds);
     FD_SET(server->sockfd, readfds);
