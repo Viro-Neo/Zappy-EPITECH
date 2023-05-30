@@ -5,9 +5,9 @@
 ** main
 */
 
-#include <cstdio>
+#include "Gui.hpp"
 
-int main(void)
+int main(int ac, char **av)
 {
-    printf("GUI\n");
+    return 0;
 }
