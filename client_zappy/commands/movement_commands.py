@@ -1,10 +1,12 @@
 from client import Client
+import threading
 
 def send_forward_command(client):
-    command = "Forward"
+    command = "USER"
     client.write_response_to_socket(command)
 
     try:
+        client.lock.acquire()
         response = client.receive_server_response()
         if response == "ok" or response == "ko":
             print(response)
@@ -12,6 +14,8 @@ def send_forward_command(client):
             print(f"Unknown server response: {response}")
     except OSError as e:
         print(f"Error receiving response: {str(e)}")
+    finally:
+        client.lock.release()
 
 
 def send_right_command(client):

@@ -1,4 +1,5 @@
 import socket
+import threading
 
 class Client:
     def __init__(self, port, team, machine):
@@ -6,6 +7,7 @@ class Client:
         self.team = team
         self.machine = machine
         self.sock = None
+        self.lock = threading.Lock()
 
     def connect_to_server(self):
         try:
@@ -34,11 +36,14 @@ class Client:
     def get_response_continuously(self):
         while True:
             try:
+                self.lock.acquire()
                 response = self.receive_server_response()
                 print("Got a continuous response")
             except Exception as e:
                 print(f"Error receiving response: {str(e)}")
                 break
+            finally:
+                self.lock.release()
 
     def write_response_to_socket(self, response):
         try:
