@@ -1,5 +1,7 @@
 from client import Client
 from commands.movement_commands import *
+from commands.object_commands import *
+from commands.players_commands import *
 import threading
 
 def network_loop(client):
