@@ -40,6 +40,7 @@ static int create_socket(zappy_server_t *server)
 int start_server(zappy_server_t *server)
 {
     if (create_socket(server)) {
+        printf("Listening on port : %d\n", server->port);
         return 1;
     }
     fprintf(stderr, "An internal error has occurred: %s", strerror(errno));

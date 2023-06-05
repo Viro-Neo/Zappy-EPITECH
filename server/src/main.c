@@ -20,6 +20,11 @@ static void zappy_free(zappy_server_t *server)
 static void zappy_init(zappy_server_t *server)
 {
     memset(server, 0, sizeof(*server));
+    server->port = 4242;
+    server->width = 10;
+    server->height = 10;
+    server->clientsNb = 3;
+    server->freq = 100;
     server->sockfd = -1;
     for (int i = 0; i < ZAPPY_SERVER_MAX_CLIENTS; ++i) {
         server->clients[i].sockfd = -1;
