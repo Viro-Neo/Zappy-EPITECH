@@ -17,19 +17,21 @@
 
 typedef struct zappy_server_s zappy_server_t;
 
+typedef struct zappy_team_s {
+    char *name;
+    struct zappy_team_s *next;
+} zappy_team_t;
+
 typedef struct zappy_client_s {
     int sockfd;
     char address[INET_ADDRSTRLEN];
     uint16_t port;
     char buffer[ZAPPY_SERVER_BUFFER_SIZE];
     ssize_t pending;
+    zappy_team_t *team;
+    int graphic;
     zappy_server_t *server;
 } zappy_client_t;
-
-typedef struct zappy_team_s {
-    char *name;
-    struct zappy_team_s *next;
-} zappy_team_t;
 
 struct zappy_server_s {
     int port;
@@ -62,7 +64,7 @@ int parse_args(int argc, char *argv[], zappy_server_t *server);
 int check_help(int argc, char *argv[]);
 
 int parse_team_names(char *argv[], zappy_server_t *server);
-int get_num_teams(zappy_server_t *server);
+zappy_team_t *get_team(zappy_server_t *server, char *team_name);
 void free_teams(zappy_server_t *server);
 
 #endif

@@ -43,7 +43,7 @@ int start_server(zappy_server_t *server)
         printf("Listening on port : %d\n", server->port);
         return 1;
     }
-    fprintf(stderr, "An internal error has occurred: %s", strerror(errno));
+    fprintf(stderr, "An internal error has occurred: %s\n", strerror(errno));
     return 0;
 }
 

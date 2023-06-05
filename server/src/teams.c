@@ -20,7 +20,7 @@ static zappy_team_t *create_team(char *team_name)
         team->next = NULL;
         return team;
     }
-    fprintf(stderr, "An internal error has occurred: Unable to create a team");
+    dprintf(2, "An internal error has occurred: Unable to create a team\n");
     free(team);
     free(name);
     return NULL;
@@ -53,16 +53,17 @@ int parse_team_names(char *argv[], zappy_server_t *server)
     return 1;
 }
 
-int get_num_teams(zappy_server_t *server)
+zappy_team_t *get_team(zappy_server_t *server, char *team_name)
 {
-    zappy_team_t **next_team = &server->teams;
-    int num = 0;
+    zappy_team_t *next_team = server->teams;
 
-    while (*next_team != NULL) {
-        ++num;
-        next_team = &(*next_team)->next;
+    while (next_team != NULL) {
+        if (strcmp(next_team->name, team_name) == 0) {
+            return next_team;
+        }
+        next_team = next_team->next;
     }
-    return num;
+    return NULL;
 }
 
 void free_teams(zappy_server_t *server)
