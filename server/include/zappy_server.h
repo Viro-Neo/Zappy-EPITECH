@@ -10,6 +10,7 @@
 
     #define ZAPPY_SERVER_MAX_CLIENTS 100
     #define ZAPPY_SERVER_BUFFER_SIZE 1024
+    #define ZAPPY_SERVER_GRAPHICAL_COMMANDS_COUNT 2
 
     #include <arpa/inet.h>
     #include <sys/select.h>
@@ -33,6 +34,11 @@ typedef struct zappy_client_s {
     zappy_server_t *server;
 } zappy_client_t;
 
+typedef struct zappy_commands_s {
+    char *name;
+    void (*func)(zappy_client_t *, char *);
+} zappy_commands_t;
+
 struct zappy_server_s {
     int port;
     int width;
@@ -42,7 +48,13 @@ struct zappy_server_s {
     int freq;
     int sockfd;
     zappy_client_t clients[ZAPPY_SERVER_MAX_CLIENTS];
+    zappy_commands_t graphical_commands[ZAPPY_SERVER_GRAPHICAL_COMMANDS_COUNT];
 };
+
+void graphical_msz(zappy_client_t *client, char *data);
+void graphical_tna(zappy_client_t *client, char *data);
+
+void commands_graphical(zappy_client_t* client, char* data);
 
 void game_loop(zappy_server_t *server);
 

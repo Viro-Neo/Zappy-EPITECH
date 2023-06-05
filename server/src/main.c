@@ -17,6 +17,12 @@ static void zappy_free(zappy_server_t *server)
     }
 }
 
+static void zappy_init_graphical_commands(zappy_server_t *server)
+{
+    server->graphical_commands[0] = (zappy_commands_t){ "msz", graphical_msz };
+    server->graphical_commands[1] = (zappy_commands_t){ "tna", graphical_tna };
+}
+
 static void zappy_init(zappy_server_t *server)
 {
     memset(server, 0, sizeof(*server));
@@ -29,6 +35,7 @@ static void zappy_init(zappy_server_t *server)
     for (int i = 0; i < ZAPPY_SERVER_MAX_CLIENTS; ++i) {
         server->clients[i].sockfd = -1;
     }
+    zappy_init_graphical_commands(server);
 }
 
 int main(int argc, char *argv[])

@@ -7,7 +7,10 @@
 
 NAME	=	../zappy_server
 
-SRCS	=	src/game/game_loop.c \
+SRCS	=	src/commands/graphical/graphical_msz.c \
+			src/commands/graphical/graphical_tna.c \
+			src/commands/commands_parse.c \
+			src/game/game_loop.c \
 			src/network/client_read.c \
 			src/network/client.c \
 			src/network/server_listen.c \

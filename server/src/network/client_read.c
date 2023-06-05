@@ -26,6 +26,7 @@ static void register_team(zappy_client_t* client, char* data)
 static void parse_cmd(zappy_client_t* client, char* data)
 {
     if (client->graphic) {
+        commands_graphical(client, data);
     } else if (client->team != NULL) {
     } else {
         register_team(client, data);
