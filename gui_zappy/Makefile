@@ -8,8 +8,7 @@
 CC =	g++
 
 SRCNAME =	main	\
-			Gui		\
-			GetOpt
+			Gui
 SRC =	$(addprefix src/, $(addsuffix .cpp, $(SRCNAME)))
 OBJ =	$(SRC:.cpp=.o)
 
@@ -22,13 +21,12 @@ all: $(NAME)
 
 $(NAME): $(OBJ)
 	@$(CC) -o $(NAME) $(OBJ)
-	mv $(NAME) ../
 
 clean:
 	@rm -f $(OBJ)
 
 fclean: clean
-	@rm -f ../$(NAME)
+	@rm -f $(NAME)
 
 re: fclean all
 
