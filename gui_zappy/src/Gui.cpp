@@ -6,21 +6,15 @@
 */
 
 #include "Gui.hpp"
-#include "GetOpt.hpp"
 
 Gui::Gui(int ac, char **av)
 {
-    if (ac == 2 && std::string(av[1]) == "-help")
-        throw std::invalid_argument("Help");
     if (ac != 5) {
         printUsage();
         throw std::invalid_argument("Too many or not enough arguments");
     }
-    GetOpt getOpt(ac, av);
-    _port = getOpt.getPort();
-    _host = getOpt.getHost();
-    std::cout << "Port: " << _port << std::endl;
-    std::cout << "Host: " << _host << std::endl;
+    _ac = ac;
+    _av = av;
 }
 
 void Gui::printUsage()
@@ -28,14 +22,4 @@ void Gui::printUsage()
     std::cout << "USAGE: ./zappy_gui -p port -h machine" << std::endl;
     std::cout << "\tport\tis the port number" << std::endl;
     std::cout << "\tmachine\tis the name of the machine; localhost by default" << std::endl;
-}
-
-std::string Gui::getPort() const
-{
-    return _port;
-}
-
-std::string Gui::getHost() const
-{
-    return _host;
 }

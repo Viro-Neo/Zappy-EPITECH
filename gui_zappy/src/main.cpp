@@ -13,7 +13,6 @@ int main(int ac, char **av)
        Gui gui(ac, av);
    } catch (const std::exception &e) {
        std::cerr << e.what() << std::endl;
-       Gui::printUsage();
        return 84;
    }
 }
