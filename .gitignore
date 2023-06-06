@@ -3,4 +3,5 @@
 zappy_server
 .idea
 *_zappy/*o
+cmake-build-debug
 CMakeLists.txt
