@@ -10,6 +10,8 @@
 
 Gui::Gui(int ac, char **av)
 {
+    if (ac == 2 && std::string(av[1]) == "-help")
+        throw std::invalid_argument("Help");
     if (ac != 5) {
         printUsage();
         throw std::invalid_argument("Too many or not enough arguments");
@@ -17,6 +19,8 @@ Gui::Gui(int ac, char **av)
     GetOpt getOpt(ac, av);
     _port = getOpt.getPort();
     _host = getOpt.getHost();
+    std::cout << "Port: " << _port << std::endl;
+    std::cout << "Host: " << _host << std::endl;
 }
 
 void Gui::printUsage()
