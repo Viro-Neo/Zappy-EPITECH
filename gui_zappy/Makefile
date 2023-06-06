@@ -8,7 +8,8 @@
 CC =	g++
 
 SRCNAME =	main	\
-			Gui
+			Gui		\
+			GetOpt
 SRC =	$(addprefix src/, $(addsuffix .cpp, $(SRCNAME)))
 OBJ =	$(SRC:.cpp=.o)
 
