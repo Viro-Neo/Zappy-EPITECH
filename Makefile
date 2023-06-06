@@ -17,7 +17,7 @@ AI_NAME    =	zappy_ai
 
 GUI_NAME	=	zappy_gui
 
-all: $(SERVER_NAME) $(AI_NAME)
+all: $(SERVER_NAME) $(AI_NAME) $(GUI_NAME)
 
 $(AI_NAME): $(AI_OBJ)
 	@make -C ./client_zappy/
