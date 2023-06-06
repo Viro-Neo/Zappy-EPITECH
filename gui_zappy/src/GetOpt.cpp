@@ -23,12 +23,6 @@ GetOpt::GetOpt(int ac, char **av)
                 _host = "localhost";
         }
     }
-    if (_port.empty()) {
-        Gui::printUsage();
-        throw std::invalid_argument("Argument missing");
-    }
-    if (_host.empty())
-        _host = "localhost";
 }
 
 std::string GetOpt::getPort() const
