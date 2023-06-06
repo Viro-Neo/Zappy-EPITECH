@@ -16,6 +16,7 @@ SRCS	=	src/commands/graphical/graphical_msz.c \
 			src/network/server_listen.c \
 			src/network/server_read.c \
 			src/network/server.c \
+			src/args_handling.c \
 			src/args.c \
 			src/help.c \
 			src/main.c \

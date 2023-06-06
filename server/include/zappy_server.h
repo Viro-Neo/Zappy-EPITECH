@@ -51,6 +51,11 @@ struct zappy_server_s {
     zappy_commands_t graphical_commands[ZAPPY_SERVER_GRAPHICAL_COMMANDS_COUNT];
 };
 
+typedef struct zappy_opt_s {
+    int c;
+    int (*func)(int, int, int);
+} zappy_opt_t;
+
 void graphical_msz(zappy_client_t *client, char *data);
 void graphical_tna(zappy_client_t *client, char *data);
 
@@ -70,6 +75,11 @@ int read_select(zappy_server_t *server, fd_set *readfds);
 
 int start_server(zappy_server_t *server);
 void stop_server(zappy_server_t *server);
+
+int check_opt_p(int is_number, int num, int c);
+int check_opt_xy(int is_number, int num, int c);
+int check_opt_c(int is_number, int num, int c);
+int check_opt_f(int is_number, int num, int c);
 
 int parse_args(int argc, char *argv[], zappy_server_t *server);
 
