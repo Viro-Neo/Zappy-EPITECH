@@ -37,10 +37,22 @@ static int create_socket(zappy_server_t *server)
     return 1;
 }
 
+static int display_port(zappy_server_t *server)
+{
+    struct sockaddr_in addr_in;
+    socklen_t socklen = sizeof(addr_in);
+    int sockfd = server->sockfd;
+
+    if (getsockname(sockfd, (struct sockaddr*)&addr_in, &socklen) == 0) {
+        printf("Listening on port : %d\n", ntohs(addr_in.sin_port));
+        return 1;
+    }
+    return 0;
+}
+
 int start_server(zappy_server_t *server)
 {
-    if (create_socket(server)) {
-        printf("Listening on port : %d\n", server->port);
+    if (create_socket(server) && display_port(server)) {
         return 1;
     }
     fprintf(stderr, "An internal error has occurred: %s\n", strerror(errno));
