@@ -10,6 +10,7 @@
 
     #define ZAPPY_SERVER_MAX_CLIENTS 100
     #define ZAPPY_SERVER_BUFFER_SIZE 1024
+    #define ZAPPY_SERVER_GRAPHICAL_COMMANDS_COUNT 4
 
     #include <arpa/inet.h>
     #include <sys/select.h>
@@ -17,19 +18,26 @@
 
 typedef struct zappy_server_s zappy_server_t;
 
+typedef struct zappy_team_s {
+    char *name;
+    struct zappy_team_s *next;
+} zappy_team_t;
+
 typedef struct zappy_client_s {
     int sockfd;
     char address[INET_ADDRSTRLEN];
     uint16_t port;
     char buffer[ZAPPY_SERVER_BUFFER_SIZE];
     ssize_t pending;
+    zappy_team_t *team;
+    int graphic;
     zappy_server_t *server;
 } zappy_client_t;
 
-typedef struct zappy_team_s {
-    char *name;
-    struct zappy_team_s *next;
-} zappy_team_t;
+typedef struct zappy_commands_s {
+    char name[4];
+    void (*func)(zappy_client_t *, char *);
+} zappy_commands_t;
 
 struct zappy_server_s {
     int port;
@@ -40,9 +48,26 @@ struct zappy_server_s {
     int freq;
     int sockfd;
     zappy_client_t clients[ZAPPY_SERVER_MAX_CLIENTS];
+    zappy_commands_t graphical_commands[ZAPPY_SERVER_GRAPHICAL_COMMANDS_COUNT];
+    int map[30][30][7];
 };
 
+typedef struct zappy_opt_s {
+    int c;
+    int (*func)(int, int, int);
+} zappy_opt_t;
+
+int tile_content(zappy_client_t *client, int x, int y);
+void graphical_bct(zappy_client_t *client, char *data);
+void graphical_mct(zappy_client_t *client, char *data);
+void graphical_msz(zappy_client_t *client, char *data);
+void graphical_tna(zappy_client_t *client, char *data);
+
+void commands_graphical(zappy_client_t* client, char* data);
+
 void game_loop(zappy_server_t *server);
+
+void spawn_resources(zappy_server_t *server);
 
 void read_client(zappy_client_t *client);
 
@@ -57,12 +82,19 @@ int read_select(zappy_server_t *server, fd_set *readfds);
 int start_server(zappy_server_t *server);
 void stop_server(zappy_server_t *server);
 
+int check_opt_p(int is_number, int num, int c);
+int check_opt_xy(int is_number, int num, int c);
+int check_opt_c(int is_number, int num, int c);
+int check_opt_f(int is_number, int num, int c);
+
 int parse_args(int argc, char *argv[], zappy_server_t *server);
 
 int check_help(int argc, char *argv[]);
 
 int parse_team_names(char *argv[], zappy_server_t *server);
-int get_num_teams(zappy_server_t *server);
+zappy_team_t *get_team(zappy_server_t *server, char *team_name);
 void free_teams(zappy_server_t *server);
+
+int is_number(char* str);
 
 #endif

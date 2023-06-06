@@ -5,7 +5,9 @@
 ** main.c
 */
 
+#include <signal.h>
 #include <string.h>
+#include <unistd.h>
 #include "zappy_server.h"
 
 static void zappy_free(zappy_server_t *server)
@@ -17,12 +19,38 @@ static void zappy_free(zappy_server_t *server)
     }
 }
 
+static void zappy_init_graphical_commands(zappy_server_t *server)
+{
+    server->graphical_commands[0] = (zappy_commands_t){ "bct", graphical_bct };
+    server->graphical_commands[1] = (zappy_commands_t){ "mct", graphical_mct };
+    server->graphical_commands[2] = (zappy_commands_t){ "msz", graphical_msz };
+    server->graphical_commands[3] = (zappy_commands_t){ "tna", graphical_tna };
+}
+
 static void zappy_init(zappy_server_t *server)
 {
     memset(server, 0, sizeof(*server));
+    server->port = 4242;
+    server->width = 10;
+    server->height = 10;
+    server->clientsNb = 3;
+    server->freq = 100;
     server->sockfd = -1;
     for (int i = 0; i < ZAPPY_SERVER_MAX_CLIENTS; ++i) {
         server->clients[i].sockfd = -1;
+    }
+    zappy_init_graphical_commands(server);
+}
+
+static void handler(int signal)
+{
+    static int sockfd = -1;
+
+    if (!(sockfd < 0)) {
+        close(sockfd);
+        sockfd = -1;
+    } else {
+        sockfd = signal;
     }
 }
 
@@ -39,6 +67,8 @@ int main(int argc, char *argv[])
     if (res) {
         res = start_server(&server);
         if (res) {
+            handler(server.sockfd);
+            signal(SIGINT, handler);
             game_loop(&server);
         }
     }
