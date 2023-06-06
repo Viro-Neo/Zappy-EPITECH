@@ -3,3 +3,9 @@
 zappy_ai
 zappy_gui
 zappy_server
+/B-YEP-400_zappy.pdf
+/B-YEP-400_zappy_GUI_protocol.pdf
+zappy_server
+.idea
+*_zappy/*o
+CMakeLists.txt
