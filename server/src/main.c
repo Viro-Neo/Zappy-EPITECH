@@ -19,8 +19,10 @@ static void zappy_free(zappy_server_t *server)
 
 static void zappy_init_graphical_commands(zappy_server_t *server)
 {
-    server->graphical_commands[0] = (zappy_commands_t){ "msz", graphical_msz };
-    server->graphical_commands[1] = (zappy_commands_t){ "tna", graphical_tna };
+    server->graphical_commands[0] = (zappy_commands_t){ "bct", graphical_bct };
+    server->graphical_commands[1] = (zappy_commands_t){ "mct", graphical_mct };
+    server->graphical_commands[2] = (zappy_commands_t){ "msz", graphical_msz };
+    server->graphical_commands[3] = (zappy_commands_t){ "tna", graphical_tna };
 }
 
 static void zappy_init(zappy_server_t *server)

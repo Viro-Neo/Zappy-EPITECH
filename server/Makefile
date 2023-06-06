@@ -7,7 +7,9 @@
 
 NAME	=	../zappy_server
 
-SRCS	=	src/commands/graphical/graphical_msz.c \
+SRCS	=	src/commands/graphical/graphical_bct.c \
+			src/commands/graphical/graphical_mct.c \
+			src/commands/graphical/graphical_msz.c \
 			src/commands/graphical/graphical_tna.c \
 			src/commands/commands_parse.c \
 			src/game/game_loop.c \
@@ -21,7 +23,8 @@ SRCS	=	src/commands/graphical/graphical_msz.c \
 			src/args.c \
 			src/help.c \
 			src/main.c \
-			src/teams.c
+			src/teams.c \
+			src/utils.c
 
 OBJS	=	$(SRCS:.c=.o)
 

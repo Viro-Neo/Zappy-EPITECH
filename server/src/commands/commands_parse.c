@@ -5,18 +5,26 @@
 ** commands_parse.c
 */
 
+#include <stdio.h>
 #include <string.h>
 #include "zappy_server.h"
 
 void commands_graphical(zappy_client_t* client, char* data)
 {
     zappy_commands_t *command = NULL;
+    char *command_name = data;
 
+    data = strstr(data, " ");
+    if (data != NULL) {
+        data[0] = '\0';
+        ++data;
+    }
     for (int i = 0; i < ZAPPY_SERVER_GRAPHICAL_COMMANDS_COUNT; ++i) {
         command = &client->server->graphical_commands[i];
-        if (strcmp(command->name, data) == 0) {
+        if (strcmp(command->name, command_name) == 0) {
             command->func(client, data);
-            break;
+            return;
         }
     }
+    dprintf(client->sockfd, "suc\n");
 }

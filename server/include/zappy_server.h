@@ -10,7 +10,7 @@
 
     #define ZAPPY_SERVER_MAX_CLIENTS 100
     #define ZAPPY_SERVER_BUFFER_SIZE 1024
-    #define ZAPPY_SERVER_GRAPHICAL_COMMANDS_COUNT 2
+    #define ZAPPY_SERVER_GRAPHICAL_COMMANDS_COUNT 4
 
     #include <arpa/inet.h>
     #include <sys/select.h>
@@ -35,7 +35,7 @@ typedef struct zappy_client_s {
 } zappy_client_t;
 
 typedef struct zappy_commands_s {
-    char *name;
+    char name[4];
     void (*func)(zappy_client_t *, char *);
 } zappy_commands_t;
 
@@ -57,6 +57,9 @@ typedef struct zappy_opt_s {
     int (*func)(int, int, int);
 } zappy_opt_t;
 
+int tile_content(zappy_client_t *client, int x, int y);
+void graphical_bct(zappy_client_t *client, char *data);
+void graphical_mct(zappy_client_t *client, char *data);
 void graphical_msz(zappy_client_t *client, char *data);
 void graphical_tna(zappy_client_t *client, char *data);
 
@@ -91,5 +94,7 @@ int check_help(int argc, char *argv[]);
 int parse_team_names(char *argv[], zappy_server_t *server);
 zappy_team_t *get_team(zappy_server_t *server, char *team_name);
 void free_teams(zappy_server_t *server);
+
+int is_number(char* str);
 
 #endif

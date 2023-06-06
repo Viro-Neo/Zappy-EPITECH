@@ -20,7 +20,7 @@ void add_client(zappy_server_t *server, zappy_client_t *client, int sockfd
     memcpy(client->address, address, strlen(address));
     client->port = ntohs(addr_in->sin_port);
     client->server = server;
-    write(client->sockfd, "WELCOME\n", 8);
+    dprintf(client->sockfd, "WELCOME\n");
     printf("Client %s:%u connected!\n", client->address, client->port);
 }
 

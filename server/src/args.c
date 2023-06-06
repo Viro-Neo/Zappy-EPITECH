@@ -5,7 +5,6 @@
 ** args.c
 */
 
-#include <ctype.h>
 #include <getopt.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -23,16 +22,6 @@ static void set_opt(zappy_server_t *server, int c, int num)
         server->clientsNb = num;
     if (c == 'f')
         server->freq = num;
-}
-
-static int is_number(char* str)
-{
-    for (int i = 0; str[i] != '\0'; ++i) {
-        if (!isdigit(str[i])) {
-            return 0;
-        }
-    }
-    return 1;
 }
 
 static int check_arg(zappy_server_t *server, zappy_opt_t opts[5], int c)

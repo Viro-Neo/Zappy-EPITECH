@@ -19,7 +19,7 @@ static void register_team(zappy_client_t* client, char* data)
     } else if (strcmp(data, "GRAPHIC") == 0) {
         client->graphic = 1;
     } else {
-        write(client->sockfd, "ko\n", 3);
+        dprintf(client->sockfd, "ko\n");
     }
 }
 
