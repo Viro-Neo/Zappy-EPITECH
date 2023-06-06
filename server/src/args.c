@@ -57,7 +57,7 @@ int parse_args(int argc, char *argv[], zappy_server_t *server)
     opterr = 0;
     while ((c = getopt(argc, argv, "p:x:y:nc:f:")) != -1) {
         if (c == '?') {
-            fprintf(stderr, "Invalid argument: -%c\n", optopt);
+            dprintf(2, "Invalid argument: -%c\n", optopt);
             return 0;
         }
         if (optarg && !check_arg(server, opts, c)) {
