@@ -49,6 +49,7 @@ struct zappy_server_s {
     int sockfd;
     zappy_client_t clients[ZAPPY_SERVER_MAX_CLIENTS];
     zappy_commands_t graphical_commands[ZAPPY_SERVER_GRAPHICAL_COMMANDS_COUNT];
+    int map[30][30][7];
 };
 
 typedef struct zappy_opt_s {
@@ -62,6 +63,8 @@ void graphical_tna(zappy_client_t *client, char *data);
 void commands_graphical(zappy_client_t* client, char* data);
 
 void game_loop(zappy_server_t *server);
+
+void spawn_resources(zappy_server_t *server);
 
 void read_client(zappy_client_t *client);
 
