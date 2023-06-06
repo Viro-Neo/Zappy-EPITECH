@@ -4,3 +4,6 @@ zappy_server
 .idea
 *_zappy/*o
 CMakeLists.txt
+cmake-build-debug
+*_zappy/src/*o
+zappy_gui
