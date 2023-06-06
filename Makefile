@@ -1,59 +1,31 @@
 ##
-## EPITECH PROJECT, 2021
-## makefile infin_add
+## EPITECH PROJECT, 2023
+## B-YEP-400-PAR-4-1-zappy-aurelien.duval
 ## File description:
 ## Makefile
 ##
 
-SERVER_SRC	=	server_zappy/main.cpp	\
-		
-SERVER_OBJ     =       $(SERVER_SRC:.cpp=.o)
+all:	zappy_ai zappy_gui zappy_server
 
-CFLAGS	=	-W -Wall -Wextra -g3
+zappy_ai:
+#	make -C ai/
 
-SERVER_NAME    =	zappy_server
+zappy_gui:
+#	make -C gui/
 
-AI_SRC = 	ai_zappy/main.cpp	\
-
-AI_OBJ	=	$(AI_SRC:.cpp=.o)
-
-AI_NAME    =	zappy_ai
-
-GUI_SRC = 	gui_zappy/main.cpp	\
-
-GUI_OBJ	=	$(GUI_SRC:.cpp=.o)
-
-GUI_NAME    =	zappy_gui
-
-all: $(SERVER_NAME) $(AI_NAME) $(GUI_NAME)
-
-$(AI_NAME): $(AI_OBJ)
-	@g++ -o $(AI_NAME) $(AI_OBJ)
-	@echo -e "\e[92;5m       ====Bien joué bg====      \e[0m"
-
-
-$(SERVER_NAME): $(SERVER_OBJ)
-	@g++ -o $(SERVER_NAME) $(SERVER_OBJ)
-	@echo -e "\e[92;5m       ====Bien joué bg====      \e[0m"
-
-$(GUI_NAME): $(GUI_OBJ)
-	@g++ -o $(GUI_NAME) $(GUI_OBJ)
-	@echo -e "\e[92;5m       ====Bien joué bg====      \e[0m"
+zappy_server:
+	make -C server/
 
 clean:
-	rm -f $(SERVER_OBJ)
-	rm -f $(AI_OBJ)
-	rm -f $(GUI_OBJ)
-	rm -f *gcno
+#	make clean -C ai/
+#	make clean -C gui/
+	make clean -C server/
 
-fclean: clean
-	rm -f $(SERVER_NAME)
-	rm -f $(AI_NAME)
-	rm -f $(GUI_NAME)
-	rm -f *~
-	rm -f *.o
-	rm -rf vgcore.*
+fclean:	clean
+#	make fclean -C ai/
+#	make fclean -C gui/
+	make fclean -C server/
 
-re:     fclean all
+re:	fclean all
 
-.PHONY:	clean fclean re all
+.PHONY: all zappy_ai zappy_gui zappy_server clean fclean re
