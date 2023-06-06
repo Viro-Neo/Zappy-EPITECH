@@ -14,7 +14,7 @@ GetOpt::GetOpt(int ac, char **av)
             if (i + 1 < ac)
                 _port = av[i + 1];
             else
-                throw std::invalid_argument("Argument missing");
+                throw std::invalid_argument("Port missing");
         }
         if (std::string(av[i]) == "-h") {
             if (i + 1 < ac)
@@ -23,6 +23,8 @@ GetOpt::GetOpt(int ac, char **av)
                 _host = "localhost";
         }
     }
+    if (_host.empty())
+        _host = "localhost";
 }
 
 std::string GetOpt::getPort() const
