@@ -23,10 +23,14 @@ class ServerCommunication {
     public:
         ServerCommunication(std::string port, std::string host);
         ~ServerCommunication();
+        // read the data sent by the server using sfml socket.
         int readFromServer();
+        // write the data inside the string msg on the socket so the server can read it using sfml sockets.
         int writeToServer(std::string msg);
+        // As the name suggest when you call this function it will connect to the server with the port and host set in the constructor
         void connectToServer(void);
-        std::string &popCmd();
+        // It gives you the first command reiceved from the server and it will pop it from the vector. The function will return an empty string if there is no more command.
+        std::string popCmd();
     protected:
     private:
         sf::TcpSocket _clientSocket;

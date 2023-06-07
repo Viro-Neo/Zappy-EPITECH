@@ -25,8 +25,10 @@ void ServerCommunication::connectToServer(void)
     }
 }
 
-std::string &ServerCommunication::popCmd()
+std::string ServerCommunication::popCmd()
 {   
+    if (this->_cmdList.empty())
+        return "";
     std::string cmd = this->_cmdList.back();
     this->_cmdList.pop_back();
     return cmd;
