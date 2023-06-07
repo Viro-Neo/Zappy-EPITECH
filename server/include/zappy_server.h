@@ -10,7 +10,7 @@
 
     #define ZAPPY_SERVER_MAX_CLIENTS 100
     #define ZAPPY_SERVER_BUFFER_SIZE 1024
-    #define ZAPPY_SERVER_GRAPHICAL_COMMANDS_COUNT 4
+    #define ZAPPY_SERVER_GRAPHICAL_COMMANDS_COUNT 6
 
     #include <arpa/inet.h>
     #include <sys/select.h>
@@ -61,6 +61,8 @@ int tile_content(zappy_client_t *client, int x, int y);
 void graphical_bct(zappy_client_t *client, char *data);
 void graphical_mct(zappy_client_t *client, char *data);
 void graphical_msz(zappy_client_t *client, char *data);
+void graphical_sgt(zappy_client_t *client, char *data);
+void graphical_sst(zappy_client_t *client, char *data);
 void graphical_tna(zappy_client_t *client, char *data);
 
 void commands_graphical(zappy_client_t* client, char* data);
