@@ -8,58 +8,40 @@
 #include "ServerCommunication.hpp"
 
 
-ServerCommunication::ServerCommunication(const std::string port, const std::string host) : _port(port), _host(host), _info(HostentByName(host))
+ServerCommunication::ServerCommunication(const std::string port, const std::string host) : _port(port), _host(host)
 {
-    this->_client_socket = socket(AF_INET, SOCK_STREAM, 0);
-    this->_client_address.sin_addr.s_addr = inet_addr(host.data());
-    this->_client_address.sin_family = AF_INET;
-    this->_client_address.sin_port = htons(atoi(port.data()));
-    // TODO(zach & vando): make logs
 }
 
 
 ServerCommunication::~ServerCommunication()
 {
-    close(this->_client_socket);
 }
 
 void ServerCommunication::connectToServer(void)
 {
-    if (connect(this->_client_socket, (struct sockaddr *)&this->_client_address, sizeof(_client_address)) == -1)
-        throw std::exception(); //TODO(zach): make error handling 
-    //else
-    //  TODO(zach & vando): make logs
+    this->status = this->_clientSocket.connect(this->_host, std::atoi(this->_port.data()));
+    if (this->status != sf::Socket::Done) {
+        throw std::exception(); //TODO(zach) : do error handling
+    }
 }
 
-void ServerCommunication::selectHandler(void)
-{
-    FD_ZERO(&this->_fdset);
-    FD_SET(STDIN_FILENO, &this->_fdset);
-    FD_SET(this->_client_socket, &this->_fdset);
-    if (select(this->_client_socket + 1, &this->_fdset, nullptr, nullptr, nullptr) == -1 && errno != EINTR)
-        throw std::exception(); //TODO(zach): make error handling
-}
-
-bool ServerCommunication::isRead()
-{
-    if (FD_ISSET(STDIN_FILENO, &this->_fdset))
-        return false;
-    else if (FD_ISSET(this->_client_socket, &this->_fdset))
-        return true;
+std::string &ServerCommunication::popCmd()
+{   
+    std::string cmd = this->_cmdList.back();
+    this->_cmdList.pop_back();
+    return cmd;
 }
 
 int ServerCommunication::readFromServer()
 {
-    char msg[4096];
-    int status = recv(this->_client_socket, msg, 4096, 0);
-    if (status = 0) {
-        this->~ServerCommunication();
-        throw std::exception(); //TODO(zach): make error handling
+    char msg[4096] = "";
+    std::string result;
+    std::size_t received;
+
+    if (this->_clientSocket.receive(msg, 4096, received) != sf::Socket::Done) {
+        throw std::exception(); //TODO(zach): do error  handling
     }
-    if (status = -1) { 
-        throw std::exception(); //TODO(zach): make error handling
-    }
-    std::string result = msg;
+    result = msg;
     int size = 0;
     while (result != "" || result.find('\n') == std::string::npos) {
         int index = result.find('\n', size);
@@ -68,13 +50,10 @@ int ServerCommunication::readFromServer()
     }
 }
 
-int ServerCommunication::writeToServer()
+int ServerCommunication::writeToServer(std::string cmd)
 {
-    char msg[1024] = {0};
-    read(STDIN_FILENO, msg, 1024 - 1);
-
-    write(this->_client_socket, msg, 1024);
-    return 0;
+    if (this->_clientSocket.send(cmd.data(), 100) != sf::Socket::Done)
+        throw std::exception(); //TODO(zach): do error handling
 }
 
 

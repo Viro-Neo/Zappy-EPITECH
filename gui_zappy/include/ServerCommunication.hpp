@@ -5,7 +5,7 @@
 ** ServerCommunication
 */
 
-
+//changer utiliser les SCOKET DE LA SFML SALE CON
 #ifndef SERVERCOMMUNICATION_HPP_
 #define SERVERCOMMUNICATION_HPP_
     #include <signal.h>
@@ -16,6 +16,7 @@
     #include <sys/socket.h>
     #include <netinet/in.h>
     #include <arpa/inet.h>
+    #include <SFML/Network.hpp>
     #include "HostentByName.hpp"
     #include <vector>
 class ServerCommunication {
@@ -23,19 +24,15 @@ class ServerCommunication {
         ServerCommunication(std::string port, std::string host);
         ~ServerCommunication();
         int readFromServer();
-        int writeToServer();
+        int writeToServer(std::string msg);
         void connectToServer(void);
-        void selectHandler(void);
-        //return true if u need to read 0 if not
-        bool isRead();
+        std::string &popCmd();
     protected:
     private:
-        struct sockaddr_in _client_address;
-        HostentByName _info;
-        int _client_socket;  
+        sf::TcpSocket _clientSocket;
+        sf::Socket::Status status;
         const std::string _port;
         const std::string _host;
-        fd_set _fdset;
         std::vector<std::string> _cmdList;
 };
 
