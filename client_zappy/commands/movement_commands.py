@@ -54,9 +54,11 @@ def send_look_command(client):
         if response == "ok" or response == "ko":
             print(response)
         else:
-            print(f"Unknown server response: {response}")
+            nested_list = [[item.strip()] if item.strip() else [] for item in response.split(',')]
+        #    print(nested_list) -> Parsed output, remove it at the end
     except OSError as e:
         print(f"Error receiving response: {str(e)}")
+
 
 
 def send_inventory_command(client):
