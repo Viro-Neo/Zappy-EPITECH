@@ -11,6 +11,7 @@
     #define ZAPPY_SERVER_MAX_CLIENTS 100
     #define ZAPPY_SERVER_BUFFER_SIZE 1024
     #define ZAPPY_SERVER_GRAPHICAL_COMMANDS_COUNT 6
+    #define ZAPPY_SERVER_PLAYER_COMMANDS_COUNT 0
 
     #include <arpa/inet.h>
     #include <sys/select.h>
@@ -20,8 +21,18 @@ typedef struct zappy_server_s zappy_server_t;
 
 typedef struct zappy_team_s {
     char *name;
+    int slot;
     struct zappy_team_s *next;
 } zappy_team_t;
+
+typedef struct zappy_player_s {
+    int id;
+    int x;
+    int y;
+    int rot;
+    int inventory[7];
+    zappy_team_t *team;
+} zappy_player_t;
 
 typedef struct zappy_client_s {
     int sockfd;
@@ -29,7 +40,7 @@ typedef struct zappy_client_s {
     uint16_t port;
     char buffer[ZAPPY_SERVER_BUFFER_SIZE];
     ssize_t pending;
-    zappy_team_t *team;
+    zappy_player_t player;
     int graphic;
     zappy_server_t *server;
 } zappy_client_t;
@@ -49,6 +60,7 @@ struct zappy_server_s {
     int sockfd;
     zappy_client_t clients[ZAPPY_SERVER_MAX_CLIENTS];
     zappy_commands_t graphical_commands[ZAPPY_SERVER_GRAPHICAL_COMMANDS_COUNT];
+    zappy_commands_t player_commands[ZAPPY_SERVER_PLAYER_COMMANDS_COUNT];
     int map[30][30][7];
 };
 
@@ -66,6 +78,7 @@ void graphical_sst(zappy_client_t *client, char *data);
 void graphical_tna(zappy_client_t *client, char *data);
 
 void commands_graphical(zappy_client_t* client, char* data);
+void commands_player(zappy_client_t* client, char* data);
 
 void game_loop(zappy_server_t *server);
 

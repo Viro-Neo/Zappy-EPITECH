@@ -10,7 +10,7 @@
 #include <string.h>
 #include "zappy_server.h"
 
-static zappy_team_t *create_team(char *team_name)
+static zappy_team_t *create_team(zappy_server_t *server, char *team_name)
 {
     zappy_team_t *team = malloc(sizeof(zappy_team_t));
     char *name = strdup(team_name);
@@ -18,6 +18,7 @@ static zappy_team_t *create_team(char *team_name)
     if (team != NULL && name != NULL) {
         if (strcmp(name, "GRAPHIC") != 0) {
             team->name = name;
+            team->slot = server->clientsNb;
             team->next = NULL;
             return team;
         } else {
@@ -49,7 +50,7 @@ int parse_team_names(char *argv[], zappy_server_t *server)
     int i = team_names_index(argv);
 
     for (; (argv[i] != NULL && argv[i][0] != '-'); ++i) {
-        *next_team = create_team(argv[i]);
+        *next_team = create_team(server, argv[i]);
         if (*next_team == NULL) {
             return 0;
         }
