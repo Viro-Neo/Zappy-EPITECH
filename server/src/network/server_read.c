@@ -26,7 +26,7 @@ static int accept_client(zappy_server_t *server)
         }
     }
     close(sockfd);
-    printf("Server is full.\n");
+    dprintf(1, "Unable to accept new client: Server is full\n");
     return 1;
 }
 

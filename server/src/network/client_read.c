@@ -10,10 +10,31 @@
 #include <unistd.h>
 #include "zappy_server.h"
 
+static void register_team(zappy_client_t* client, char* data)
+{
+    zappy_team_t *team = get_team(client->server, data);
+
+    if (team != NULL) {
+        client->team = team;
+    } else if (strcmp(data, "GRAPHIC") == 0) {
+        client->graphic = 1;
+        graphical_msz(client, NULL);
+        graphical_sgt(client, NULL);
+        graphical_mct(client, NULL);
+        graphical_tna(client, NULL);
+    } else {
+        dprintf(client->sockfd, "ko\n");
+    }
+}
+
 static void parse_cmd(zappy_client_t* client, char* data)
 {
-    (void)client;
-    (void)data;
+    if (client->graphic) {
+        commands_graphical(client, data);
+    } else if (client->team != NULL) {
+    } else {
+        register_team(client, data);
+    }
 }
 
 static void parse_read(zappy_client_t* client)

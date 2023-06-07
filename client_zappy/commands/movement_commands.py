@@ -50,7 +50,7 @@ def send_look_command(client):
     client.write_response_to_socket(command)
 
     try:
-        response = "player, food, item,,,,"  #client.receive_server_response()
+        response = client.receive_server_response()
         if response == "ok" or response == "ko":
             print(response)
         else:
