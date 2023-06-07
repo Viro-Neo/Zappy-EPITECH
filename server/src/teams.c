@@ -16,11 +16,16 @@ static zappy_team_t *create_team(char *team_name)
     char *name = strdup(team_name);
 
     if (team != NULL && name != NULL) {
-        team->name = name;
-        team->next = NULL;
-        return team;
+        if (strcmp(name, "GRAPHIC") != 0) {
+            team->name = name;
+            team->next = NULL;
+            return team;
+        } else {
+            dprintf(2, "An internal error has occurred: GRAPHIC is reserved\n");
+        }
+    } else {
+        dprintf(2, "An internal error has occurred: Unable to create a team\n");
     }
-    dprintf(2, "An internal error has occurred: Unable to create a team\n");
     free(team);
     free(name);
     return NULL;
