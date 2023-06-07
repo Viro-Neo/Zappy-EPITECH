@@ -18,6 +18,10 @@ static void register_team(zappy_client_t* client, char* data)
         client->team = team;
     } else if (strcmp(data, "GRAPHIC") == 0) {
         client->graphic = 1;
+        graphical_msz(client, NULL);
+        graphical_sgt(client, NULL);
+        graphical_mct(client, NULL);
+        graphical_tna(client, NULL);
     } else {
         dprintf(client->sockfd, "ko\n");
     }
