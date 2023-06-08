@@ -10,6 +10,7 @@ NAME	=	../zappy_server
 SRCS	=	src/commands/graphical/graphical_bct.c \
 			src/commands/graphical/graphical_mct.c \
 			src/commands/graphical/graphical_msz.c \
+			src/commands/graphical/graphical_pin.c \
 			src/commands/graphical/graphical_plv.c \
 			src/commands/graphical/graphical_ppo.c \
 			src/commands/graphical/graphical_sgt.c \
