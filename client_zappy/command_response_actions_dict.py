@@ -5,11 +5,8 @@
 ## get_server_response_for_commands
 ##
 
-from commands.movement_commands import send_inventory_command
-from client import Client
 from typing import Dict
 from decisions import *
-import re
 
 response_dict = {
     'Forward': 'ok',
@@ -49,14 +46,3 @@ action_dict = {
     'Message': decide_heard,
     'Ejected': decide_ejected
 }
-
-def check_response(response: str, client: Client):
-    for cmd in client.cmd_buff:
-        if re.match(response_dict[cmd], response):
-            action_dict[cmd](client, response)
-            return 1
-    for stray in stray_response_dict:
-        if re.match(stray_response_dict[stray], response):
-            action_dict[stray](client, response)
-            return 2
-    return 0
