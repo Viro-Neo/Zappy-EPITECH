@@ -21,15 +21,15 @@ static void zappy_free(zappy_server_t *server)
 
 static void zappy_init_graphical_commands(zappy_server_t *server)
 {
-    server->graphical_commands[0] = (zappy_commands_t){ "bct", graphical_bct };
-    server->graphical_commands[1] = (zappy_commands_t){ "mct", graphical_mct };
-    server->graphical_commands[2] = (zappy_commands_t){ "msz", graphical_msz };
-    server->graphical_commands[3] = (zappy_commands_t){ "pin", graphical_pin };
-    server->graphical_commands[4] = (zappy_commands_t){ "plv", graphical_plv };
-    server->graphical_commands[5] = (zappy_commands_t){ "ppo", graphical_ppo };
-    server->graphical_commands[6] = (zappy_commands_t){ "sgt", graphical_sgt };
-    server->graphical_commands[7] = (zappy_commands_t){ "sst", graphical_sst };
-    server->graphical_commands[8] = (zappy_commands_t){ "tna", graphical_tna };
+    server->graphical_commands[0] = (zappy_gcmd_t){ "bct", graphical_bct };
+    server->graphical_commands[1] = (zappy_gcmd_t){ "mct", graphical_mct };
+    server->graphical_commands[2] = (zappy_gcmd_t){ "msz", graphical_msz };
+    server->graphical_commands[3] = (zappy_gcmd_t){ "pin", graphical_pin };
+    server->graphical_commands[4] = (zappy_gcmd_t){ "plv", graphical_plv };
+    server->graphical_commands[5] = (zappy_gcmd_t){ "ppo", graphical_ppo };
+    server->graphical_commands[6] = (zappy_gcmd_t){ "sgt", graphical_sgt };
+    server->graphical_commands[7] = (zappy_gcmd_t){ "sst", graphical_sst };
+    server->graphical_commands[8] = (zappy_gcmd_t){ "tna", graphical_tna };
 }
 
 static void zappy_init(zappy_server_t *server)

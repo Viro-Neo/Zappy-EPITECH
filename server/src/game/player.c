@@ -5,7 +5,7 @@
 ** player.c
 */
 
-#include <stddef.h>
+#include <time.h>
 #include "zappy_server.h"
 
 zappy_player_t *get_player_by_id(zappy_server_t *server, int id)
@@ -19,4 +19,15 @@ zappy_player_t *get_player_by_id(zappy_server_t *server, int id)
         }
     }
     return NULL;
+}
+
+void add_player_command(zappy_client_t* client, zappy_pcmd_t *pcmd)
+{
+    for (int i = 0; i < 10; ++i) {
+        if (client->player.cmds[i].pcmd == NULL) {
+            client->player.cmds[i].start = time(NULL);
+            client->player.cmds[i].pcmd = pcmd;
+            return;
+        }
+    }
 }

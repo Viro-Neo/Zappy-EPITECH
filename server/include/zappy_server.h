@@ -19,11 +19,18 @@
 
 typedef struct zappy_server_s zappy_server_t;
 
+typedef struct zappy_pcmd_s zappy_pcmd_t;
+
 typedef struct zappy_team_s {
     char *name;
     int slot;
     struct zappy_team_s *next;
 } zappy_team_t;
+
+typedef struct zappy_player_cmd_s {
+    time_t start;
+    zappy_pcmd_t *pcmd;
+} zappy_player_cmd_t;
 
 typedef struct zappy_player_s {
     int id;
@@ -33,6 +40,7 @@ typedef struct zappy_player_s {
     int lvl;
     int inventory[7];
     zappy_team_t *team;
+    zappy_player_cmd_t cmds[10];
 } zappy_player_t;
 
 typedef struct zappy_client_s {
@@ -46,10 +54,16 @@ typedef struct zappy_client_s {
     zappy_server_t *server;
 } zappy_client_t;
 
-typedef struct zappy_commands_s {
+typedef struct zappy_gcmd_s {
     char name[4];
     void (*func)(zappy_client_t *, char *);
-} zappy_commands_t;
+} zappy_gcmd_t;
+
+struct zappy_pcmd_s {
+    char name[12];
+    int time_limit;
+    void (*func)(zappy_client_t *);
+};
 
 struct zappy_server_s {
     int port;
@@ -60,8 +74,8 @@ struct zappy_server_s {
     int freq;
     int sockfd;
     zappy_client_t clients[ZAPPY_SERVER_MAX_CLIENTS];
-    zappy_commands_t graphical_commands[ZAPPY_SERVER_GRAPHICAL_COMMANDS_COUNT];
-    zappy_commands_t player_commands[ZAPPY_SERVER_PLAYER_COMMANDS_COUNT];
+    zappy_gcmd_t graphical_commands[ZAPPY_SERVER_GRAPHICAL_COMMANDS_COUNT];
+    zappy_pcmd_t player_commands[ZAPPY_SERVER_PLAYER_COMMANDS_COUNT];
     int map[30][30][7];
 };
 
@@ -87,6 +101,7 @@ void commands_player(zappy_client_t* client, char* data);
 void game_loop(zappy_server_t *server);
 
 zappy_player_t *get_player_by_id(zappy_server_t *server, int id);
+void add_player_command(zappy_client_t* client, zappy_pcmd_t *pcmd);
 
 void spawn_resources(zappy_server_t *server);
 
