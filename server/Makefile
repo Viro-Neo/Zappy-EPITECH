@@ -10,11 +10,13 @@ NAME	=	../zappy_server
 SRCS	=	src/commands/graphical/graphical_bct.c \
 			src/commands/graphical/graphical_mct.c \
 			src/commands/graphical/graphical_msz.c \
+			src/commands/graphical/graphical_plv.c \
 			src/commands/graphical/graphical_sgt.c \
 			src/commands/graphical/graphical_sst.c \
 			src/commands/graphical/graphical_tna.c \
 			src/commands/commands_parse.c \
 			src/game/game_loop.c \
+			src/game/player.c \
 			src/game/resources.c \
 			src/network/client_read.c \
 			src/network/client.c \

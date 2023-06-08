@@ -10,7 +10,7 @@
 
     #define ZAPPY_SERVER_MAX_CLIENTS 100
     #define ZAPPY_SERVER_BUFFER_SIZE 1024
-    #define ZAPPY_SERVER_GRAPHICAL_COMMANDS_COUNT 6
+    #define ZAPPY_SERVER_GRAPHICAL_COMMANDS_COUNT 7
     #define ZAPPY_SERVER_PLAYER_COMMANDS_COUNT 0
 
     #include <arpa/inet.h>
@@ -30,6 +30,7 @@ typedef struct zappy_player_s {
     int x;
     int y;
     int rot;
+    int lvl;
     int inventory[7];
     zappy_team_t *team;
 } zappy_player_t;
@@ -73,6 +74,7 @@ int tile_content(zappy_client_t *client, int x, int y);
 void graphical_bct(zappy_client_t *client, char *data);
 void graphical_mct(zappy_client_t *client, char *data);
 void graphical_msz(zappy_client_t *client, char *data);
+void graphical_plv(zappy_client_t *client, char *data);
 void graphical_sgt(zappy_client_t *client, char *data);
 void graphical_sst(zappy_client_t *client, char *data);
 void graphical_tna(zappy_client_t *client, char *data);
@@ -81,6 +83,8 @@ void commands_graphical(zappy_client_t* client, char* data);
 void commands_player(zappy_client_t* client, char* data);
 
 void game_loop(zappy_server_t *server);
+
+zappy_player_t *get_player_by_id(zappy_server_t *server, int id);
 
 void spawn_resources(zappy_server_t *server);
 
