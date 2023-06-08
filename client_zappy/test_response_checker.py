@@ -1,7 +1,6 @@
 import unittest
 import sys
 import io
-from get_server_response_for_commands import check_response
 from client import Client
 
 class TestResponseChecker(unittest.TestCase):
@@ -12,7 +11,7 @@ class TestResponseChecker(unittest.TestCase):
 
         test_response = "ko"
         expected = 0
-        self.assertEqual(check_response(test_response, client), expected)
+        self.assertEqual(client.check_response(test_response), expected)
 
     def test_movement_response(self):
         client = Client(1234, "A", "test")
@@ -20,7 +19,7 @@ class TestResponseChecker(unittest.TestCase):
 
         test_response = "ok"
         expected = 1
-        self.assertEqual(check_response(test_response, client), expected)
+        self.assertEqual(client.check_response(test_response), expected)
     
     def test_connect_number_response_correct(self):
         client = Client(1234, "A", "test")
@@ -29,7 +28,7 @@ class TestResponseChecker(unittest.TestCase):
 
         test_response = "53"
         expected = 1
-        self.assertEqual(check_response(test_response, client), expected)
+        self.assertEqual(client.check_response(test_response), expected)
     
     def test_connect_number_response_incorrect(self):
         client = Client(1234, "A", "test")
@@ -38,7 +37,7 @@ class TestResponseChecker(unittest.TestCase):
 
         test_response = "a"
         expected = 0
-        self.assertEqual(check_response(test_response, client), expected)
+        self.assertEqual(client.check_response(test_response), expected)
     
     def test_eject_response_correct(self):
         client = Client(1234, "A", "test")
@@ -47,7 +46,7 @@ class TestResponseChecker(unittest.TestCase):
 
         test_response = "ok"
         expected = 1
-        self.assertEqual(check_response(test_response, client), expected)
+        self.assertEqual(client.check_response(test_response), expected)
     
     def test_eject_response_correct2(self):
         client = Client(1234, "A", "test")
@@ -56,7 +55,7 @@ class TestResponseChecker(unittest.TestCase):
 
         test_response = "ko"
         expected = 1
-        self.assertEqual(check_response(test_response, client), expected)
+        self.assertEqual(client.check_response(test_response), expected)
     
     def test_eject_response_incorrect(self):
         client = Client(1234, "A", "test")
@@ -65,7 +64,7 @@ class TestResponseChecker(unittest.TestCase):
 
         test_response = "asd"
         expected = 0
-        self.assertEqual(check_response(test_response, client), expected)
+        self.assertEqual(client.check_response(test_response), expected)
     
     def test_incantation_response_correct(self):
         client = Client(1234, "A", "test")
@@ -74,7 +73,7 @@ class TestResponseChecker(unittest.TestCase):
 
         test_response = "Elevation underway Current level: 5"
         expected = 1
-        self.assertEqual(check_response(test_response, client), expected)
+        self.assertEqual(client.check_response(test_response), expected)
     
     def test_incantation_response_correct2(self):
         client = Client(1234, "A", "test")
@@ -83,7 +82,7 @@ class TestResponseChecker(unittest.TestCase):
 
         test_response = "ko"
         expected = 1
-        self.assertEqual(check_response(test_response, client), expected)
+        self.assertEqual(client.check_response(test_response), expected)
     
     def test_incantation_response_incorrect(self):
         client = Client(1234, "A", "test")
@@ -92,7 +91,7 @@ class TestResponseChecker(unittest.TestCase):
 
         test_response = "Elevation underway Current level: 9"
         expected = 0
-        self.assertEqual(check_response(test_response, client), expected)
+        self.assertEqual(client.check_response(test_response), expected)
     
     def test_look_response_correct(self):
         client = Client(1234, "A", "test")
@@ -101,7 +100,7 @@ class TestResponseChecker(unittest.TestCase):
 
         test_response = "[food, limestone food, player,,player food, test]"
         expected = 1
-        self.assertEqual(check_response(test_response, client), expected)
+        self.assertEqual(client.check_response(test_response), expected)
     
     def test_look_response_incorrect(self):
         client = Client(1234, "A", "test")
@@ -110,7 +109,7 @@ class TestResponseChecker(unittest.TestCase):
 
         test_response = "ok"
         expected = 0
-        self.assertEqual(check_response(test_response, client), expected)
+        self.assertEqual(client.check_response(test_response), expected)
     
     def test_inventory_response_correct(self):
         client = Client(1234, "A", "test")
@@ -119,7 +118,7 @@ class TestResponseChecker(unittest.TestCase):
 
         test_response = "[food 4, limestone 2]"
         expected = 1
-        self.assertEqual(check_response(test_response, client), expected)
+        self.assertEqual(client.check_response(test_response), expected)
     
     def test_inventory_response_incorrect(self):
         client = Client(1234, "A", "test")
@@ -128,7 +127,7 @@ class TestResponseChecker(unittest.TestCase):
 
         test_response = "ok"
         expected = 0
-        self.assertEqual(check_response(test_response, client), expected)
+        self.assertEqual(client.check_response(test_response), expected)
     
     def test_inventory_response_incorrect2(self):
         client = Client(1234, "A", "test")
@@ -137,7 +136,7 @@ class TestResponseChecker(unittest.TestCase):
 
         test_response = "[food 4, limestone, test 12]"
         expected = 0
-        self.assertEqual(check_response(test_response, client), expected)
+        self.assertEqual(client.check_response(test_response), expected)
     
     def test_dead_response(self):
         client = Client(1234, "A", "test")
@@ -146,7 +145,7 @@ class TestResponseChecker(unittest.TestCase):
 
         test_response = "dead"
         expected = 2
-        self.assertEqual(check_response(test_response, client), expected)
+        self.assertEqual(client.check_response(test_response), expected)
     
     def test_message_response(self):
         client = Client(1234, "A", "test")
@@ -155,7 +154,7 @@ class TestResponseChecker(unittest.TestCase):
 
         test_response = "message 5, hello asdkjlh"
         expected = 2
-        self.assertEqual(check_response(test_response, client), expected)
+        self.assertEqual(client.check_response(test_response), expected)
     
     def test_ejected_response(self):
         client = Client(1234, "A", "test")
@@ -164,7 +163,7 @@ class TestResponseChecker(unittest.TestCase):
 
         test_response = "eject: S"
         expected = 2
-        self.assertEqual(check_response(test_response, client), expected)
+        self.assertEqual(client.check_response(test_response), expected)
 
 if __name__ == '__main__':
     unittest.main()
