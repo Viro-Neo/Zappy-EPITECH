@@ -1,13 +1,19 @@
 from client import Client
 
-def send_connect_nbr_command(client):
+def send_connect_nbr_command(client: Client):
     command = "Connect_nbr"
-    client.write_response_to_socket(command)
+    if len(client.cmd_buff) < 10:
+        client.cmd_buff.append("Connect_nbr")
+        client.write_response_to_socket(command)
 
-def send_fork_command(client):
+def send_fork_command(client: Client):
     command = "Fork"
-    client.write_response_to_socket(command)
+    if len(client.cmd_buff) < 10:
+        client.cmd_buff.append("Fork")
+        client.write_response_to_socket(command)
 
-def send_eject_command(client):
+def send_eject_command(client: Client):
     command = "Eject"
-    client.write_response_to_socket(command)
+    if len(client.cmd_buff) < 10:
+        client.cmd_buff.append("Eject")
+        client.write_response_to_socket(command)
