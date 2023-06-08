@@ -11,6 +11,7 @@ SRCS	=	src/commands/graphical/graphical_bct.c \
 			src/commands/graphical/graphical_mct.c \
 			src/commands/graphical/graphical_msz.c \
 			src/commands/graphical/graphical_plv.c \
+			src/commands/graphical/graphical_ppo.c \
 			src/commands/graphical/graphical_sgt.c \
 			src/commands/graphical/graphical_sst.c \
 			src/commands/graphical/graphical_tna.c \

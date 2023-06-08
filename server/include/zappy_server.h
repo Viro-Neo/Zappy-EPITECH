@@ -10,7 +10,7 @@
 
     #define ZAPPY_SERVER_MAX_CLIENTS 100
     #define ZAPPY_SERVER_BUFFER_SIZE 1024
-    #define ZAPPY_SERVER_GRAPHICAL_COMMANDS_COUNT 7
+    #define ZAPPY_SERVER_GRAPHICAL_COMMANDS_COUNT 8
     #define ZAPPY_SERVER_PLAYER_COMMANDS_COUNT 0
 
     #include <arpa/inet.h>
@@ -75,6 +75,7 @@ void graphical_bct(zappy_client_t *client, char *data);
 void graphical_mct(zappy_client_t *client, char *data);
 void graphical_msz(zappy_client_t *client, char *data);
 void graphical_plv(zappy_client_t *client, char *data);
+void graphical_ppo(zappy_client_t *client, char *data);
 void graphical_sgt(zappy_client_t *client, char *data);
 void graphical_sst(zappy_client_t *client, char *data);
 void graphical_tna(zappy_client_t *client, char *data);
