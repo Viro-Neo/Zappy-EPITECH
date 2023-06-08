@@ -73,6 +73,7 @@ struct zappy_server_s {
     int clientsNb;
     int freq;
     int sockfd;
+    int signalfd;
     zappy_client_t clients[ZAPPY_SERVER_MAX_CLIENTS];
     zappy_gcmd_t graphical_commands[ZAPPY_SERVER_GRAPHICAL_COMMANDS_COUNT];
     zappy_pcmd_t player_commands[ZAPPY_SERVER_PLAYER_COMMANDS_COUNT];
@@ -126,6 +127,8 @@ int check_opt_f(int is_number, int num, int c);
 int parse_args(int argc, char *argv[], zappy_server_t *server);
 
 int check_help(int argc, char *argv[]);
+
+void setup_signal(zappy_server_t *server);
 
 int parse_team_names(char *argv[], zappy_server_t *server);
 zappy_team_t *get_team(zappy_server_t *server, char *team_name);

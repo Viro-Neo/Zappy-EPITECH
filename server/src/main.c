@@ -5,9 +5,7 @@
 ** main.c
 */
 
-#include <signal.h>
 #include <string.h>
-#include <unistd.h>
 #include "zappy_server.h"
 
 static void zappy_free(zappy_server_t *server)
@@ -41,22 +39,11 @@ static void zappy_init(zappy_server_t *server)
     server->clientsNb = 3;
     server->freq = 100;
     server->sockfd = -1;
+    server->signalfd = -1;
     for (int i = 0; i < ZAPPY_SERVER_MAX_CLIENTS; ++i) {
         server->clients[i].sockfd = -1;
     }
     zappy_init_graphical_commands(server);
-}
-
-static void handler(int signal)
-{
-    static int sockfd = -1;
-
-    if (!(sockfd < 0)) {
-        close(sockfd);
-        sockfd = -1;
-    } else {
-        sockfd = signal;
-    }
 }
 
 int main(int argc, char *argv[])
@@ -72,8 +59,7 @@ int main(int argc, char *argv[])
     if (res) {
         res = start_server(&server);
         if (res) {
-            handler(server.sockfd);
-            signal(SIGINT, handler);
+            setup_signal(&server);
             game_loop(&server);
         }
     }

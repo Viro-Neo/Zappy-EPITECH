@@ -29,6 +29,7 @@ SRCS	=	src/commands/graphical/graphical_bct.c \
 			src/args.c \
 			src/help.c \
 			src/main.c \
+			src/signal.c \
 			src/teams.c \
 			src/utils.c
 

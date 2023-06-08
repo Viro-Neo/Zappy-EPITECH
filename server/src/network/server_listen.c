@@ -27,6 +27,12 @@ static void init_select(zappy_server_t *server, fd_set *readfds, int *maxfd)
     FD_ZERO(readfds);
     FD_SET(server->sockfd, readfds);
     *maxfd = server->sockfd;
+    if (server->signalfd != -1) {
+        FD_SET(server->signalfd, readfds);
+        if (server->signalfd > *maxfd) {
+            *maxfd = server->signalfd;
+        }
+    }
     set_client_fds(server, readfds, maxfd);
 }
 
