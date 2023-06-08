@@ -8,26 +8,30 @@
 from commands.movement_commands import send_inventory_command
 from client import Client
 from typing import Dict
+import re
 
+command_dict = {
+    'Forward': 'ok',
+    'Right': 'ok',
+    'Left': 'ok',
+    'Look': r'\[([^,\[\]]*\s*,\s*)*([^,\[\]]*)\]',
+    'Inventory': r'\w+ n',
+    'Broadcast text': 'ok',
+    'Connect_nbr': r"\b(?:0|[1-9]\d*)\b",
+    'Fork': 'ok',
+    'Eject': r'ok|ko',
+    'Take object': r'ok|ko',
+    'Set object': r'ok|ko',
+    'Incantation': r'Elevation underway Current level: [1-7]|ko'
+}
 
-def init_command() -> Dict[str, str]:
-    command = {}
-    command["Forward"] = "ok"
-    command["Right"] = "ok"
-    command["Left"] = "ok"
-    command["Look"] = "ok" # Replace with the player tiles
-    command["Inventory"] = "ok" # replace with the command
-    command["Broadcast"] = "ok"
-    command["Connect_nbr"] = 0
-    command["Fork"] = "ok"
-    command["Eject"] = "ok", "ko"
-    command["Take"] = "ok", "ko"
-    command["Set"] = "ok", "ko"
-    command["Incantation"] = "Current level:"
-
-
-    return command
-
-def get_command_response(command: str) -> str:
-    command_responses = init_command()
-    return command_responses.get(command, "Unknown command")
+def check_response(response: str, client: Client):
+    if response == "dead":
+        print("response was dead, should die!")
+        return "dead"
+    for cmd in client.cmd_buff:
+        if re.match(command_dict[cmd], response):
+            print(f"correct response {response} to command {cmd}")
+            return "good"
+    print("response is not linked to any queued command")
+    return "invalid"
