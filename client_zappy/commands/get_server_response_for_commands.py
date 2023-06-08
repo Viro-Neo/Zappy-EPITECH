@@ -15,7 +15,7 @@ command_dict = {
     'Right': 'ok',
     'Left': 'ok',
     'Look': r'\[([^,\[\]]*\s*,\s*)*([^,\[\]]*)\]',
-    'Inventory': r'\w+ n',
+    'Inventory': r"\[([\w\s]+ \d+)(, [\w\s]+ \d+)*\]",
     'Broadcast text': 'ok',
     'Connect_nbr': r"\b(?:0|[1-9]\d*)\b",
     'Fork': 'ok',
