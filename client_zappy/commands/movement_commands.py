@@ -72,10 +72,10 @@ def send_inventory_command(client: Client) -> str:
 
     try:
         response = client.receive_server_response()
-        if response == "ok" or response == "ko":
-            return response
-        else:
-            print(f"Unknown server response: {response}")
+        #if response == "ok" or response == "ko":
+        #    return response
+        #else:
+        #    print(f"Unknown server response: {response}")
     except OSError as e:
         print(f"Error receiving response: {str(e)}")
 
