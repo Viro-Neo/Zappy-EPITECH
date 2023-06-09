@@ -30,10 +30,25 @@ void add_player_command(zappy_client_t* client, zappy_pcmd_t *pcmd, char *data)
     }
     for (int i = 0; i < 10; ++i) {
         if (client->player.cmds[i].pcmd == NULL) {
-            client->player.cmds[i].start = time(NULL);
+            clock_gettime(CLOCK_REALTIME, &client->player.cmds[i].start);
             client->player.cmds[i].pcmd = pcmd;
             client->player.cmds[i].data = data;
             return;
         }
     }
+}
+
+struct timespec get_end_time(zappy_server_t* server, zappy_player_cmd_t *cmd)
+{
+    struct timespec ts = cmd->start;
+    double duration = (double)cmd->pcmd->time_limit / server->freq;
+    time_t sec = duration;
+
+    ts.tv_sec += sec;
+    ts.tv_nsec += (duration - sec) * 1000000000;
+    if (ts.tv_nsec >= 1000000000) {
+        ++ts.tv_sec;
+        ts.tv_nsec -= 1000000000;
+    }
+    return ts;
 }

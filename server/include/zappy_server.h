@@ -28,7 +28,7 @@ typedef struct zappy_team_s {
 } zappy_team_t;
 
 typedef struct zappy_player_cmd_s {
-    time_t start;
+    struct timespec start;
     zappy_pcmd_t *pcmd;
     char *data;
 } zappy_player_cmd_t;
@@ -107,6 +107,7 @@ void game_loop(zappy_server_t *server);
 
 zappy_player_t *get_player_by_id(zappy_server_t *server, int id);
 void add_player_command(zappy_client_t* client, zappy_pcmd_t *pcmd, char *data);
+struct timespec get_end_time(zappy_server_t* server, zappy_player_cmd_t *cmd);
 
 void spawn_resources(zappy_server_t *server);
 
