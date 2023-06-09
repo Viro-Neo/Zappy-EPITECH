@@ -8,6 +8,7 @@ class Client:
         self.machine = machine
         self.sock = None
         self.lock = threading.Lock()
+        self.level = 1
 
     def connect_to_server(self):
         try:
