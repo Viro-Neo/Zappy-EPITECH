@@ -64,5 +64,5 @@ int parse_args(int argc, char *argv[], zappy_server_t *server)
             return 0;
         }
     }
-    return parse_team_names(argv, server);
+    return 1;
 }

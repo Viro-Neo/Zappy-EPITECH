@@ -38,8 +38,11 @@ static void zappy_init_graphical_commands(zappy_server_t *server)
     server->graphical_commands[8] = (zappy_gcmd_t){ "tna", graphical_tna };
 }
 
-static void zappy_init(zappy_server_t *server)
+static int zappy_init(int argc, char *argv[], zappy_server_t *server)
 {
+    char *argv_cpy[argc + 1];
+
+    memcpy(argv_cpy, argv, sizeof(char*) * (argc + 1));
     memset(server, 0, sizeof(*server));
     server->port = 4242;
     server->width = 10;
@@ -53,6 +56,10 @@ static void zappy_init(zappy_server_t *server)
     }
     zappy_init_graphical_commands(server);
     zappy_init_player_commands(server);
+    if (!parse_args(argc, argv, server) || !parse_team_names(argv_cpy, server)) {
+        return 0;
+    }
+    return 1;
 }
 
 int main(int argc, char *argv[])
@@ -60,11 +67,10 @@ int main(int argc, char *argv[])
     zappy_server_t server;
     int res = 0;
 
-    zappy_init(&server);
     if (check_help(argc, argv)) {
         return 0;
     }
-    res = parse_args(argc, argv, &server);
+    res = zappy_init(argc, argv, &server);
     if (res) {
         res = start_server(&server);
         if (res) {
