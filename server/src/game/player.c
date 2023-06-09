@@ -5,6 +5,7 @@
 ** player.c
 */
 
+#include <stdio.h>
 #include <string.h>
 #include <time.h>
 #include "zappy_server.h"
@@ -24,9 +25,15 @@ zappy_player_t *get_player_by_id(zappy_server_t *server, int id)
 
 void add_player_command(zappy_client_t* client, zappy_pcmd_t *pcmd, char *data)
 {
+    struct timespec curr;
+
+    if (clock_gettime(CLOCK_REALTIME, &curr) != 0) {
+        dprintf(client->sockfd, "ko\n");
+        return;
+    }
     for (int i = 0; i < 10; ++i) {
         if (client->player.cmds[i].pcmd == NULL) {
-            client->player.cmds[i].start = client->server->curr_time;
+            client->player.cmds[i].start = curr;
             client->player.cmds[i].pcmd = pcmd;
             client->player.cmds[i].data = data;
             return;

@@ -40,9 +40,9 @@ static void zappy_init_graphical_commands(zappy_server_t *server)
 
 static int zappy_init(int argc, char *argv[], zappy_server_t *server)
 {
-    char *argv_cpy[argc + 1];
+    char *argvcpy[argc + 1];
 
-    memcpy(argv_cpy, argv, sizeof(char*) * (argc + 1));
+    memcpy(argvcpy, argv, sizeof(char*) * (argc + 1));
     memset(server, 0, sizeof(*server));
     server->port = 4242;
     server->width = 10;
@@ -56,7 +56,7 @@ static int zappy_init(int argc, char *argv[], zappy_server_t *server)
     }
     zappy_init_graphical_commands(server);
     zappy_init_player_commands(server);
-    if (!parse_args(argc, argv, server) || !parse_team_names(argv_cpy, server)) {
+    if (!parse_args(argc, argv, server) || !parse_team_names(argvcpy, server)) {
         return 0;
     }
     return 1;
