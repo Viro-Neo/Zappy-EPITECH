@@ -24,10 +24,6 @@ zappy_player_t *get_player_by_id(zappy_server_t *server, int id)
 
 void add_player_command(zappy_client_t* client, zappy_pcmd_t *pcmd, char *data)
 {
-    if (strcmp(pcmd->name, "Connect_nbr") == 0) {
-        pcmd->func(client, data);
-        return;
-    }
     for (int i = 0; i < 10; ++i) {
         if (client->player.cmds[i].pcmd == NULL) {
             client->player.cmds[i].start = client->server->curr_time;
