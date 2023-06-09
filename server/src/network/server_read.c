@@ -26,7 +26,7 @@ static int accept_client(zappy_server_t *server)
         }
     }
     close(sockfd);
-    dprintf(1, "Unable to accept new client: Server is full\n");
+    printf("Server is full.\n");
     return 1;
 }
 
@@ -38,9 +38,6 @@ int read_select(zappy_server_t *server, fd_set *readfds)
         if (!accept_client(server)) {
             return 0;
         }
-    }
-    if (server->signalfd != -1 && FD_ISSET(server->signalfd, readfds)) {
-        return 0;
     }
     for (int i = 0; i < ZAPPY_SERVER_MAX_CLIENTS; ++i) {
         client = &server->clients[i];
