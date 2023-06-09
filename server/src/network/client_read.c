@@ -6,54 +6,14 @@
 */
 
 #include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
 #include "zappy_server.h"
 
-static void player_join_team(zappy_client_t *client, zappy_team_t *team)
-{
-    static int player_id = 0;
-    zappy_server_t *server = client->server;
-
-    --team->slot;
-    client->player.id = ++player_id;
-    client->player.x = rand() % server->width;
-    client->player.y = rand() % server->height;
-    client->player.rot = (rand() % 4) + 1;
-    client->player.lvl = 1;
-    client->player.inventory[0] = 10;
-    client->player.team = team;
-    dprintf(client->sockfd, "%d\n", team->slot);
-    dprintf(client->sockfd, "%d %d\n", server->width, server->height);
-}
-
-static void register_team(zappy_client_t* client, char* data)
-{
-    zappy_team_t *team = get_team(client->server, data);
-
-    if (team != NULL && team->slot > 0) {
-        player_join_team(client, team);
-    } else if (strcmp(data, "GRAPHIC") == 0) {
-        client->graphic = 1;
-        graphical_msz(client, NULL);
-        graphical_sgt(client, NULL);
-        graphical_mct(client, NULL);
-        graphical_tna(client, NULL);
-    } else {
-        dprintf(client->sockfd, "ko\n");
-    }
-}
-
 static void parse_cmd(zappy_client_t* client, char* data)
 {
-    if (client->graphic) {
-        commands_graphical(client, data);
-    } else if (client->player.id != 0) {
-        commands_player(client, data);
-    } else {
-        register_team(client, data);
-    }
+    (void)client;
+    (void)data;
 }
 
 static void parse_read(zappy_client_t* client)

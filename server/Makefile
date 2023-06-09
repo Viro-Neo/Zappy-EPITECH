@@ -7,33 +7,16 @@
 
 NAME	=	../zappy_server
 
-SRCS	=	src/commands/graphical/graphical_bct.c \
-			src/commands/graphical/graphical_mct.c \
-			src/commands/graphical/graphical_msz.c \
-			src/commands/graphical/graphical_pin.c \
-			src/commands/graphical/graphical_plv.c \
-			src/commands/graphical/graphical_ppo.c \
-			src/commands/graphical/graphical_sgt.c \
-			src/commands/graphical/graphical_sst.c \
-			src/commands/graphical/graphical_tna.c \
-			src/commands/player/player_connect_nbr.c \
-			src/commands/player/player_inventory.c \
-			src/commands/commands_parse.c \
-			src/game/game_loop.c \
-			src/game/player.c \
-			src/game/resources.c \
+SRCS	=	src/game/game_loop.c \
 			src/network/client_read.c \
 			src/network/client.c \
 			src/network/server_listen.c \
 			src/network/server_read.c \
 			src/network/server.c \
-			src/args_handling.c \
 			src/args.c \
 			src/help.c \
 			src/main.c \
-			src/signal.c \
-			src/teams.c \
-			src/utils.c
+			src/teams.c
 
 OBJS	=	$(SRCS:.c=.o)
 
