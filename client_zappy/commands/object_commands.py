@@ -34,8 +34,10 @@ def send_incantation_command(client):
     try:
         response = client.receive_server_response()
         pattern = r"Elevation underway\nCurrent level: \d+"
-        if re.match(pattern, response) or response == "ko":
-            print(response)
+        if re.match(pattern, response):
+            client.level += 1
+        elif response == "ko":
+            pass
         else:
             print(f"Unknown server response: {response}")
     except OSError as e:
