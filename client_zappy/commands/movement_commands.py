@@ -45,6 +45,11 @@ def send_left_command(client):
         print(f"Error receiving response: {str(e)}")
 
 
+def process_response(response):
+    response_list = [x.strip() for x in response.split(',')]
+    response_table = [[item] for item in response_list]
+    return response_table
+
 def send_look_command(client):
     command = "Look"
     client.write_response_to_socket(command)
@@ -54,9 +59,7 @@ def send_look_command(client):
         if response == "ok" or response == "ko":
             print(response)
         else:
-            response_list = [x.strip() for x in response.split(',')]
-            response_table = [[item] for item in response_list]
-
+            response_table = process_response(response)
             print(response_table)
     except OSError as e:
         print(f"Error receiving response: {str(e)}")
