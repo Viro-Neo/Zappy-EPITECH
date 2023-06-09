@@ -22,6 +22,7 @@ static void player_join_team(zappy_client_t *client, zappy_team_t *team)
     client->player.y = rand() % server->height;
     client->player.rot = (rand() % 4) + 1;
     client->player.lvl = 1;
+    client->player.inventory[0] = 10;
     client->player.team = team;
     dprintf(client->sockfd, "%d\n", team->slot);
     dprintf(client->sockfd, "%d %d\n", server->width, server->height);

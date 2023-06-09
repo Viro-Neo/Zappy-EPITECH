@@ -42,7 +42,7 @@ void commands_player(zappy_client_t* client, char* data)
     for (int i = 0; i < ZAPPY_SERVER_PLAYER_COMMANDS_COUNT; ++i) {
         pcmd = &client->server->player_commands[i];
         if (strcmp(pcmd->name, command_name) == 0) {
-            add_player_command(client, pcmd);
+            add_player_command(client, pcmd, data);
             return;
         }
     }

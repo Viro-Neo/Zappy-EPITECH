@@ -17,6 +17,14 @@ static void zappy_free(zappy_server_t *server)
     }
 }
 
+static void zappy_init_player_commands(zappy_server_t *server)
+{
+    zappy_pcmd_t *pcmds = server->player_commands;
+
+    pcmds[0] = (zappy_pcmd_t){ "Connect_nbr", 0, player_connect_nbr };
+    pcmds[1] = (zappy_pcmd_t){ "Inventory", 1, player_inventory };
+}
+
 static void zappy_init_graphical_commands(zappy_server_t *server)
 {
     server->graphical_commands[0] = (zappy_gcmd_t){ "bct", graphical_bct };
@@ -44,6 +52,7 @@ static void zappy_init(zappy_server_t *server)
         server->clients[i].sockfd = -1;
     }
     zappy_init_graphical_commands(server);
+    zappy_init_player_commands(server);
 }
 
 int main(int argc, char *argv[])
