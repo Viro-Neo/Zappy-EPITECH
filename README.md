@@ -8,6 +8,8 @@
 ### Usage
 
 
+# Zappy AI
+
 ## 1. Introduction
 The Zappy project is a multiplayer game developed as part of the curriculum at Epitech. It involves creating a server and multiple clients that interact with each other in a virtual world. The goal of the game is to gather resources and level up in order to win.
 
@@ -66,3 +68,8 @@ Eject:
 Take <resource>: Gather a resource from the current cell.
 Set <resource>: Drop a resource onto the current cell.
 Incantation: 
+
+  
+# Zappy Server
+  
+  
