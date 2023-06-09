@@ -30,7 +30,7 @@ void add_player_command(zappy_client_t* client, zappy_pcmd_t *pcmd, char *data)
     }
     for (int i = 0; i < 10; ++i) {
         if (client->player.cmds[i].pcmd == NULL) {
-            clock_gettime(CLOCK_REALTIME, &client->player.cmds[i].start);
+            client->player.cmds[i].start = client->server->curr_time;
             client->player.cmds[i].pcmd = pcmd;
             client->player.cmds[i].data = data;
             return;

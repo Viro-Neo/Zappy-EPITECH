@@ -5,6 +5,8 @@
 ** game_loop.c
 */
 
+#include <errno.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
@@ -15,10 +17,10 @@ static void process_player_commands(zappy_client_t *client)
 {
     zappy_player_cmd_t *cmd = &client->player.cmds[0];
     unsigned long cmd_len = sizeof(zappy_player_cmd_t);
-    struct timespec curr, end;
+    struct timespec curr = client->server->curr_time;
+    struct timespec end;
 
     if (cmd->pcmd != NULL) {
-        clock_gettime(CLOCK_REALTIME, &curr);
         end = get_end_time(client->server, cmd);
         if (curr.tv_sec >= end.tv_sec && curr.tv_nsec >= end.tv_nsec) {
             cmd->pcmd->func(client, cmd->data);
@@ -44,7 +46,14 @@ void game_loop(zappy_server_t *server)
 {
     srand(time(NULL));
     spawn_resources(server);
-    while (listen_sockets(server)) {
+    while (1) {
+        if (clock_gettime(CLOCK_REALTIME, &server->curr_time) != 0) {
+            dprintf(2, "An internal error has occurred: %s\n", strerror(errno));
+            break;
+        }
+        if (!listen_sockets(server)) {
+            break;
+        }
         players_commands(server);
         usleep(50000);
     }
