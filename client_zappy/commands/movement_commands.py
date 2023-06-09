@@ -56,11 +56,11 @@ def send_look_command(client):
 
     try:
         response = client.receive_server_response()
-        if response == "ok" or response == "ko":
-            print(response)
-        else:
-            response_table = process_response(response)
-            print(response_table)
+        response = client.receive_server_response()
+        print("Tile ")
+        #else:
+        #    response_table = process_response(response)
+        #    print(response_table)
     except OSError as e:
         print(f"Error receiving response: {str(e)}")
 
@@ -72,10 +72,7 @@ def send_inventory_command(client: Client) -> str:
 
     try:
         response = client.receive_server_response()
-        #if response == "ok" or response == "ko":
-        #    return response
-        #else:
-        #    print(f"Unknown server response: {response}")
+        pattern = r"Linemate\nLibur \d+"
     except OSError as e:
         print(f"Error receiving response: {str(e)}")
 
