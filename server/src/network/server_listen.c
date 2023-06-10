@@ -76,7 +76,6 @@ static void next_timeout(zappy_server_t *server, struct timeval **timeout_ptr)
     for (int i = 0; i < ZAPPY_SERVER_MAX_CLIENTS; ++i) {
         client = &server->clients[i];
         if (!(client->sockfd < 0)) {
-            printf("qzf2: find\n");
             find_timeout(client, timeout_ptr, &curr);
         }
     }

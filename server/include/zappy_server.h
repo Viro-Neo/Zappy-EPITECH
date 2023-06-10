@@ -11,7 +11,7 @@
     #define ZAPPY_SERVER_MAX_CLIENTS 100
     #define ZAPPY_SERVER_BUFFER_SIZE 1024
     #define ZAPPY_SERVER_GRAPHICAL_COMMANDS_COUNT 9
-    #define ZAPPY_SERVER_PLAYER_COMMANDS_COUNT 5
+    #define ZAPPY_SERVER_PLAYER_COMMANDS_COUNT 7
 
     #include <arpa/inet.h>
     #include <sys/select.h>
@@ -102,6 +102,8 @@ void player_forward(zappy_client_t *client, char *data);
 void player_inventory(zappy_client_t *client, char *data);
 void player_left(zappy_client_t *client, char *data);
 void player_right(zappy_client_t *client, char *data);
+void player_set(zappy_client_t *client, char *data);
+void player_take(zappy_client_t *client, char *data);
 
 void commands_graphical(zappy_client_t* client, char* data);
 void commands_player(zappy_client_t* client, char* data);
@@ -113,6 +115,7 @@ void add_player_command(zappy_client_t* client, zappy_pcmd_t *pcmd, char *data);
 struct timespec get_end_time(zappy_server_t* server, zappy_player_cmd_t *cmd);
 
 void spawn_resources(zappy_server_t *server);
+int get_resource_index(const char *str);
 
 void read_client(zappy_client_t *client);
 
