@@ -28,7 +28,6 @@ typedef struct zappy_team_s {
 } zappy_team_t;
 
 typedef struct zappy_player_cmd_s {
-    struct timespec start;
     zappy_pcmd_t *pcmd;
     char *data;
 } zappy_player_cmd_t;
@@ -42,6 +41,7 @@ typedef struct zappy_player_s {
     int inventory[7];
     zappy_team_t *team;
     zappy_player_cmd_t cmds[10];
+    struct timespec cmd_start;
 } zappy_player_t;
 
 typedef struct zappy_client_s {
@@ -112,7 +112,7 @@ void game_loop(zappy_server_t *server);
 
 zappy_player_t *get_player_by_id(zappy_server_t *server, int id);
 void add_player_command(zappy_client_t* client, zappy_pcmd_t *pcmd, char *data);
-struct timespec get_end_time(zappy_server_t* server, zappy_player_cmd_t *cmd);
+struct timespec get_end_time(zappy_client_t *client);
 
 void spawn_resources(zappy_server_t *server);
 int get_resource_index(const char *str);

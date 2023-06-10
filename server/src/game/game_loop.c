@@ -20,11 +20,12 @@ static void process_player_commands(zappy_client_t *client
     struct timespec end;
 
     if (cmd->pcmd != NULL) {
-        end = get_end_time(client->server, cmd);
+        end = get_end_time(client);
         if (curr->tv_sec >= end.tv_sec && curr->tv_nsec >= end.tv_nsec) {
             cmd->pcmd->func(client, cmd->data);
             memcpy(client->player.cmds, &client->player.cmds[1], cmd_len * 9);
             memset(&client->player.cmds[9], 0, cmd_len);
+            client->player.cmd_start = *curr;
         }
     }
 }
