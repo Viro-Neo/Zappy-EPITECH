@@ -32,29 +32,42 @@ static zappy_team_t *create_team(zappy_server_t *server, char *team_name)
     return NULL;
 }
 
-static int team_names_index(char *argv[])
+static int create_default_teams(zappy_server_t *server)
 {
-    int argc = 1;
+    zappy_team_t **next_team = &server->teams;
+    char team_name[6] = "Team ";
 
-    for (; argv[argc] != NULL; ++argc) {
-        if (strcmp(argv[argc], "-n") == 0) {
-            return argc + 1;
+    for (int i = 0; i < 4; ++i) {
+        team_name[4] = '1' + i;
+        *next_team = create_team(server, team_name);
+        if (*next_team == NULL) {
+            return 0;
         }
+        next_team = &(*next_team)->next;
     }
-    return argc;
+    return 1;
 }
 
 int parse_team_names(char *argv[], zappy_server_t *server)
 {
     zappy_team_t **next_team = &server->teams;
-    int i = team_names_index(argv);
+    int i = 1;
 
+    for (; argv[i] != NULL; ++i) {
+        if (strcmp(argv[i], "-n") == 0) {
+            ++i;
+            break;
+        }
+    }
     for (; (argv[i] != NULL && argv[i][0] != '-'); ++i) {
         *next_team = create_team(server, argv[i]);
         if (*next_team == NULL) {
             return 0;
         }
         next_team = &(*next_team)->next;
+    }
+    if (server->teams == NULL) {
+        return create_default_teams(server);
     }
     return 1;
 }
