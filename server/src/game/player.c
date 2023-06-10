@@ -27,7 +27,9 @@ void add_player_command(zappy_client_t* client, zappy_pcmd_t *pcmd, char *data)
 {
     struct timespec curr;
     int i = 0;
+    int data_len = strlen(data);
 
+    data_len = (data_len > 9) ? 9 : data_len;
     if (clock_gettime(CLOCK_REALTIME, &curr) != 0) {
         dprintf(client->sockfd, "ko\n");
         return;
@@ -35,7 +37,8 @@ void add_player_command(zappy_client_t* client, zappy_pcmd_t *pcmd, char *data)
     for (; i < 10; ++i) {
         if (client->player.cmds[i].pcmd == NULL) {
             client->player.cmds[i].pcmd = pcmd;
-            client->player.cmds[i].data = data;
+            memset(client->player.cmds[i].data, 0, 10);
+            memcpy(client->player.cmds[i].data, data, data_len);
             break;
         }
     }

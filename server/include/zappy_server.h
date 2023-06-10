@@ -16,6 +16,7 @@
     #include <arpa/inet.h>
     #include <sys/select.h>
     #include <sys/types.h>
+    #include <time.h>
 
 typedef struct zappy_server_s zappy_server_t;
 
@@ -29,7 +30,7 @@ typedef struct zappy_team_s {
 
 typedef struct zappy_player_cmd_s {
     zappy_pcmd_t *pcmd;
-    char *data;
+    char data[10];
 } zappy_player_cmd_t;
 
 typedef struct zappy_player_s {
