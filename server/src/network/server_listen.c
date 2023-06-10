@@ -47,7 +47,7 @@ static void find_timeout(zappy_client_t *client, struct timeval **timeout_ptr
     static struct timeval timeout;
 
     if (client->player.id != 0 && client->player.cmds[0].pcmd != NULL) {
-        end = get_end_time(client->server, &client->player.cmds[0]);
+        end = get_end_time(client);
         remaining.tv_sec = end.tv_sec - curr->tv_sec;
         remaining.tv_usec = (end.tv_nsec - curr->tv_nsec) / 1000;
         if (remaining.tv_usec < 0) {
@@ -76,7 +76,6 @@ static void next_timeout(zappy_server_t *server, struct timeval **timeout_ptr)
     for (int i = 0; i < ZAPPY_SERVER_MAX_CLIENTS; ++i) {
         client = &server->clients[i];
         if (!(client->sockfd < 0)) {
-            printf("qzf2: find\n");
             find_timeout(client, timeout_ptr, &curr);
         }
     }

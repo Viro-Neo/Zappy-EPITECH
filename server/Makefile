@@ -17,7 +17,12 @@ SRCS	=	src/commands/graphical/graphical_bct.c \
 			src/commands/graphical/graphical_sst.c \
 			src/commands/graphical/graphical_tna.c \
 			src/commands/player/player_connect_nbr.c \
+			src/commands/player/player_forward.c \
 			src/commands/player/player_inventory.c \
+			src/commands/player/player_left.c \
+			src/commands/player/player_right.c \
+			src/commands/player/player_set.c \
+			src/commands/player/player_take.c \
 			src/commands/commands_parse.c \
 			src/game/game_loop.c \
 			src/game/player.c \

@@ -11,11 +11,12 @@
     #define ZAPPY_SERVER_MAX_CLIENTS 100
     #define ZAPPY_SERVER_BUFFER_SIZE 1024
     #define ZAPPY_SERVER_GRAPHICAL_COMMANDS_COUNT 9
-    #define ZAPPY_SERVER_PLAYER_COMMANDS_COUNT 2
+    #define ZAPPY_SERVER_PLAYER_COMMANDS_COUNT 7
 
     #include <arpa/inet.h>
     #include <sys/select.h>
     #include <sys/types.h>
+    #include <time.h>
 
 typedef struct zappy_server_s zappy_server_t;
 
@@ -28,20 +29,20 @@ typedef struct zappy_team_s {
 } zappy_team_t;
 
 typedef struct zappy_player_cmd_s {
-    struct timespec start;
     zappy_pcmd_t *pcmd;
-    char *data;
+    char data[10];
 } zappy_player_cmd_t;
 
 typedef struct zappy_player_s {
     int id;
-    int x;
-    int y;
-    int rot;
+    unsigned int x;
+    unsigned int y;
+    unsigned int rot;
     int lvl;
     int inventory[7];
     zappy_team_t *team;
     zappy_player_cmd_t cmds[10];
+    struct timespec cmd_start;
 } zappy_player_t;
 
 typedef struct zappy_client_s {
@@ -98,7 +99,12 @@ void graphical_sst(zappy_client_t *client, char *data);
 void graphical_tna(zappy_client_t *client, char *data);
 
 void player_connect_nbr(zappy_client_t *client, char *data);
+void player_forward(zappy_client_t *client, char *data);
 void player_inventory(zappy_client_t *client, char *data);
+void player_left(zappy_client_t *client, char *data);
+void player_right(zappy_client_t *client, char *data);
+void player_set(zappy_client_t *client, char *data);
+void player_take(zappy_client_t *client, char *data);
 
 void commands_graphical(zappy_client_t* client, char* data);
 void commands_player(zappy_client_t* client, char* data);
@@ -107,9 +113,10 @@ void game_loop(zappy_server_t *server);
 
 zappy_player_t *get_player_by_id(zappy_server_t *server, int id);
 void add_player_command(zappy_client_t* client, zappy_pcmd_t *pcmd, char *data);
-struct timespec get_end_time(zappy_server_t* server, zappy_player_cmd_t *cmd);
+struct timespec get_end_time(zappy_client_t *client);
 
 void spawn_resources(zappy_server_t *server);
+int get_resource_index(const char *str);
 
 void read_client(zappy_client_t *client);
 
