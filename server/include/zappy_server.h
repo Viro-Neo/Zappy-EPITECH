@@ -11,7 +11,7 @@
     #define ZAPPY_SERVER_MAX_CLIENTS 100
     #define ZAPPY_SERVER_BUFFER_SIZE 1024
     #define ZAPPY_SERVER_GRAPHICAL_COMMANDS_COUNT 9
-    #define ZAPPY_SERVER_PLAYER_COMMANDS_COUNT 2
+    #define ZAPPY_SERVER_PLAYER_COMMANDS_COUNT 5
 
     #include <arpa/inet.h>
     #include <sys/select.h>
@@ -35,9 +35,9 @@ typedef struct zappy_player_cmd_s {
 
 typedef struct zappy_player_s {
     int id;
-    int x;
-    int y;
-    int rot;
+    unsigned int x;
+    unsigned int y;
+    unsigned int rot;
     int lvl;
     int inventory[7];
     zappy_team_t *team;
@@ -98,7 +98,10 @@ void graphical_sst(zappy_client_t *client, char *data);
 void graphical_tna(zappy_client_t *client, char *data);
 
 void player_connect_nbr(zappy_client_t *client, char *data);
+void player_forward(zappy_client_t *client, char *data);
 void player_inventory(zappy_client_t *client, char *data);
+void player_left(zappy_client_t *client, char *data);
+void player_right(zappy_client_t *client, char *data);
 
 void commands_graphical(zappy_client_t* client, char* data);
 void commands_player(zappy_client_t* client, char* data);
