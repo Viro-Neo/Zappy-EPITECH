@@ -22,7 +22,12 @@ static void zappy_init_player_commands(zappy_server_t *server)
     zappy_pcmd_t *pcmds = server->player_commands;
 
     pcmds[0] = (zappy_pcmd_t){ "Connect_nbr", 0, player_connect_nbr };
-    pcmds[1] = (zappy_pcmd_t){ "Inventory", 1, player_inventory };
+    pcmds[1] = (zappy_pcmd_t){ "Forward", 7, player_forward };
+    pcmds[2] = (zappy_pcmd_t){ "Inventory", 1, player_inventory };
+    pcmds[3] = (zappy_pcmd_t){ "Left", 7, player_left };
+    pcmds[4] = (zappy_pcmd_t){ "Right", 7, player_right };
+    pcmds[5] = (zappy_pcmd_t){ "Set", 7, player_set };
+    pcmds[6] = (zappy_pcmd_t){ "Take", 7, player_take };
 }
 
 static void zappy_init_graphical_commands(zappy_server_t *server)
