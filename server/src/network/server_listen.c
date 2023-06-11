@@ -39,17 +39,17 @@ static void init_select(zappy_server_t *server, fd_set *readfds, int *maxfd)
     set_client_fds(server, readfds, maxfd);
 }
 
-static void find_timeout(zappy_client_t *client, struct timeval **timeout_ptr
-, struct timespec *curr)
+static void find_timeout(zappy_client_t *client, struct timeval **timeout_ptr)
 {
     static struct timespec end;
     static struct timeval remaining;
     static struct timeval timeout;
+    struct timespec *now = &client->server->now;
 
     if (client->player.id != 0 && client->player.cmds[0].pcmd != NULL) {
         end = get_end_time(client);
-        remaining.tv_sec = end.tv_sec - curr->tv_sec;
-        remaining.tv_usec = (end.tv_nsec - curr->tv_nsec) / 1000;
+        remaining.tv_sec = end.tv_sec - now->tv_sec;
+        remaining.tv_usec = (end.tv_nsec - now->tv_nsec) / 1000;
         if (remaining.tv_usec < 0) {
             --remaining.tv_sec;
             remaining.tv_usec += 1000000;
@@ -65,18 +65,13 @@ static void find_timeout(zappy_client_t *client, struct timeval **timeout_ptr
 
 static void next_timeout(zappy_server_t *server, struct timeval **timeout_ptr)
 {
-    static struct timespec curr;
     static zappy_client_t *client = NULL;
 
     *timeout_ptr = NULL;
-    if (clock_gettime(CLOCK_REALTIME, &curr) != 0) {
-        dprintf(2, "An internal error has occurred: %s\n", strerror(errno));
-        return;
-    }
     for (int i = 0; i < ZAPPY_SERVER_MAX_CLIENTS; ++i) {
         client = &server->clients[i];
         if (!(client->sockfd < 0)) {
-            find_timeout(client, timeout_ptr, &curr);
+            find_timeout(client, timeout_ptr);
         }
     }
 }
@@ -91,6 +86,10 @@ int listen_sockets(zappy_server_t *server)
     init_select(server, &readfds, &maxfd);
     next_timeout(server, &timeout_ptr);
     fds = select(maxfd + 1, &readfds, NULL, NULL, timeout_ptr);
+    if (clock_gettime(CLOCK_REALTIME, &server->now) != 0) {
+        dprintf(2, "An internal error has occurred: %s\n", strerror(errno));
+        return -1;
+    }
     if (fds > 0) {
         return read_select(server, &readfds);
     }

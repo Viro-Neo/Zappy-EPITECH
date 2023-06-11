@@ -80,6 +80,7 @@ struct zappy_server_s {
     zappy_gcmd_t graphical_commands[ZAPPY_SERVER_GRAPHICAL_COMMANDS_COUNT];
     zappy_pcmd_t player_commands[ZAPPY_SERVER_PLAYER_COMMANDS_COUNT];
     int map[30][30][7];
+    struct timespec now;
 };
 
 typedef struct zappy_opt_s {
