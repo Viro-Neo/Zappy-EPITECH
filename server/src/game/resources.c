@@ -37,6 +37,7 @@ void spawn_resources(zappy_server_t *server)
             --resources[i];
         }
     }
+    server->resources = server->now;
 }
 
 int get_resource_index(const char *str)
