@@ -10,7 +10,6 @@
 
 void player_right(zappy_client_t *client, char *)
 {
-    ++client->player.rot;
-    client->player.rot %= 4;
+    client->player.rot = (client->player.rot % 4) + 1;
     dprintf(client->sockfd, "ok\n");
 }
