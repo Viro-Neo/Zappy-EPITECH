@@ -1,48 +1,24 @@
 from client import Client
 import threading
 
-def send_forward_command(client):
-    command = "USER"
-    client.write_response_to_socket(command)
+def send_forward_command(client: Client):
+    command = "Forward"
+    if len(client.cmd_buff) < 10:
+        client.cmd_buff.append("Forward")
+        client.write_response_to_socket(command)
 
-    try:
-        client.lock.acquire()
-        response = client.receive_server_response()
-        if response == "ok" or response == "ko":
-            print(response)
-        else:
-            print(f"Unknown server response: {response}")
-    except OSError as e:
-        print(f"Error receiving response: {str(e)}")
-    finally:
-        client.lock.release()
-
-
-def send_right_command(client):
+def send_right_command(client: Client):
     command = "Right"
-    client.write_response_to_socket(command)
+    if len(client.cmd_buff) < 10:
+        client.cmd_buff.append("Right")
+        client.write_response_to_socket(command)
 
-    try:
-        response = client.receive_server_response()
-        if response == "ok" or response == "ko":
-            print(response)
-        else:
-            print(f"Unknown server response: {response}")
-    except OSError as e:
-        print(f"Error receiving response: {str(e)}")
-
-def send_left_command(client):
+def send_left_command(client: Client):
     command = "Left"
-    client.write_response_to_socket(command)
+    if len(client.cmd_buff) < 10:
+        client.cmd_buff.append("Left")
+        client.write_response_to_socket(command)
 
-    try:
-        response = client.receive_server_response()
-        if response == "ok" or response == "ko":
-            print(response)
-        else:
-            print(f"Unknown server response: {response}")
-    except OSError as e:
-        print(f"Error receiving response: {str(e)}")
 
 
 def process_response(response):
@@ -50,9 +26,11 @@ def process_response(response):
     response_table = [[item] for item in response_list]
     return response_table
 
-def send_look_command(client):
+def send_look_command(client: Client):
     command = "Look"
-    client.write_response_to_socket(command)
+    if len(client.cmd_buff) < 10:
+        client.cmd_buff.append("Look")
+        client.write_response_to_socket(command)
 
     try:
         response = client.receive_server_response()
@@ -66,26 +44,16 @@ def send_look_command(client):
 
 
 
-def send_inventory_command(client: Client) -> str:
+def send_inventory_command(client: Client):
     command = "Inventory"
-    client.write_response_to_socket(command)
-
-    try:
-        response = client.receive_server_response()
-        pattern = r"Linemate\nLibur \d+"
-    except OSError as e:
-        print(f"Error receiving response: {str(e)}")
+    if len(client.cmd_buff) < 10:
+        client.cmd_buff.append("Inventory")
+        client.write_response_to_socket(command)
 
 
-def send_broadcast_text_command(client):
-    command = "Broadcast text"
-    client.write_response_to_socket(command)
 
-    try:
-        response = client.receive_server_response()
-        if response == "ok" or response == "ko":
-            print(response)
-        else:
-            print(f"Unknown server response: {response}")
-    except OSError as e:
-        print(f"Error receiving response: {str(e)}")
+def send_broadcast_text_command(client: Client, text: str):
+    command = f"Broadcast {text}"
+    if len(client.cmd_buff) < 10:
+        client.cmd_buff.append("Broadcast text")
+        client.write_response_to_socket(command)
