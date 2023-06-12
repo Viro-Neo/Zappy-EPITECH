@@ -27,6 +27,7 @@ SRCS	=	src/commands/graphical/graphical_bct.c \
 			src/game/game_loop.c \
 			src/game/player.c \
 			src/game/resources.c \
+			src/game/time.c \
 			src/network/client_read.c \
 			src/network/client.c \
 			src/network/server_listen.c \
