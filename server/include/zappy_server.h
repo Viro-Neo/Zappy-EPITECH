@@ -13,6 +13,7 @@
     #define ZAPPY_SERVER_GRAPHICAL_COMMANDS_COUNT 9
     #define ZAPPY_SERVER_PLAYER_COMMANDS_COUNT 7
     #define ZAPPY_SERVER_FOOD_UNITS 126
+    #define ZAPPY_SERVER_RESOURCES_UNITS 20
 
     #include <arpa/inet.h>
     #include <sys/select.h>
@@ -83,6 +84,7 @@ struct zappy_server_s {
     zappy_pcmd_t player_commands[ZAPPY_SERVER_PLAYER_COMMANDS_COUNT];
     int map[30][30][7];
     struct timespec now;
+    struct timespec resources;
 };
 
 typedef struct zappy_opt_s {

@@ -64,9 +64,8 @@ static void next_timeout(zappy_server_t *server, struct timeval **timeout_ptr)
         client = &server->clients[i];
         player = &client->player;
         cmd = &player->cmds[0];
-        if (client->sockfd < 0 || player->id == 0) {
+        if (client->sockfd < 0 || player->id == 0)
             continue;
-        }
         if (cmd->pcmd != NULL) {
             time_limit = cmd->pcmd->time_limit;
             find_timeout(server, timeout_ptr, player->cmd_start, time_limit);
@@ -74,6 +73,8 @@ static void next_timeout(zappy_server_t *server, struct timeval **timeout_ptr)
         time_limit = ZAPPY_SERVER_FOOD_UNITS;
         find_timeout(server, timeout_ptr, player->hunger, time_limit);
     }
+    time_limit = ZAPPY_SERVER_RESOURCES_UNITS;
+    find_timeout(server, timeout_ptr, server->resources, time_limit);
 }
 
 int listen_sockets(zappy_server_t *server)
@@ -92,6 +93,9 @@ int listen_sockets(zappy_server_t *server)
     }
     if (fds > 0) {
         return read_select(server, &readfds);
+    }
+    if (fds < 0) {
+        dprintf(2, "An internal error has occurred: %s\n", strerror(errno));
     }
     return !(fds < 0);
 }
