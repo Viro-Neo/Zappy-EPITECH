@@ -12,6 +12,7 @@
     #define ZAPPY_SERVER_BUFFER_SIZE 1024
     #define ZAPPY_SERVER_GRAPHICAL_COMMANDS_COUNT 9
     #define ZAPPY_SERVER_PLAYER_COMMANDS_COUNT 7
+    #define ZAPPY_SERVER_FOOD_UNITS 126
 
     #include <arpa/inet.h>
     #include <sys/select.h>
@@ -43,6 +44,7 @@ typedef struct zappy_player_s {
     zappy_team_t *team;
     zappy_player_cmd_t cmds[10];
     struct timespec cmd_start;
+    struct timespec hunger;
 } zappy_player_t;
 
 typedef struct zappy_client_s {
@@ -114,10 +116,14 @@ void game_loop(zappy_server_t *server);
 
 zappy_player_t *get_player_by_id(zappy_server_t *server, int id);
 void add_player_command(zappy_client_t* client, zappy_pcmd_t *pcmd, char *data);
-struct timespec get_end_time(zappy_client_t *client);
+void kill_player(zappy_client_t *client);
 
 void spawn_resources(zappy_server_t *server);
 int get_resource_index(const char *str);
+
+int time_is_up(zappy_server_t *server, struct timespec ts, double time_limit);
+struct timeval get_remaining_time(zappy_server_t *server, struct timespec ts
+, double time_limit);
 
 void read_client(zappy_client_t *client);
 
