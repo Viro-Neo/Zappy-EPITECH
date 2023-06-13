@@ -6,6 +6,7 @@
 */
 
 #include <stdlib.h>
+#include <string.h>
 #include "zappy_server.h"
 
 static int *get_random_tile(zappy_server_t *server)
@@ -36,4 +37,24 @@ void spawn_resources(zappy_server_t *server)
             --resources[i];
         }
     }
+    server->resources = server->now;
+}
+
+int get_resource_index(const char *str)
+{
+    if (strcmp(str, "food") == 0)
+        return 0;
+    if (strcmp(str, "linemate") == 0)
+        return 1;
+    if (strcmp(str, "deraumere") == 0)
+        return 2;
+    if (strcmp(str, "sibur") == 0)
+        return 3;
+    if (strcmp(str, "mendiane") == 0)
+        return 4;
+    if (strcmp(str, "phiras") == 0)
+        return 5;
+    if (strcmp(str, "thystame") == 0)
+        return 6;
+    return -1;
 }

@@ -27,8 +27,10 @@ void add_client(zappy_server_t *server, zappy_client_t *client, int sockfd
 void remove_client(zappy_client_t *client)
 {
     if (!(client->sockfd < 0)) {
+        kill_player(client);
         close(client->sockfd);
         client->sockfd = -1;
-        dprintf(1, "Client %s:%u disconnected!\n", client->address, client->port);
+        dprintf(1, "Client %s:%u disconnected!\n"
+                , client->address, client->port);
     }
 }
