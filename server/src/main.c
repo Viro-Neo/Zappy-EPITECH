@@ -5,9 +5,7 @@
 ** main.c
 */
 
-#include <signal.h>
 #include <string.h>
-#include <unistd.h>
 #include "zappy_server.h"
 
 static void zappy_free(zappy_server_t *server)
@@ -19,18 +17,32 @@ static void zappy_free(zappy_server_t *server)
     }
 }
 
-static void zappy_init_graphical_commands(zappy_server_t *server)
+static void zappy_init_player_commands(zappy_server_t *server)
 {
-    server->graphical_commands[0] = (zappy_commands_t){ "bct", graphical_bct };
-    server->graphical_commands[1] = (zappy_commands_t){ "mct", graphical_mct };
-    server->graphical_commands[2] = (zappy_commands_t){ "msz", graphical_msz };
-    server->graphical_commands[3] = (zappy_commands_t){ "sgt", graphical_sgt };
-    server->graphical_commands[4] = (zappy_commands_t){ "sst", graphical_sst };
-    server->graphical_commands[5] = (zappy_commands_t){ "tna", graphical_tna };
+    zappy_pcmd_t *pcmds = server->player_commands;
+
+    pcmds[0] = (zappy_pcmd_t){ "Connect_nbr", 0, player_connect_nbr };
+    pcmds[1] = (zappy_pcmd_t){ "Inventory", 1, player_inventory };
 }
 
-static void zappy_init(zappy_server_t *server)
+static void zappy_init_graphical_commands(zappy_server_t *server)
 {
+    server->graphical_commands[0] = (zappy_gcmd_t){ "bct", graphical_bct };
+    server->graphical_commands[1] = (zappy_gcmd_t){ "mct", graphical_mct };
+    server->graphical_commands[2] = (zappy_gcmd_t){ "msz", graphical_msz };
+    server->graphical_commands[3] = (zappy_gcmd_t){ "pin", graphical_pin };
+    server->graphical_commands[4] = (zappy_gcmd_t){ "plv", graphical_plv };
+    server->graphical_commands[5] = (zappy_gcmd_t){ "ppo", graphical_ppo };
+    server->graphical_commands[6] = (zappy_gcmd_t){ "sgt", graphical_sgt };
+    server->graphical_commands[7] = (zappy_gcmd_t){ "sst", graphical_sst };
+    server->graphical_commands[8] = (zappy_gcmd_t){ "tna", graphical_tna };
+}
+
+static int zappy_init(int argc, char *argv[], zappy_server_t *server)
+{
+    char *argvcpy[argc + 1];
+
+    memcpy(argvcpy, argv, sizeof(char*) * (argc + 1));
     memset(server, 0, sizeof(*server));
     server->port = 4242;
     server->width = 10;
@@ -38,22 +50,16 @@ static void zappy_init(zappy_server_t *server)
     server->clientsNb = 3;
     server->freq = 100;
     server->sockfd = -1;
+    server->signalfd = -1;
     for (int i = 0; i < ZAPPY_SERVER_MAX_CLIENTS; ++i) {
         server->clients[i].sockfd = -1;
     }
     zappy_init_graphical_commands(server);
-}
-
-static void handler(int signal)
-{
-    static int sockfd = -1;
-
-    if (!(sockfd < 0)) {
-        close(sockfd);
-        sockfd = -1;
-    } else {
-        sockfd = signal;
+    zappy_init_player_commands(server);
+    if (!parse_args(argc, argv, server) || !parse_team_names(argvcpy, server)) {
+        return 0;
     }
+    return 1;
 }
 
 int main(int argc, char *argv[])
@@ -61,16 +67,14 @@ int main(int argc, char *argv[])
     zappy_server_t server;
     int res = 0;
 
-    zappy_init(&server);
     if (check_help(argc, argv)) {
         return 0;
     }
-    res = parse_args(argc, argv, &server);
+    res = zappy_init(argc, argv, &server);
     if (res) {
         res = start_server(&server);
         if (res) {
-            handler(server.sockfd);
-            signal(SIGINT, handler);
+            setup_signal(&server);
             game_loop(&server);
         }
     }

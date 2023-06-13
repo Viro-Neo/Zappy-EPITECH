@@ -39,6 +39,9 @@ int read_select(zappy_server_t *server, fd_set *readfds)
             return 0;
         }
     }
+    if (server->signalfd != -1 && FD_ISSET(server->signalfd, readfds)) {
+        return 0;
+    }
     for (int i = 0; i < ZAPPY_SERVER_MAX_CLIENTS; ++i) {
         client = &server->clients[i];
         if (!(client->sockfd < 0) && FD_ISSET(client->sockfd, readfds)) {
