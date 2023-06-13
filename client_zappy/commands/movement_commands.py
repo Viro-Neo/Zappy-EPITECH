@@ -52,11 +52,10 @@ def process_response(response):
 
 def send_look_command(client: Client):
     command = "Look"
-    starting_position = 1
     client.write_response_to_socket(command)
 
     try:
-        response = "food, item, stone, food,,,,,,"#client.receive_server_response()
+        response = "stone, stone, item,,,,,,,"  # client.receive_server_response()
         if response == "ok" or response == "ko":
             print(response)
         else:
@@ -64,6 +63,8 @@ def send_look_command(client: Client):
             print(response_list)
             nearest_food = None
             nearest_distance = float('inf')
+            starting_position = response_list.index("stone")  # Update starting position
+
             print("I go forward first of all")
             send_forward_command(client)
 
@@ -75,10 +76,10 @@ def send_look_command(client: Client):
                         nearest_distance = distance
 
             if nearest_food is not None:
-                if nearest_food < 6:
+                if nearest_food < starting_position:
                     send_left_command(client)
                     print("I go left")
-                elif nearest_food > 6:
+                elif nearest_food > starting_position:
                     send_forward_command(client)
                     print("I go forward")
                 else:
@@ -87,6 +88,7 @@ def send_look_command(client: Client):
 
     except OSError as e:
         print(f"Error receiving response: {str(e)}")
+
 
 
 
