@@ -57,6 +57,7 @@ typedef struct zappy_player_s {
 
 typedef struct zappy_client_s {
     int sockfd;
+    int sockclose;
     char address[INET_ADDRSTRLEN];
     uint16_t port;
     char buffer[ZAPPY_SERVER_BUFFER_SIZE];

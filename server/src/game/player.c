@@ -44,7 +44,9 @@ void add_player_command(zappy_client_t* client, zappy_pcmd_t *pcmd, char *data)
 void kill_player(zappy_client_t *client)
 {
     if (client->player.id != 0) {
-        dprintf(client->sockfd, "dead\n");
+        if (!client->sockclose) {
+            dprintf(client->sockfd, "dead\n");
+        }
         memset(&client->player, 0, sizeof(client->player));
     }
 }

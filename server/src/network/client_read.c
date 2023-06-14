@@ -86,6 +86,7 @@ void read_client(zappy_client_t* client)
         client->buffer[bytesread + client->pending] = '\0';
         parse_read(client);
     } else {
+        client->sockclose = 1;
         remove_client(client);
     }
 }
