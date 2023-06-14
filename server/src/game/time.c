@@ -28,7 +28,8 @@ int time_is_up(zappy_server_t *server, struct timespec ts, double time_limit)
     struct timespec *now = &server->now;
     struct timespec end = get_end_time(ts, time_limit, server->freq);
 
-    return now->tv_sec >= end.tv_sec && now->tv_nsec >= end.tv_nsec;
+    return (now->tv_sec > end.tv_sec)
+            || (now->tv_sec == end.tv_sec && now->tv_nsec >= end.tv_nsec);
 }
 
 struct timeval get_remaining_time(zappy_server_t *server, struct timespec ts
