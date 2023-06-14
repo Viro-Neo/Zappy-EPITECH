@@ -38,6 +38,8 @@ void commands_player(zappy_client_t* client, char* data)
     if (data != NULL) {
         data[0] = '\0';
         ++data;
+    } else {
+        data = "";
     }
     for (int i = 0; i < ZAPPY_SERVER_PLAYER_COMMANDS_COUNT; ++i) {
         pcmd = &client->server->player_commands[i];
