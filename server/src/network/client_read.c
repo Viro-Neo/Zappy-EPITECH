@@ -26,6 +26,7 @@ static void player_join_team(zappy_client_t *client, zappy_team_t *team
     client->player.team = team;
     dprintf(client->sockfd, "%d\n", team->slot);
     dprintf(client->sockfd, "%d %d\n", server->width, server->height);
+    free(egg);
 }
 
 static void register_team(zappy_client_t* client, char* data)

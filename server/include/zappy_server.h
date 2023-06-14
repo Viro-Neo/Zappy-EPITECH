@@ -11,7 +11,7 @@
     #define ZAPPY_SERVER_MAX_CLIENTS 100
     #define ZAPPY_SERVER_BUFFER_SIZE 1024
     #define ZAPPY_SERVER_GRAPHICAL_COMMANDS_COUNT 9
-    #define ZAPPY_SERVER_PLAYER_COMMANDS_COUNT 7
+    #define ZAPPY_SERVER_PLAYER_COMMANDS_COUNT 8
     #define ZAPPY_SERVER_FOOD_UNITS 126
     #define ZAPPY_SERVER_RESOURCES_UNITS 20
 
@@ -112,6 +112,7 @@ void graphical_sst(zappy_client_t *client, char *data);
 void graphical_tna(zappy_client_t *client, char *data);
 
 void player_connect_nbr(zappy_client_t *client, char *data);
+void player_fork(zappy_client_t *client, char *data);
 void player_forward(zappy_client_t *client, char *data);
 void player_inventory(zappy_client_t *client, char *data);
 void player_left(zappy_client_t *client, char *data);
