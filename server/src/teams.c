@@ -14,19 +14,21 @@ static zappy_team_t *create_team(zappy_server_t *server, char *team_name)
 {
     zappy_team_t *team = malloc(sizeof(zappy_team_t));
     char *name = strdup(team_name);
+    int graphic = strcmp(team_name, "GRAPHIC") == 0;
 
     if (team != NULL && name != NULL) {
-        if (strcmp(name, "GRAPHIC") != 0) {
-            team->name = name;
-            team->slot = server->clientsNb;
-            team->next = NULL;
+        team->name = name;
+        team->slot = 0;
+        team->eggs = NULL;
+        team->next = NULL;
+        if (!graphic && spawn_eggs(server, team, server->clientsNb))
             return team;
-        } else {
+        if (graphic)
             dprintf(2, "An internal error has occurred: GRAPHIC is reserved\n");
-        }
-    } else {
+        else
+            dprintf(2, "An internal error has occurred: Unable to spawn egg\n");
+    } else
         dprintf(2, "An internal error has occurred: Unable to create a team\n");
-    }
     free(team);
     free(name);
     return NULL;
@@ -93,6 +95,7 @@ void free_teams(zappy_server_t *server)
     while (next_team != NULL) {
         team = next_team;
         next_team = team->next;
+        free_eggs(team);
         free(team->name);
         free(team);
     }

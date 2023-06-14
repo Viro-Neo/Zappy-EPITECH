@@ -24,9 +24,16 @@ typedef struct zappy_server_s zappy_server_t;
 
 typedef struct zappy_pcmd_s zappy_pcmd_t;
 
+typedef struct zappy_egg_s {
+    int x;
+    int y;
+    struct zappy_egg_s *next;
+} zappy_egg_t;
+
 typedef struct zappy_team_s {
     char *name;
     int slot;
+    zappy_egg_t *eggs;
     struct zappy_team_s *next;
 } zappy_team_t;
 
@@ -113,6 +120,10 @@ void player_take(zappy_client_t *client, char *data);
 
 void commands_graphical(zappy_client_t* client, char* data);
 void commands_player(zappy_client_t* client, char* data);
+
+int spawn_eggs(zappy_server_t *server, zappy_team_t *team, int nb);
+zappy_egg_t* get_random_egg(zappy_team_t *team);
+void free_eggs(zappy_team_t *team);
 
 void game_loop(zappy_server_t *server);
 

@@ -11,15 +11,15 @@
 #include <unistd.h>
 #include "zappy_server.h"
 
-static void player_join_team(zappy_client_t *client, zappy_team_t *team)
+static void player_join_team(zappy_client_t *client, zappy_team_t *team
+, zappy_egg_t *egg)
 {
     static int player_id = 0;
     zappy_server_t *server = client->server;
 
-    --team->slot;
     client->player.id = ++player_id;
-    client->player.x = rand() % server->width;
-    client->player.y = rand() % server->height;
+    client->player.x = egg->x;
+    client->player.y = egg->y;
     client->player.rot = (rand() % 4) + 1;
     client->player.lvl = 1;
     client->player.inventory[0] = 10;
@@ -31,9 +31,10 @@ static void player_join_team(zappy_client_t *client, zappy_team_t *team)
 static void register_team(zappy_client_t* client, char* data)
 {
     zappy_team_t *team = get_team(client->server, data);
+    zappy_egg_t *egg = NULL;
 
-    if (team != NULL && team->slot > 0) {
-        player_join_team(client, team);
+    if (team != NULL && (egg = get_random_egg(team)) != NULL) {
+        player_join_team(client, team, egg);
     } else if (strcmp(data, "GRAPHIC") == 0) {
         client->graphic = 1;
         graphical_msz(client, NULL);
