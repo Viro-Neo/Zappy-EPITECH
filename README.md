@@ -56,18 +56,18 @@ Replace the placeholders with the desired values:
   Client Commands
 Once connected, the client can send various commands to the server. Here are the commands:
  
-Forward: Move the client's avatar one space forward.
-Right: Rotate the client's avatar 90 degrees to the right.
-Left: Rotate the client's avatar 90 degrees to the left.
-Look: 
-Inventory:
-Broadcast <message>: Send a message to all other clients.
-Connect_nbr:
-Fork:
-Eject:
-Take <resource>: Gather a resource from the current cell.
-Set <resource>: Drop a resource onto the current cell.
-Incantation: 
+* Forward: Move the client's avatar one space forward.
+* Right: Rotate the client's avatar 90 degrees to the right.
+* Left: Rotate the client's avatar 90 degrees to the left.
+* Look: 
+* Inventory:
+* Broadcast <message>: Send a message to all other clients.
+* Connect_nbr:
+* Fork:
+* Eject:
+* Take <resource>: Gather a resource from the current cell.
+* Set <resource>: Drop a resource onto the current cell.
+* Incantation: 
 
   
 # Zappy Server
