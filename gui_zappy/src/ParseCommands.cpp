@@ -14,11 +14,13 @@ void ParseServerCommands::parseCommand(std::string command)
     std::string token;
 
     _command = command.substr(0, command.find(' '));
+    command.erase(0, command.find(' ') + delimiter.length());
     while ((pos = command.find(delimiter)) != std::string::npos) {
         token = command.substr(0, pos);
         _arguments.push_back(token);
         command.erase(0, pos + delimiter.length());
     }
+    _arguments.push_back(command);
 }
 
 std::string ParseServerCommands::getCommand() const
