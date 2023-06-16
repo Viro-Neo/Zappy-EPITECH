@@ -27,6 +27,9 @@ void add_player_command(zappy_client_t* client, zappy_pcmd_t *pcmd, char *data)
     int i = 0;
     int data_len = strlen(data);
 
+    if (pcmd->start != NULL && !pcmd->start(client)) {
+        return;
+    }
     data_len = (data_len > 9) ? 9 : data_len;
     for (; i < 10; ++i) {
         if (client->player.cmds[i].pcmd == NULL) {

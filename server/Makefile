@@ -19,6 +19,7 @@ SRCS	=	src/commands/graphical/graphical_bct.c \
 			src/commands/player/player_connect_nbr.c \
 			src/commands/player/player_fork.c \
 			src/commands/player/player_forward.c \
+			src/commands/player/player_incantation.c \
 			src/commands/player/player_inventory.c \
 			src/commands/player/player_left.c \
 			src/commands/player/player_right.c \

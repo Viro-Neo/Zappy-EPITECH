@@ -11,7 +11,7 @@
     #define ZAPPY_SERVER_MAX_CLIENTS 100
     #define ZAPPY_SERVER_BUFFER_SIZE 1024
     #define ZAPPY_SERVER_GRAPHICAL_COMMANDS_COUNT 9
-    #define ZAPPY_SERVER_PLAYER_COMMANDS_COUNT 8
+    #define ZAPPY_SERVER_PLAYER_COMMANDS_COUNT 9
     #define ZAPPY_SERVER_FOOD_UNITS 126
     #define ZAPPY_SERVER_RESOURCES_UNITS 20
 
@@ -76,6 +76,7 @@ struct zappy_pcmd_s {
     char name[12];
     int time_limit;
     void (*func)(zappy_client_t *, char *);
+    int (*start)(zappy_client_t *);
 };
 
 struct zappy_server_s {
@@ -114,6 +115,8 @@ void graphical_tna(zappy_client_t *client, char *data);
 void player_connect_nbr(zappy_client_t *client, char *data);
 void player_fork(zappy_client_t *client, char *data);
 void player_forward(zappy_client_t *client, char *data);
+int can_elevation_start(zappy_client_t *client);
+void player_incantation(zappy_client_t *client, char *data);
 void player_inventory(zappy_client_t *client, char *data);
 void player_left(zappy_client_t *client, char *data);
 void player_right(zappy_client_t *client, char *data);
