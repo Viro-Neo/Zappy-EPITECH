@@ -28,6 +28,7 @@ SRCS	=	src/commands/graphical/graphical_bct.c \
 			src/commands/commands_parse.c \
 			src/game/egg.c \
 			src/game/game_loop.c \
+			src/game/incantation.c \
 			src/game/player.c \
 			src/game/resources.c \
 			src/game/time.c \

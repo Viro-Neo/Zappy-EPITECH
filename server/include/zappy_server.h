@@ -49,6 +49,7 @@ typedef struct zappy_player_s {
     unsigned int rot;
     int lvl;
     int inventory[7];
+    int elevation;
     zappy_team_t *team;
     zappy_player_cmd_t cmds[10];
     struct timespec cmd_start;
@@ -131,6 +132,11 @@ zappy_egg_t* get_random_egg(zappy_team_t *team);
 void free_eggs(zappy_team_t *team);
 
 void game_loop(zappy_server_t *server);
+
+int player_equals_incantation(zappy_client_t *c1, zappy_client_t *c2
+, int elevation);
+int nb_players_incantation(zappy_client_t *client, int elevation);
+int already_incantating(zappy_client_t *client);
 
 zappy_player_t *get_player_by_id(zappy_server_t *server, int id);
 void add_player_command(zappy_client_t* client, zappy_pcmd_t *pcmd, char *data);
