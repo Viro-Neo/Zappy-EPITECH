@@ -8,21 +8,26 @@
 #include <stdio.h>
 #include "zappy_server.h"
 
-void player_forward(zappy_client_t *client, char *)
+void forward(zappy_client_t *client, int rot)
 {
-    if (client->player.rot == 1) {
+    if (rot == 1) {
         ++client->player.y;
     }
-    if (client->player.rot == 2) {
+    if (rot == 2) {
         ++client->player.x;
     }
-    if (client->player.rot == 3) {
+    if (rot == 3) {
         --client->player.y;
     }
-    if (client->player.rot == 4) {
+    if (rot == 4) {
         --client->player.x;
     }
     client->player.x %= client->server->width;
     client->player.y %= client->server->height;
+}
+
+void player_forward(zappy_client_t *client, char *)
+{
+    forward(client, client->player.rot);
     dprintf(client->sockfd, "ok\n");
 }

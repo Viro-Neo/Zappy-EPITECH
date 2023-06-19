@@ -11,7 +11,7 @@
     #define ZAPPY_SERVER_MAX_CLIENTS 100
     #define ZAPPY_SERVER_BUFFER_SIZE 1024
     #define ZAPPY_SERVER_GRAPHICAL_COMMANDS_COUNT 9
-    #define ZAPPY_SERVER_PLAYER_COMMANDS_COUNT 9
+    #define ZAPPY_SERVER_PLAYER_COMMANDS_COUNT 10
     #define ZAPPY_SERVER_FOOD_UNITS 126
     #define ZAPPY_SERVER_RESOURCES_UNITS 20
 
@@ -25,8 +25,8 @@ typedef struct zappy_server_s zappy_server_t;
 typedef struct zappy_pcmd_s zappy_pcmd_t;
 
 typedef struct zappy_egg_s {
-    int x;
-    int y;
+    unsigned int x;
+    unsigned int y;
     struct zappy_egg_s *next;
 } zappy_egg_t;
 
@@ -114,7 +114,9 @@ void graphical_sst(zappy_client_t *client, char *data);
 void graphical_tna(zappy_client_t *client, char *data);
 
 void player_connect_nbr(zappy_client_t *client, char *data);
+void player_eject(zappy_client_t *client, char *data);
 void player_fork(zappy_client_t *client, char *data);
+void forward(zappy_client_t *client, int rot);
 void player_forward(zappy_client_t *client, char *data);
 int can_elevation_start(zappy_client_t *client);
 void player_incantation(zappy_client_t *client, char *data);
