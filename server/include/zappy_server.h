@@ -11,7 +11,7 @@
     #define ZAPPY_SERVER_MAX_CLIENTS 100
     #define ZAPPY_SERVER_BUFFER_SIZE 1024
     #define ZAPPY_SERVER_GRAPHICAL_COMMANDS_COUNT 9
-    #define ZAPPY_SERVER_PLAYER_COMMANDS_COUNT 7
+    #define ZAPPY_SERVER_PLAYER_COMMANDS_COUNT 10
     #define ZAPPY_SERVER_FOOD_UNITS 126
     #define ZAPPY_SERVER_RESOURCES_UNITS 20
 
@@ -24,9 +24,16 @@ typedef struct zappy_server_s zappy_server_t;
 
 typedef struct zappy_pcmd_s zappy_pcmd_t;
 
+typedef struct zappy_egg_s {
+    unsigned int x;
+    unsigned int y;
+    struct zappy_egg_s *next;
+} zappy_egg_t;
+
 typedef struct zappy_team_s {
     char *name;
     int slot;
+    zappy_egg_t *eggs;
     struct zappy_team_s *next;
 } zappy_team_t;
 
@@ -42,6 +49,7 @@ typedef struct zappy_player_s {
     unsigned int rot;
     int lvl;
     int inventory[7];
+    int elevation;
     zappy_team_t *team;
     zappy_player_cmd_t cmds[10];
     struct timespec cmd_start;
@@ -50,6 +58,7 @@ typedef struct zappy_player_s {
 
 typedef struct zappy_client_s {
     int sockfd;
+    int sockclose;
     char address[INET_ADDRSTRLEN];
     uint16_t port;
     char buffer[ZAPPY_SERVER_BUFFER_SIZE];
@@ -68,6 +77,7 @@ struct zappy_pcmd_s {
     char name[12];
     int time_limit;
     void (*func)(zappy_client_t *, char *);
+    int (*start)(zappy_client_t *);
 };
 
 struct zappy_server_s {
@@ -104,7 +114,12 @@ void graphical_sst(zappy_client_t *client, char *data);
 void graphical_tna(zappy_client_t *client, char *data);
 
 void player_connect_nbr(zappy_client_t *client, char *data);
+void player_eject(zappy_client_t *client, char *data);
+void player_fork(zappy_client_t *client, char *data);
+void forward(zappy_client_t *client, int rot);
 void player_forward(zappy_client_t *client, char *data);
+int can_elevation_start(zappy_client_t *client);
+void player_incantation(zappy_client_t *client, char *data);
 void player_inventory(zappy_client_t *client, char *data);
 void player_left(zappy_client_t *client, char *data);
 void player_right(zappy_client_t *client, char *data);
@@ -114,7 +129,16 @@ void player_take(zappy_client_t *client, char *data);
 void commands_graphical(zappy_client_t* client, char* data);
 void commands_player(zappy_client_t* client, char* data);
 
+int spawn_eggs(zappy_server_t *server, zappy_team_t *team, int nb);
+zappy_egg_t* get_random_egg(zappy_team_t *team);
+void free_eggs(zappy_team_t *team);
+
 void game_loop(zappy_server_t *server);
+
+int player_equals_incantation(zappy_client_t *c1, zappy_client_t *c2
+, int elevation);
+int nb_players_incantation(zappy_client_t *client, int elevation);
+int already_incantating(zappy_client_t *client);
 
 zappy_player_t *get_player_by_id(zappy_server_t *server, int id);
 void add_player_command(zappy_client_t* client, zappy_pcmd_t *pcmd, char *data);

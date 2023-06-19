@@ -29,14 +29,16 @@ static void player_commands(zappy_client_t *client)
 {
     zappy_player_cmd_t *cmd = &client->player.cmds[0];
     unsigned long cmd_len = sizeof(zappy_player_cmd_t);
-    struct timespec cmd_start = client->player.cmd_start;
 
     if (cmd->pcmd != NULL && time_is_up(client->server
-            , cmd_start, cmd->pcmd->time_limit)) {
+            , client->player.cmd_start, cmd->pcmd->time_limit)) {
         cmd->pcmd->func(client, cmd->data);
-        memcpy(client->player.cmds, &client->player.cmds[1], cmd_len * 9);
-        memset(&client->player.cmds[9], 0, cmd_len);
-        client->player.cmd_start = client->server->now;
+        do {
+            memcpy(client->player.cmds, &client->player.cmds[1], cmd_len * 9);
+            memset(&client->player.cmds[9], 0, cmd_len);
+            client->player.cmd_start = client->server->now;
+        } while (cmd->pcmd != NULL
+                && cmd->pcmd->start != NULL && !cmd->pcmd->start(client));
     }
 }
 

@@ -27,6 +27,9 @@ void add_player_command(zappy_client_t* client, zappy_pcmd_t *pcmd, char *data)
     int i = 0;
     int data_len = strlen(data);
 
+    if (pcmd->start != NULL && !pcmd->start(client)) {
+        return;
+    }
     data_len = (data_len > 9) ? 9 : data_len;
     for (; i < 10; ++i) {
         if (client->player.cmds[i].pcmd == NULL) {
@@ -44,7 +47,9 @@ void add_player_command(zappy_client_t* client, zappy_pcmd_t *pcmd, char *data)
 void kill_player(zappy_client_t *client)
 {
     if (client->player.id != 0) {
-        dprintf(client->sockfd, "dead\n");
+        if (!client->sockclose) {
+            dprintf(client->sockfd, "dead\n");
+        }
         memset(&client->player, 0, sizeof(client->player));
     }
 }
