@@ -19,7 +19,8 @@ int player_equals_incantation(zappy_client_t *c1, zappy_client_t *c2
             && p1->y == p2->y
             && p1->lvl == p2->lvl
             && p1->elevation == elevation
-            && p2->elevation == elevation;
+            && p2->elevation == elevation
+            && (elevation != 0 || p2->cmds[0].pcmd == NULL);
 }
 
 int nb_players_incantation(zappy_client_t *client, int elevation)

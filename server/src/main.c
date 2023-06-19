@@ -32,6 +32,7 @@ static void zappy_init_player_commands(zappy_server_t *server)
     pcmds[7] = (zappy_pcmd_t){ "Right", 7, player_right, NULL };
     pcmds[8] = (zappy_pcmd_t){ "Set", 7, player_set, NULL };
     pcmds[9] = (zappy_pcmd_t){ "Take", 7, player_take, NULL };
+    server->incantation_wait = (zappy_pcmd_t){ "\0", 300, NULL, NULL };
 }
 
 static void zappy_init_graphical_commands(zappy_server_t *server)

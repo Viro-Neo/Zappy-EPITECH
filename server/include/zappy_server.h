@@ -92,6 +92,7 @@ struct zappy_server_s {
     zappy_client_t clients[ZAPPY_SERVER_MAX_CLIENTS];
     zappy_gcmd_t graphical_commands[ZAPPY_SERVER_GRAPHICAL_COMMANDS_COUNT];
     zappy_pcmd_t player_commands[ZAPPY_SERVER_PLAYER_COMMANDS_COUNT];
+    zappy_pcmd_t incantation_wait;
     int map[30][30][7];
     struct timespec now;
     struct timespec resources;
