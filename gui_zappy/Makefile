@@ -22,7 +22,7 @@ all: $(NAME)
 
 $(NAME): $(OBJ)
 	@$(CC) -o $(NAME) $(OBJ)
-	mv $(NAME) ../
+	@mv $(NAME) ../
 
 clean:
 	@rm -f $(OBJ)

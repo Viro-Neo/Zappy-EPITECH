@@ -9,25 +9,22 @@
 
 GetOpt::GetOpt(int ac, char **av)
 {
-    int opt = 0;
-
-    while ((opt = getopt(ac, av, "p:h:")) != -1) {
-        switch (opt) {
-            case 'p':
-                _port = optarg;
-                break;
-            case 'h':
-                _host = optarg;
-                break;
-            default:
-                Gui::printUsage();
-                throw std::invalid_argument("No argument found");
+    for (int i = 1; i < ac; i++) {
+        if (std::string(av[i]) == "-p") {
+            if (i + 1 < ac)
+                _port = av[i + 1];
+            else
+                throw std::invalid_argument("Port missing");
+        }
+        if (std::string(av[i]) == "-h") {
+            if (i + 1 < ac)
+                _host = av[i + 1];
+            else
+                _host = "localhost";
         }
     }
-    if (_port.empty() || _host.empty()) {
-        Gui::printUsage();
-        throw std::invalid_argument("Argument missing");
-    }
+    if (_host.empty())
+        _host = "localhost";
 }
 
 std::string GetOpt::getPort() const

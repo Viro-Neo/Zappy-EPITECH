@@ -8,7 +8,6 @@
 #ifndef ZAPPY_GETOPT_H
     #define ZAPPY_GETOPT_H
 
-    #include <getopt.h>
     #include "Gui.hpp"
 
 class GetOpt {
