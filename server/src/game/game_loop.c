@@ -63,7 +63,7 @@ void game_loop(zappy_server_t *server)
         return;
     }
     spawn_resources(server);
-    while (listen_sockets(server)) {
+    while (!server->close && listen_sockets(server)) {
         update_players(server);
         if (time_is_up(server, server->resources
                 , ZAPPY_SERVER_RESOURCES_UNITS)) {

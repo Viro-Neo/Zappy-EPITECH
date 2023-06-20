@@ -9,7 +9,7 @@
 
 void graphical_pie(zappy_server_t *server, zappy_player_t *player, int res)
 {
-    graphical_write(server, "pic %u %u %d\n"
+    graphical_write(server, "pie %u %u %d\n"
             , player->x
             , player->y
             , res);

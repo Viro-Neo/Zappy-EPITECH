@@ -97,6 +97,7 @@ struct zappy_server_s {
     int map[30][30][7];
     struct timespec now;
     struct timespec resources;
+    int close;
 };
 
 typedef struct zappy_opt_s {

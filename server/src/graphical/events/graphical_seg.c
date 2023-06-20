@@ -5,15 +5,11 @@
 ** graphical_seg.c
 */
 
-#include <unistd.h>
 #include "zappy_server.h"
 
 void graphical_seg(zappy_server_t *server, char *team_name)
 {
     graphical_write(server, "seg %s\n"
             , team_name);
-    if (!(server->sockfd < 0)) {
-        close(server->sockfd);
-        server->sockfd = -1;
-    }
+    server->close = 1;
 }
