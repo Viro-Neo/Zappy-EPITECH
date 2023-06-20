@@ -70,4 +70,4 @@ Once connected, the client can send various commands to the server. Here are the
   
 # Zappy Server
   
-  
+  In order to make zappy work, there is a server that receives requests from the IA and then it is visually shown on the GUI. Therefore the server is fundamental for the project. It receives the requests and sends back the responses.
