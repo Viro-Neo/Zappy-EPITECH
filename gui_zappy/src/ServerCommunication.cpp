@@ -23,10 +23,11 @@ void ServerCommunication::connectToServer(void)
     if (this->status != sf::Socket::Done) {
         throw std::exception(); //TODO(zach) : do error handling
     }
+    this->writeToServer("GRAPHIC\n");
 }
 
 std::string ServerCommunication::popCmd()
-{   
+{
     if (this->_cmdList.empty())
         return "";
     std::string cmd = this->_cmdList.back();
@@ -57,5 +58,3 @@ int ServerCommunication::writeToServer(std::string cmd)
     if (this->_clientSocket.send(cmd.data(), 100) != sf::Socket::Done)
         throw std::exception(); //TODO(zach): do error handling
 }
-
-

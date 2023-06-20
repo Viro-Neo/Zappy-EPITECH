@@ -16,7 +16,7 @@ class Gui {
         Gui() = default;
         Gui(int ac, char **av);
         ~Gui() = default;
-        void printUsage();
+        static void printUsage();
 
         std::string getPort() const;
         std::string getHost() const;
