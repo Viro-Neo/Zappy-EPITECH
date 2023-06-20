@@ -57,6 +57,7 @@ static int eject_players(zappy_client_t *client)
                 && target->player.y == client->player.y) {
             forward(target, client->player.rot);
             dprintf(target->sockfd, "eject: %d\n", client->player.rot);
+            graphical_pex(client->server, &target->player);
             res = 1;
         }
     }
