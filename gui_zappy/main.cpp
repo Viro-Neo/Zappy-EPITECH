@@ -9,5 +9,5 @@
 
 int main(void)
 {
-    printf("Server\n");
+    printf("GUI\n");
 }

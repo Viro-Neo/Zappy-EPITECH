@@ -1,6 +1,6 @@
 ##
-## EPITECH PROJECT, 2021
-## makefile infin_add
+## EPITECH PROJECT, 2023
+## B-YEP-400-PAR-4-1-zappy-aurelien.duval
 ## File description:
 ## Makefile
 ##
@@ -9,9 +9,11 @@ SERVER_SRC	=	server_zappy/main.cpp	\
 
 SERVER_OBJ     =       $(SERVER_SRC:.cpp=.o)
 
-CFLAGS	=	-W -Wall -Wextra -g3
+# zappy_ai:
+#	make -C ai/
 
-SERVER_NAME    =	zappy_server
+# zappy_gui:
+#	make -C gui/
 
 AI_NAME    =	zappy_ai
 
@@ -45,6 +47,6 @@ fclean: clean
 	rm -f *.o
 	rm -rf vgcore.*
 
-re:     fclean all
+re:	fclean all
 
 .PHONY:	clean fclean re all
