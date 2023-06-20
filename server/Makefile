@@ -36,6 +36,7 @@ SRCS	=	src/commands/graphical/graphical_bct.c \
 			src/graphical/events/graphical_pdr.c \
 			src/graphical/events/graphical_pex.c \
 			src/graphical/events/graphical_pfk.c \
+			src/graphical/events/graphical_pgt.c \
 			src/graphical/events/graphical_pic.c \
 			src/graphical/events/graphical_pie.c \
 			src/graphical/events/graphical_pnw.c \
