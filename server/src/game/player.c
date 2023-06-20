@@ -53,3 +53,19 @@ void kill_player(zappy_client_t *client)
         memset(&client->player, 0, sizeof(client->player));
     }
 }
+
+int get_nb_players_team(zappy_server_t *server, zappy_team_t *team)
+{
+    zappy_client_t *client = NULL;
+    int nb = 0;
+
+    for (int i = 0; i < ZAPPY_SERVER_MAX_CLIENTS; ++i) {
+        client = &server->clients[i];
+        if (!(client->sockfd < 0)
+                && client->player.id != 0
+                && client->player.team == team) {
+            ++nb;
+        }
+    }
+    return nb;
+}

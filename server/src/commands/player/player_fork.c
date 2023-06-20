@@ -10,8 +10,9 @@
 
 void player_fork(zappy_client_t *client, char *)
 {
-    if (spawn_eggs(client->server, client->player.team, 1)) {
+    if (spawn_egg(client->server, client->player.team)) {
         dprintf(client->sockfd, "ok\n");
+        graphical_pfk(client->server, &client->player);
     } else {
         dprintf(client->sockfd, "ko\n");
     }

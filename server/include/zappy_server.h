@@ -130,7 +130,7 @@ void player_take(zappy_client_t *client, char *data);
 void commands_graphical(zappy_client_t* client, char* data);
 void commands_player(zappy_client_t* client, char* data);
 
-int spawn_eggs(zappy_server_t *server, zappy_team_t *team, int nb);
+int spawn_egg(zappy_server_t *server, zappy_team_t *team);
 zappy_egg_t* get_random_egg(zappy_team_t *team);
 void free_eggs(zappy_team_t *team);
 
@@ -144,6 +144,7 @@ int already_incantating(zappy_client_t *client);
 zappy_player_t *get_player_by_id(zappy_server_t *server, int id);
 void add_player_command(zappy_client_t* client, zappy_pcmd_t *pcmd, char *data);
 void kill_player(zappy_client_t *client);
+int get_nb_players_team(zappy_server_t *server, zappy_team_t *team);
 
 void spawn_resources(zappy_server_t *server);
 int get_resource_index(const char *str);
@@ -153,6 +154,7 @@ struct timeval get_remaining_time(zappy_server_t *server, struct timespec ts
 , double time_limit);
 
 void graphical_pex(zappy_server_t *server, zappy_player_t *player);
+void graphical_pfk(zappy_server_t *server, zappy_player_t *player);
 void graphical_pic(zappy_server_t *server, zappy_client_t *client);
 void graphical_pie(zappy_server_t *server, zappy_player_t *player, int res);
 void graphical_pnw(zappy_server_t *server, zappy_player_t *player);

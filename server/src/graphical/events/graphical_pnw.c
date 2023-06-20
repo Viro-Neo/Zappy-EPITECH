@@ -9,7 +9,7 @@
 
 void graphical_pnw(zappy_server_t *server, zappy_player_t *player)
 {
-    graphical_write(server, "pnw #%d %u %u %u %d %s\n"
+    graphical_write(server, "pnw %d %u %u %u %d %s\n"
             , player->id
             , player->x
             , player->y

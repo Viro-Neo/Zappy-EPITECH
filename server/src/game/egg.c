@@ -8,25 +8,21 @@
 #include <stdlib.h>
 #include "zappy_server.h"
 
-int spawn_eggs(zappy_server_t *server, zappy_team_t *team, int nb)
+int spawn_egg(zappy_server_t *server, zappy_team_t *team)
 {
     zappy_egg_t **egg = &team->eggs;
 
     while (*egg != NULL) {
         egg = &(*egg)->next;
     }
-    while (nb > 0) {
-        *egg = malloc(sizeof(zappy_egg_t));
-        if (*egg == NULL) {
-            return 0;
-        }
-        (*egg)->x = rand() % server->width;
-        (*egg)->y = rand() % server->height;
-        (*egg)->next = NULL;
-        egg = &(*egg)->next;
-        ++team->slot;
-        --nb;
+    *egg = malloc(sizeof(zappy_egg_t));
+    if (*egg == NULL) {
+        return 0;
     }
+    (*egg)->x = rand() % server->width;
+    (*egg)->y = rand() % server->height;
+    (*egg)->next = NULL;
+    ++team->slot;
     return 1;
 }
 

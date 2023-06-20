@@ -18,24 +18,32 @@ static void player_join_team(zappy_client_t *client, zappy_team_t *team
     zappy_server_t *server = client->server;
 
     client->player.id = ++player_id;
-    client->player.x = egg->x;
-    client->player.y = egg->y;
+    if (egg != NULL) {
+        client->player.x = egg->x;
+        client->player.y = egg->y;
+        free(egg);
+    } else {
+        client->player.x = rand() % server->width;
+        client->player.y = rand() % server->height;
+    }
     client->player.rot = (rand() % 4) + 1;
     client->player.lvl = 1;
     client->player.inventory[0] = 10;
     client->player.team = team;
     dprintf(client->sockfd, "%d\n", team->slot);
     dprintf(client->sockfd, "%d %d\n", server->width, server->height);
-    free(egg);
     graphical_pnw(client->server, &client->player);
 }
 
 static void register_team(zappy_client_t* client, char* data)
 {
-    zappy_team_t *team = get_team(client->server, data);
+    zappy_server_t *server = client->server;
+    zappy_team_t *team = get_team(server, data);
     zappy_egg_t *egg = NULL;
 
-    if (team != NULL && (egg = get_random_egg(team)) != NULL) {
+    if (team != NULL
+            && (get_nb_players_team(server, team) < server->clientsNb
+            || (egg = get_random_egg(team)) != NULL)) {
         player_join_team(client, team, egg);
     } else if (strcmp(data, "GRAPHIC") == 0) {
         client->graphic = 1;
