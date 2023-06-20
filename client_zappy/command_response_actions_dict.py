@@ -6,7 +6,7 @@
 ##
 
 from typing import Dict
-from decision import *
+from commands.decision import *
 
 response_dict = {
     'Forward': 'ok',
