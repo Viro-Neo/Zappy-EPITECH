@@ -18,20 +18,20 @@ static void player_join_team(zappy_client_t *client, zappy_team_t *team
     zappy_server_t *server = client->server;
 
     client->player.id = ++player_id;
-    if (egg != NULL) {
-        client->player.x = egg->x;
-        client->player.y = egg->y;
-        free(egg);
-    } else {
-        client->player.x = rand() % server->width;
-        client->player.y = rand() % server->height;
-    }
+    client->player.x = rand() % server->width;
+    client->player.y = rand() % server->height;
     client->player.rot = (rand() % 4) + 1;
     client->player.lvl = 1;
     client->player.inventory[0] = 10;
     client->player.team = team;
     dprintf(client->sockfd, "%d\n", team->slot);
     dprintf(client->sockfd, "%d %d\n", server->width, server->height);
+    if (egg != NULL) {
+        client->player.x = egg->x;
+        client->player.y = egg->y;
+        graphical_ebo(client->server, &client->player, egg);
+        free(egg);
+    }
     graphical_pnw(client->server, &client->player);
 }
 

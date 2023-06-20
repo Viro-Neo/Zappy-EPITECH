@@ -155,6 +155,8 @@ int time_is_up(zappy_server_t *server, struct timespec ts, double time_limit);
 struct timeval get_remaining_time(zappy_server_t *server, struct timespec ts
 , double time_limit);
 
+void graphical_ebo(zappy_server_t *server, zappy_player_t *player
+, zappy_egg_t *egg);
 void graphical_enw(zappy_server_t *server, zappy_player_t *player
 , zappy_egg_t *egg);
 void graphical_pdi(zappy_server_t *server, zappy_player_t *player);
