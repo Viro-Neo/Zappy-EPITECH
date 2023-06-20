@@ -1,4 +1,5 @@
 from inventory import check_inventory
+from inventory import ritual_needs
 
 def decide_forward(client, response: str):
     pass
