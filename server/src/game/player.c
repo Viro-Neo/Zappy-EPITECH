@@ -50,6 +50,7 @@ void kill_player(zappy_client_t *client)
         if (!client->sockclose) {
             dprintf(client->sockfd, "dead\n");
         }
+        graphical_pdi(client->server, &client->player);
         memset(&client->player, 0, sizeof(client->player));
     }
 }

@@ -153,6 +153,7 @@ int time_is_up(zappy_server_t *server, struct timespec ts, double time_limit);
 struct timeval get_remaining_time(zappy_server_t *server, struct timespec ts
 , double time_limit);
 
+void graphical_pdi(zappy_server_t *server, zappy_player_t *player);
 void graphical_pdr(zappy_server_t *server, zappy_player_t *player, int i);
 void graphical_pex(zappy_server_t *server, zappy_player_t *player);
 void graphical_pfk(zappy_server_t *server, zappy_player_t *player);

@@ -33,6 +33,7 @@ SRCS	=	src/commands/graphical/graphical_bct.c \
 			src/game/player.c \
 			src/game/resources.c \
 			src/game/time.c \
+			src/graphical/events/graphical_pdi.c \
 			src/graphical/events/graphical_pdr.c \
 			src/graphical/events/graphical_pex.c \
 			src/graphical/events/graphical_pfk.c \
