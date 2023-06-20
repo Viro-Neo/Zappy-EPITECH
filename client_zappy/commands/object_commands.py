@@ -1,4 +1,3 @@
-from client import Client
 import re
 
 def send_take_object_command(client):

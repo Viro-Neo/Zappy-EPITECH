@@ -1,4 +1,3 @@
-from client import Client
 import threading
 
 def send_forward_command(client):
@@ -50,12 +49,12 @@ def process_response(response):
     response_table = [[item] for item in response_list]
     return response_table
 
-def send_look_command(client: Client):
+def send_look_command(client):
     command = "Look"
     client.write_response_to_socket(command)
 
 
-def send_inventory_command(client: Client) -> str:
+def send_inventory_command(client) -> str:
     command = "Inventory"
     client.write_response_to_socket(command)
 

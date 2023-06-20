@@ -6,7 +6,7 @@
 ##
 
 from typing import Dict
-from commands.decision import *
+from commands.decision import decide_broadcast, decide_connect_nbr, decide_eject, decide_ejected, decide_fork, decide_forward, decide_heard, decide_incantation, decide_inventory, decide_left, decide_look, decide_right, decide_set, decide_take, died
 
 response_dict = {
     'Forward': 'ok',

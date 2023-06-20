@@ -2,7 +2,7 @@ from inventory import check_inventory
 from inventory import ritual_needs
 
 import threading
-from movement_commands import *
+from commands.movement_commands import *
 
 
 def decide_forward(client, response: str):
