@@ -9,7 +9,10 @@
     #define B_YEP_400_PAR_4_1_ZAPPY_AURELIEN_DUVAL_GUI_HPP
 
     #include <exception>
+    #include "GetOpt.hpp"
+    #include "ServerCommunication.hpp"
     #include <iostream>
+    #include <unistd.h>
 
 class Gui {
     public:
@@ -17,13 +20,14 @@ class Gui {
         Gui(int ac, char **av);
         ~Gui() = default;
         void printUsage();
-
+        void initGui();
         std::string getPort() const;
         std::string getHost() const;
 
     private:
         std::string _port;
         std::string _host;
+        ServerCommunication _comm;
 };
 
 #endif //B_YEP_400_PAR_4_1_ZAPPY_AURELIEN_DUVAL_GUI_HPP

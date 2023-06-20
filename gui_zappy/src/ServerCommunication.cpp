@@ -7,8 +7,7 @@
 
 #include "ServerCommunication.hpp"
 
-
-ServerCommunication::ServerCommunication(const std::string port, const std::string host) : _port(port), _host(host)
+ServerCommunication::ServerCommunication()
 {
 }
 
@@ -50,12 +49,22 @@ int ServerCommunication::readFromServer()
         this->_cmdList.push_back(result.substr(size, index - 1));
         size = index + 1;
     }
+    return 0;
 }
 
 int ServerCommunication::writeToServer(std::string cmd)
 {
-    if (this->_clientSocket.send(cmd.data(), 100) != sf::Socket::Done)
+    if (this->_clientSocket.send(cmd.data(), cmd.size() + 1) != sf::Socket::Done)
         throw std::exception(); //TODO(zach): do error handling
+    return 0;
 }
 
+void ServerCommunication::setPort(std::string port)
+{
+    this->_port = port;
+}
 
+void ServerCommunication::setHost(std::string host)
+{
+    this->_host = host;
+}

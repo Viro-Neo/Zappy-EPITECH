@@ -7,9 +7,9 @@
 
 #ifndef ZAPPY_GETOPT_H
     #define ZAPPY_GETOPT_H
-
-    #include "Gui.hpp"
-
+    #include <string>
+    #include <iostream>
+    #include <exception>
 class GetOpt {
 public:
     GetOpt(int ac, char **av);
