@@ -43,8 +43,11 @@ int can_elevation_start(zappy_client_t *client)
         dprintf(client->sockfd, "ko\n");
         return 0;
     }
+    graphical_pic(client->server, client);
+    client->player.elevation = 1;
     for (int i = 0; i < ZAPPY_SERVER_MAX_CLIENTS; ++i) {
-        if (player_equals_incantation(client, &client->server->clients[i], 0)) {
+        if (player_equals_incantation(client, &client->server->clients[i], 0)
+                && client != &client->server->clients[i]) {
             client->server->clients[i].player.elevation = 1;
             add_player_command(&client->server->clients[i]
                     , &client->server->incantation_wait, NULL);
