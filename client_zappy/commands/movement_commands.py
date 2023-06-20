@@ -63,13 +63,13 @@ def send_look_command(client: Client):
             print(response_list)
             nearest_food = None
             nearest_distance = float('inf')
-            starting_position = response_list.index("stone")  # Update starting position
+            starting_position = response_list.index("stone")
 
             print("I go forward first of all")
             send_forward_command(client)
 
             for index, tile in enumerate(response_list):
-                if tile == "food":
+                if tile in client.missing:
                     distance = abs(starting_position - index)
                     if distance < nearest_distance:
                         nearest_food = index
