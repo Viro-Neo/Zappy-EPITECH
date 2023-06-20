@@ -40,7 +40,8 @@ class Client:
             try:
                 self.lock.acquire()
                 response = self.receive_server_response()
-                print("Got a continuous response")
+                print(f"Got a continuous response : {response}")
+                self.check_response(response)
             except Exception as e:
                 print(f"Error receiving response: {str(e)}")
                 break
