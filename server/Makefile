@@ -44,6 +44,7 @@ SRCS	=	src/commands/graphical/graphical_bct.c \
 			src/graphical/events/graphical_pic.c \
 			src/graphical/events/graphical_pie.c \
 			src/graphical/events/graphical_pnw.c \
+			src/graphical/events/graphical_seg.c \
 			src/graphical/graphical_write.c \
 			src/network/client_read.c \
 			src/network/client.c \

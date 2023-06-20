@@ -56,6 +56,23 @@ int can_elevation_start(zappy_client_t *client)
     return 1;
 }
 
+static int win_detector(zappy_client_t *client)
+{
+    zappy_client_t *target = NULL;
+    int nb = 0;
+
+    for (int i = 0; i < ZAPPY_SERVER_MAX_CLIENTS; ++i) {
+        target = &client->server->clients[i];
+        if (!(target->sockfd < 0)
+                && target->player.id != 0
+                && target->player.lvl == 8
+                && target->player.team == client->player.team) {
+            ++nb;
+        }
+    }
+    return nb >= 6;
+}
+
 void player_incantation(zappy_client_t *client, char *)
 {
     if (!can_elevate(client, 1)) {
@@ -71,4 +88,8 @@ void player_incantation(zappy_client_t *client, char *)
     }
     dprintf(client->sockfd, "ok\n");
     graphical_pie(client->server, &client->player, 1);
+    if (win_detector(client))
+    {
+        graphical_seg(client->server, client->player.team->name);
+    }
 }

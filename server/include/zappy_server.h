@@ -167,6 +167,7 @@ void graphical_pgt(zappy_server_t *server, zappy_player_t *player, int i);
 void graphical_pic(zappy_server_t *server, zappy_client_t *client);
 void graphical_pie(zappy_server_t *server, zappy_player_t *player, int res);
 void graphical_pnw(zappy_server_t *server, zappy_player_t *player);
+void graphical_seg(zappy_server_t *server, char *team_name);
 
 void graphical_write(zappy_server_t *server, const char *fmt, ...);
 
