@@ -25,6 +25,7 @@ typedef struct zappy_server_s zappy_server_t;
 typedef struct zappy_pcmd_s zappy_pcmd_t;
 
 typedef struct zappy_egg_s {
+    int id;
     unsigned int x;
     unsigned int y;
     struct zappy_egg_s *next;
@@ -116,6 +117,7 @@ void graphical_tna(zappy_client_t *client, char *data);
 
 void player_connect_nbr(zappy_client_t *client, char *data);
 void player_eject(zappy_client_t *client, char *data);
+int egg_laying(zappy_client_t *client);
 void player_fork(zappy_client_t *client, char *data);
 void forward(zappy_client_t *client, int rot);
 void player_forward(zappy_client_t *client, char *data);
@@ -130,7 +132,7 @@ void player_take(zappy_client_t *client, char *data);
 void commands_graphical(zappy_client_t* client, char* data);
 void commands_player(zappy_client_t* client, char* data);
 
-int spawn_egg(zappy_server_t *server, zappy_team_t *team);
+zappy_egg_t *spawn_egg(zappy_server_t *server, zappy_team_t *team);
 zappy_egg_t* get_random_egg(zappy_team_t *team);
 void free_eggs(zappy_team_t *team);
 
@@ -153,6 +155,8 @@ int time_is_up(zappy_server_t *server, struct timespec ts, double time_limit);
 struct timeval get_remaining_time(zappy_server_t *server, struct timespec ts
 , double time_limit);
 
+void graphical_enw(zappy_server_t *server, zappy_player_t *player
+, zappy_egg_t *egg);
 void graphical_pdi(zappy_server_t *server, zappy_player_t *player);
 void graphical_pdr(zappy_server_t *server, zappy_player_t *player, int i);
 void graphical_pex(zappy_server_t *server, zappy_player_t *player);

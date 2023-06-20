@@ -23,7 +23,7 @@ static void zappy_init_player_commands(zappy_server_t *server)
 
     pcmds[0] = (zappy_pcmd_t){ "Connect_nbr", 0, player_connect_nbr, NULL };
     pcmds[1] = (zappy_pcmd_t){ "Eject", 7, player_eject, NULL };
-    pcmds[2] = (zappy_pcmd_t){ "Fork", 42, player_fork, NULL };
+    pcmds[2] = (zappy_pcmd_t){ "Fork", 42, player_fork, egg_laying };
     pcmds[3] = (zappy_pcmd_t){ "Forward", 7, player_forward, NULL };
     pcmds[4] = (zappy_pcmd_t){ "Incantation"
             , 300, player_incantation, can_elevation_start };

@@ -8,8 +8,9 @@
 #include <stdlib.h>
 #include "zappy_server.h"
 
-int spawn_egg(zappy_server_t *server, zappy_team_t *team)
+zappy_egg_t *spawn_egg(zappy_server_t *server, zappy_team_t *team)
 {
+    static int egg_id = 0;
     zappy_egg_t **egg = &team->eggs;
 
     while (*egg != NULL) {
@@ -17,13 +18,14 @@ int spawn_egg(zappy_server_t *server, zappy_team_t *team)
     }
     *egg = malloc(sizeof(zappy_egg_t));
     if (*egg == NULL) {
-        return 0;
+        return NULL;
     }
+    (*egg)->id = ++egg_id;
     (*egg)->x = rand() % server->width;
     (*egg)->y = rand() % server->height;
     (*egg)->next = NULL;
     ++team->slot;
-    return 1;
+    return (*egg);
 }
 
 zappy_egg_t* get_random_egg(zappy_team_t *team)

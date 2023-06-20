@@ -8,11 +8,19 @@
 #include <stdio.h>
 #include "zappy_server.h"
 
+int egg_laying(zappy_client_t *client)
+{
+    graphical_pfk(client->server, &client->player);
+    return 1;
+}
+
 void player_fork(zappy_client_t *client, char *)
 {
-    if (spawn_egg(client->server, client->player.team)) {
+    zappy_egg_t *egg = spawn_egg(client->server, client->player.team);
+
+    if (egg != NULL) {
         dprintf(client->sockfd, "ok\n");
-        graphical_pfk(client->server, &client->player);
+        graphical_enw(client->server, &client->player, egg);
     } else {
         dprintf(client->sockfd, "ko\n");
     }
