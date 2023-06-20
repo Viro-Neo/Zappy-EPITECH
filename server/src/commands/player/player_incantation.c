@@ -60,6 +60,7 @@ void player_incantation(zappy_client_t *client, char *)
 {
     if (!can_elevate(client, 1)) {
         dprintf(client->sockfd, "ko\n");
+        graphical_pie(client->server, &client->player, 0);
         return;
     }
     for (int i = 0; i < ZAPPY_SERVER_MAX_CLIENTS; ++i) {
@@ -69,4 +70,5 @@ void player_incantation(zappy_client_t *client, char *)
         }
     }
     dprintf(client->sockfd, "ok\n");
+    graphical_pie(client->server, &client->player, 1);
 }

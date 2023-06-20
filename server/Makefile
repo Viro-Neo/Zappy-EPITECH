@@ -35,6 +35,7 @@ SRCS	=	src/commands/graphical/graphical_bct.c \
 			src/game/time.c \
 			src/graphical/events/graphical_pex.c \
 			src/graphical/events/graphical_pic.c \
+			src/graphical/events/graphical_pie.c \
 			src/graphical/events/graphical_pnw.c \
 			src/graphical/graphical_write.c \
 			src/network/client_read.c \
