@@ -34,6 +34,7 @@ SRCS	=	src/commands/graphical/graphical_bct.c \
 			src/game/resources.c \
 			src/game/time.c \
 			src/graphical/events/graphical_ebo.c \
+			src/graphical/events/graphical_edi.c \
 			src/graphical/events/graphical_enw.c \
 			src/graphical/events/graphical_pdi.c \
 			src/graphical/events/graphical_pdr.c \

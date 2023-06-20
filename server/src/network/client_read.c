@@ -29,7 +29,7 @@ static void player_join_team(zappy_client_t *client, zappy_team_t *team
     if (egg != NULL) {
         client->player.x = egg->x;
         client->player.y = egg->y;
-        graphical_ebo(client->server, &client->player, egg);
+        graphical_ebo(client->server, egg);
         free(egg);
     }
     graphical_pnw(client->server, &client->player);

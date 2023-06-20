@@ -19,6 +19,7 @@ static int destroy_eggs(zappy_client_t *client, zappy_team_t *team)
         curr_egg = *egg;
         if (client->player.x == (*egg)->x && client->player.y == (*egg)->y) {
             *egg = (*egg)->next;
+            graphical_edi(client->server, curr_egg);
             free(curr_egg);
             res = 1;
         }
