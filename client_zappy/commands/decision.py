@@ -13,7 +13,7 @@ def decide_look(client, response: str):
     print("Should make decisions based on what I see")
 
 def decide_inventory(client, response: str):
-    check_inventory(client, response)
+    client.missing = check_inventory(client, response)
     print("Should make decision based on inventory")
 
 def decide_broadcast(client, response: str):
