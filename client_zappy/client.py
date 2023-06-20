@@ -9,6 +9,7 @@ class Client:
         self.sock = None
         self.lock = threading.Lock()
         self.level = 1
+        self.missing = {}
 
     def connect_to_server(self):
         try:
