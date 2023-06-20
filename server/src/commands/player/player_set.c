@@ -18,6 +18,7 @@ void player_set(zappy_client_t *client, char *data)
         --client->player.inventory[i];
         ++client->server->map[y][x][i];
         dprintf(client->sockfd, "ok\n");
+        graphical_pdr(client->server, &client->player, i);
     } else {
         dprintf(client->sockfd, "ko\n");
     }
