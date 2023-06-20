@@ -13,8 +13,6 @@
 class Errors : public std::exception {
     private:
     public:
-        
-        
         class NotEnoughArgumentsError {
             private:
                 const std::string message = "Not enough arguments";
@@ -34,7 +32,6 @@ class Errors : public std::exception {
             public:
                 const char *what() const throw();
         };
-        
 };
 
 #endif
