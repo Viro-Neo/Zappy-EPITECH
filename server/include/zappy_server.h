@@ -152,6 +152,10 @@ int time_is_up(zappy_server_t *server, struct timespec ts, double time_limit);
 struct timeval get_remaining_time(zappy_server_t *server, struct timespec ts
 , double time_limit);
 
+void graphical_pnw(zappy_server_t *server, zappy_player_t *player);
+
+void graphical_write(zappy_server_t *server, const char *fmt, ...);
+
 void read_client(zappy_client_t *client);
 
 void add_client(zappy_server_t *server, zappy_client_t *client, int sockfd
