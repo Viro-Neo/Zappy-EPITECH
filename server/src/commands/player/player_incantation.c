@@ -14,24 +14,20 @@ static int meet_conditions(zappy_client_t *client, int elevation, int *pls)
         { 1, 1, 0, 0, 0, 0, 0 }, { 2, 1, 1, 1, 0, 0, 0 },
         { 2, 2, 0, 1, 0, 2, 0 }, { 4, 1, 1, 2, 0, 1, 0 },
         { 4, 1, 2, 1, 3, 0, 0 }, { 6, 1, 2, 3, 0, 1, 0 },
-        { 6, 2, 2, 2, 2, 2, 1 },
+        { 6, 2, 2, 2, 2, 2, 1 }
     };
     int l = client->player.lvl - 1;
     int x = client->player.x;
     int y = client->player.y;
+    int *unit = client->server->map[y][x];
 
-    if (pls != NULL) {
+    if (pls != NULL)
         *pls = elev[l][0];
-    }
     if (nb_players_incantation(client, elevation) >= elev[l][0]
-            && client->server->map[y][x][1] >= elev[l][1]
-            && client->server->map[y][x][2] >= elev[l][2]
-            && client->server->map[y][x][3] >= elev[l][3]
-            && client->server->map[y][x][4] >= elev[l][4]
-            && client->server->map[y][x][5] >= elev[l][5]
-            && client->server->map[y][x][6] >= elev[l][6]) {
+            && unit[1] >= elev[l][1] && unit[2] >= elev[l][2]
+            && unit[3] >= elev[l][3] && unit[4] >= elev[l][4]
+            && unit[5] >= elev[l][5] && unit[6] >= elev[l][6])
         return 1;
-    }
     return 0;
 }
 
@@ -94,8 +90,7 @@ void player_incantation(zappy_client_t *client, char *)
     }
     dprintf(client->sockfd, "ok\n");
     graphical_pie(client->server, &client->player, 1);
-    if (win_detector(client))
-    {
+    if (win_detector(client)) {
         graphical_seg(client->server, client->player.team->name);
     }
 }
