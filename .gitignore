@@ -1,6 +1,10 @@
-.vscode/
-*.o
-zappy_ai
-zappy_gui
+/B-YEP-400_zappy.pdf
+/B-YEP-400_zappy_GUI_protocol.pdf
 zappy_server
-__pycache__
+.idea
+*_zappy/*o
+CMakeLists.txt
+cmake-build-debug
+*_zappy/src/*o
+zappy_gui
+.vscode

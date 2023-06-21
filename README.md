@@ -1,14 +1,10 @@
 # Zappy Project Documentation
 
-
 ## Table of Contents
 ### Introduction
 ### Project Overview
 ### Communication between server and AI
 ### Usage
-
-
-# Zappy AI
 
 ## 1. Introduction
 The Zappy project is a multiplayer game developed as part of the curriculum at Epitech. It involves creating a server and multiple clients that interact with each other in a virtual world. The goal of the game is to gather resources and level up in order to win.
@@ -33,7 +29,7 @@ passed via the server). In the beginning, the player has 10 life units, which me
 A player can reproduce thanks to the fork command. The execution of this command leads to the production of an egg. Once it’s layed, the player who has layed it can take care of their business. Once the egg is layed, a new slot is added to the team.
 
 
-# 3. Communication between server and AI
+## 3. Communication between server and AI
 
 The dialogue between the ai client and the server is carried out via tcp sockets.
 The port that is used must be indicated in parameters.
@@ -41,7 +37,9 @@ The client sends its requests, without waiting for them to be done.
 The server sends back a message confirming the correct execution of the requests.
 
 
-# 4. Usage
+# Zappy AI
+
+## 1. Usage
 
 To connect a client to the server, use the following command:
 
@@ -72,4 +70,4 @@ Once connected, the client can send various commands to the server. Here are the
   
 # Zappy Server
   
-  
+  In order to make zappy work, there is a server that receives requests from the IA and then it is visually shown on the GUI. Therefore the server is fundamental for the project. It receives the requests and sends back the responses.

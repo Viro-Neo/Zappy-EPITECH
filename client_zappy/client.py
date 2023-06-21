@@ -1,5 +1,7 @@
 import socket
 import threading
+import re
+from command_response_actions_dict import *
 
 class Client:
     def __init__(self, port, team, machine):
@@ -9,6 +11,7 @@ class Client:
         self.sock = None
         self.lock = threading.Lock()
         self.level = 1
+        self.cmd_buff = []
 
     def connect_to_server(self):
         try:
@@ -24,29 +27,31 @@ class Client:
             print(f"connected to server {self.machine} on port {self.port}")
         except:
             print("Can't connect to server. Please try again later.\n")
-    def receive_server_response(self):
-        while True:
-            try:
-                response = self.sock.recv(1024).decode()
-                print(f"Server response: {response}", end = '')
-                return response
-                # Handle response here
-            except:
-                pass
     
     def get_response_continuously(self):
         while True:
             try:
                 self.lock.acquire()
                 response = self.receive_server_response()
-                print("Got a continuous response")
+                print(f"Got a continuous response : {response}")
             except Exception as e:
                 print(f"Error receiving response: {str(e)}")
                 break
             finally:
                 self.lock.release()
+    
+    def check_response(self, response: str) -> int:
+        for cmd in self.cmd_buff:
+            if re.match(response_dict[cmd], response):
+                action_dict[cmd](self, response)
+                return 1
+        for stray in stray_response_dict:
+            if re.match(stray_response_dict[stray], response):
+                action_dict[stray](self, response)
+                return 2
+        return 0
 
-    def write_response_to_socket(self, response):
+    def write_response_to_socket(self, response: str):
         try:
             self.sock.send(response.encode())
             print("Response sent successfully.")
