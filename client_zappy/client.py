@@ -9,9 +9,15 @@ class Client:
         self.team = team
         self.machine = machine
         self.sock = None
-        self.lock = threading.Lock()
         self.level = 1
+        self.missing = []
         self.cmd_buff = []
+        self.direction = []
+        self.direction_index = 0
+        self.reposition = []
+        self.reposition_index = 0
+        self.ready = 0
+        self.team_items = init_team_items()
 
     def connect_to_server(self):
         try:
@@ -31,14 +37,11 @@ class Client:
     def get_response_continuously(self):
         while True:
             try:
-                self.lock.acquire()
                 response = self.receive_server_response()
                 print(f"Got a continuous response : {response}")
             except Exception as e:
                 print(f"Error receiving response: {str(e)}")
                 break
-            finally:
-                self.lock.release()
     
     def check_response(self, response: str) -> int:
         for cmd in self.cmd_buff:
@@ -58,3 +61,13 @@ class Client:
         except Exception as e:
             print(f"Error sending response: {str(e)}")
             exit(84)
+
+def init_team_items():
+    team_items = {}
+    team_items["linemate"] = 0
+    team_items["deraumere"] = 0
+    team_items["sibur"] = 0
+    team_items["mendiane"] = 0
+    team_items["phiras"] = 0
+    team_items["thystame"] = 0
+    return team_items
