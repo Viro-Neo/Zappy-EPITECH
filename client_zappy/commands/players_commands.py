@@ -1,4 +1,3 @@
-from client import Client
 
 def send_connect_nbr_command(client):
     command = "Connect_nbr"

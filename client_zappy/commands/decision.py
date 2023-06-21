@@ -13,7 +13,30 @@ def decide_left(client, response: str):
     pass
 
 def decide_look(client, response: str):
-    print("Should make decisions based on what I see")
+    response = "stone, stone, item,,,,,,,"  # client.receive_server_response()
+    response_list = [x.strip() for x in response.split(',')]
+    print(response_list)
+    nearest_food = None
+    nearest_distance = float('inf')
+    starting_position = response_list.index("stone")
+    print("I go forward first of all")
+    send_forward_command(client)
+    for index, tile in enumerate(response_list):
+        if tile in client.missing:
+            distance = abs(starting_position - index)
+            if distance < nearest_distance:
+                nearest_food = index
+                nearest_distance = distance
+    if nearest_food is not None:
+        if nearest_food < starting_position:
+            send_left_command(client)
+            print("I go left")
+        elif nearest_food > starting_position:
+            send_forward_command(client)
+            print("I go forward")
+        else:
+            print("I go right")
+            send_right_command(client)
 
 def decide_inventory(client, response: str):
     client.missing = check_inventory(client, response)

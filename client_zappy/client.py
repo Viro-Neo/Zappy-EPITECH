@@ -39,6 +39,7 @@ class Client:
             try:
                 response = self.receive_server_response()
                 print(f"Got a continuous response : {response}")
+                self.check_response(response)
             except Exception as e:
                 print(f"Error receiving response: {str(e)}")
                 break

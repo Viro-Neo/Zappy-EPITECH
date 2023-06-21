@@ -1,5 +1,4 @@
 from commands.movement_commands import send_inventory_command
-from client import Client
 from typing import Dict
 
 ritual_needs = {
@@ -80,7 +79,7 @@ def init_inventory() -> Dict[str, int]:
 
     return inventory
 
-def get_inventory(client: Client) -> Dict[str, int]:
+def get_inventory(client) -> Dict[str, int]:
     # get string describing inventory from server
     inventory_str = send_inventory_command(client)
 
@@ -101,7 +100,7 @@ def get_inventory(client: Client) -> Dict[str, int]:
     
     return inventory
 
-def check_inventory(client: Client):
+def check_inventory(client):
     # get the inventory
     inventory = get_inventory(client)
 
