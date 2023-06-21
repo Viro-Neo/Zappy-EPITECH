@@ -32,7 +32,9 @@ static void player_commands(zappy_client_t *client)
 
     if (cmd->pcmd != NULL && time_is_up(client->server
             , client->player.cmd_start, cmd->pcmd->time_limit)) {
-        cmd->pcmd->func(client, cmd->data);
+        if (cmd->pcmd->func != NULL) {
+            cmd->pcmd->func(client, cmd->data);
+        }
         do {
             memcpy(client->player.cmds, &client->player.cmds[1], cmd_len * 9);
             memset(&client->player.cmds[9], 0, cmd_len);
@@ -49,8 +51,8 @@ static void update_players(zappy_server_t *server)
     for (int i = 0; i < ZAPPY_SERVER_MAX_CLIENTS; ++i) {
         client = &server->clients[i];
         if (!(client->sockfd < 0) && client->player.id != 0) {
-            player_commands(&server->clients[i]);
-            player_hunger(&server->clients[i]);
+            player_commands(client);
+            player_hunger(client);
         }
     }
 }

@@ -25,7 +25,7 @@ zappy_player_t *get_player_by_id(zappy_server_t *server, int id)
 void add_player_command(zappy_client_t* client, zappy_pcmd_t *pcmd, char *data)
 {
     int i = 0;
-    int data_len = strlen(data);
+    int data_len = data != NULL ? strlen(data) : 0;
 
     if (pcmd->start != NULL && !pcmd->start(client)) {
         return;

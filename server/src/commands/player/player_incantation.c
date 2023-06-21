@@ -8,7 +8,7 @@
 #include <stdio.h>
 #include "zappy_server.h"
 
-static int meet_conditions(zappy_client_t *client, int elevation)
+static int meet_conditions(zappy_client_t *client, int elevation, int *pls)
 {
     static int elev[7][7] = {
         { 1, 1, 0, 0, 0, 0, 0 }, { 2, 1, 1, 1, 0, 0, 0 },
@@ -20,6 +20,9 @@ static int meet_conditions(zappy_client_t *client, int elevation)
     int x = client->player.x;
     int y = client->player.y;
 
+    if (pls != NULL) {
+        *pls = elev[l][0];
+    }
     if (nb_players_incantation(client, elevation) >= elev[l][0]
             && client->server->map[y][x][1] >= elev[l][1]
             && client->server->map[y][x][2] >= elev[l][2]
@@ -32,27 +35,30 @@ static int meet_conditions(zappy_client_t *client, int elevation)
     return 0;
 }
 
-static int can_elevate(zappy_client_t *client, int elevation)
+static int can_elevate(zappy_client_t *client, int elevation, int *pls)
 {
-    return client->player.lvl < 8 && meet_conditions(client, elevation);
+    return client->player.lvl < 8 && meet_conditions(client, elevation, pls);
 }
 
 int can_elevation_start(zappy_client_t *client)
 {
-    if (already_incantating(client) || !can_elevate(client, 0)) {
+    int pls = 0;
+
+    if (already_incantating(client) || !can_elevate(client, 0, &pls)) {
         dprintf(client->sockfd, "ko\n");
         return 0;
     }
     graphical_pic(client->server, client);
-    client->player.elevation = 1;
-    for (int i = 0; i < ZAPPY_SERVER_MAX_CLIENTS; ++i) {
+    for (int i = 0; i < ZAPPY_SERVER_MAX_CLIENTS && pls > 0; ++i) {
         if (player_equals_incantation(client, &client->server->clients[i], 0)
                 && client != &client->server->clients[i]) {
+            --pls;
             client->server->clients[i].player.elevation = 1;
             add_player_command(&client->server->clients[i]
                     , &client->server->incantation_wait, NULL);
         }
     }
+    client->player.elevation = 1;
     return 1;
 }
 
@@ -75,7 +81,7 @@ static int win_detector(zappy_client_t *client)
 
 void player_incantation(zappy_client_t *client, char *)
 {
-    if (!can_elevate(client, 1)) {
+    if (!can_elevate(client, 1, NULL)) {
         dprintf(client->sockfd, "ko\n");
         graphical_pie(client->server, &client->player, 0);
         return;
