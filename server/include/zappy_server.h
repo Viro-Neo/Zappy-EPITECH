@@ -11,7 +11,7 @@
     #define ZAPPY_SERVER_MAX_CLIENTS 100
     #define ZAPPY_SERVER_BUFFER_SIZE 1024
     #define ZAPPY_SERVER_GRAPHICAL_COMMANDS_COUNT 9
-    #define ZAPPY_SERVER_PLAYER_COMMANDS_COUNT 10
+    #define ZAPPY_SERVER_PLAYER_COMMANDS_COUNT 11
     #define ZAPPY_SERVER_FOOD_UNITS 126
     #define ZAPPY_SERVER_RESOURCES_UNITS 20
 
@@ -126,6 +126,7 @@ int can_elevation_start(zappy_client_t *client);
 void player_incantation(zappy_client_t *client, char *data);
 void player_inventory(zappy_client_t *client, char *data);
 void player_left(zappy_client_t *client, char *data);
+void player_look(zappy_client_t *client, char *data);
 void player_right(zappy_client_t *client, char *data);
 void player_set(zappy_client_t *client, char *data);
 void player_take(zappy_client_t *client, char *data);
@@ -151,6 +152,7 @@ int get_nb_players_team(zappy_server_t *server, zappy_team_t *team);
 
 void spawn_resources(zappy_server_t *server);
 int get_resource_index(const char *str);
+char *get_resource_name(int i);
 
 int time_is_up(zappy_server_t *server, struct timespec ts, double time_limit);
 struct timeval get_remaining_time(zappy_server_t *server, struct timespec ts

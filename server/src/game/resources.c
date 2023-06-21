@@ -58,3 +58,22 @@ int get_resource_index(const char *str)
         return 6;
     return -1;
 }
+
+char *get_resource_name(int i)
+{
+    if (i == 0)
+        return "food";
+    if (i == 1)
+        return "linemate";
+    if (i == 2)
+        return "deraumere";
+    if (i == 3)
+        return "sibur";
+    if (i == 4)
+        return "mendiane";
+    if (i == 5)
+        return "phiras";
+    if (i == 6)
+        return "thystame";
+    return "";
+}

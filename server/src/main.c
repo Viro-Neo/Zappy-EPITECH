@@ -29,9 +29,10 @@ static void zappy_init_player_commands(zappy_server_t *server)
             , 300, player_incantation, can_elevation_start };
     pcmds[5] = (zappy_pcmd_t){ "Inventory", 1, player_inventory, NULL };
     pcmds[6] = (zappy_pcmd_t){ "Left", 7, player_left, NULL };
-    pcmds[7] = (zappy_pcmd_t){ "Right", 7, player_right, NULL };
-    pcmds[8] = (zappy_pcmd_t){ "Set", 7, player_set, NULL };
-    pcmds[9] = (zappy_pcmd_t){ "Take", 7, player_take, NULL };
+    pcmds[7] = (zappy_pcmd_t){ "Look", 7, player_look, NULL };
+    pcmds[8] = (zappy_pcmd_t){ "Right", 7, player_right, NULL };
+    pcmds[9] = (zappy_pcmd_t){ "Set", 7, player_set, NULL };
+    pcmds[10] = (zappy_pcmd_t){ "Take", 7, player_take, NULL };
     server->incantation_wait = (zappy_pcmd_t){ "\0", 300, NULL, NULL };
 }
 
