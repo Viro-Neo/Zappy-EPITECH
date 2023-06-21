@@ -25,8 +25,11 @@ zappy_player_t *get_player_by_id(zappy_server_t *server, int id)
 void add_player_command(zappy_client_t* client, zappy_pcmd_t *pcmd, char *data)
 {
     int i = 0;
-    int data_len = strlen(data);
+    int data_len = data != NULL ? strlen(data) : 0;
 
+    if (pcmd->start != NULL && !pcmd->start(client)) {
+        return;
+    }
     data_len = (data_len > 9) ? 9 : data_len;
     for (; i < 10; ++i) {
         if (client->player.cmds[i].pcmd == NULL) {
@@ -44,7 +47,26 @@ void add_player_command(zappy_client_t* client, zappy_pcmd_t *pcmd, char *data)
 void kill_player(zappy_client_t *client)
 {
     if (client->player.id != 0) {
-        dprintf(client->sockfd, "dead\n");
+        if (!client->sockclose) {
+            dprintf(client->sockfd, "dead\n");
+        }
+        graphical_pdi(client->server, &client->player);
         memset(&client->player, 0, sizeof(client->player));
     }
+}
+
+int get_nb_players_team(zappy_server_t *server, zappy_team_t *team)
+{
+    zappy_client_t *client = NULL;
+    int nb = 0;
+
+    for (int i = 0; i < ZAPPY_SERVER_MAX_CLIENTS; ++i) {
+        client = &server->clients[i];
+        if (!(client->sockfd < 0)
+                && client->player.id != 0
+                && client->player.team == team) {
+            ++nb;
+        }
+    }
+    return nb;
 }

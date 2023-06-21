@@ -8,22 +8,22 @@
 all:	zappy_ai zappy_gui zappy_server
 
 zappy_ai:
-#	make -C ai/
+	make -C client_zappy/
 
 zappy_gui:
-#	make -C gui/
+	make -C gui_zappy/
 
 zappy_server:
 	make -C server/
 
 clean:
-#	make clean -C ai/
-#	make clean -C gui/
+	make clean -C client_zappy/
+	make clean -C gui_zappy/
 	make clean -C server/
 
 fclean:	clean
-#	make fclean -C ai/
-#	make fclean -C gui/
+	make fclean -C client_zappy/
+	make fclean -C gui_zappy/
 	make fclean -C server/
 
 re:	fclean all

@@ -1,9 +1,7 @@
 from inventory import check_inventory
 from inventory import ritual_needs
-
-import threading
+from broadcast import check_broadcast_pattern
 from commands.movement_commands import *
-
 
 def decide_forward(client, response: str):
     pass
@@ -42,10 +40,10 @@ def decide_look(client, response: str):
 
 def decide_inventory(client, response: str):
     client.missing = check_inventory(client, response)
-    print("Should make decision based on inventory")
+    
 
 def decide_broadcast(client, response: str):
-    pass
+    check_broadcast_pattern(response, client)
 
 def decide_connect_nbr(client, response: str):
     pass

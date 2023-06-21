@@ -10,16 +10,15 @@
 #include <string.h>
 #include "zappy_server.h"
 
-static zappy_team_t *create_team(zappy_server_t *server, char *team_name)
+static zappy_team_t *create_team(char *team_name)
 {
     zappy_team_t *team = malloc(sizeof(zappy_team_t));
     char *name = strdup(team_name);
 
     if (team != NULL && name != NULL) {
-        if (strcmp(name, "GRAPHIC") != 0) {
-            team->name = name;
-            team->slot = server->clientsNb;
-            team->next = NULL;
+        memset(team, 0, sizeof(*team));
+        team->name = name;
+        if (strcmp(team_name, "GRAPHIC") != 0) {
             return team;
         } else {
             dprintf(2, "An internal error has occurred: GRAPHIC is reserved\n");
@@ -39,7 +38,7 @@ static int create_default_teams(zappy_server_t *server)
 
     for (int i = 0; i < 4; ++i) {
         team_name[4] = '1' + i;
-        *next_team = create_team(server, team_name);
+        *next_team = create_team(team_name);
         if (*next_team == NULL) {
             return 0;
         }
@@ -60,7 +59,7 @@ int parse_team_names(char *argv[], zappy_server_t *server)
         }
     }
     for (; (argv[i] != NULL && argv[i][0] != '-'); ++i) {
-        *next_team = create_team(server, argv[i]);
+        *next_team = create_team(argv[i]);
         if (*next_team == NULL) {
             return 0;
         }
@@ -93,6 +92,7 @@ void free_teams(zappy_server_t *server)
     while (next_team != NULL) {
         team = next_team;
         next_team = team->next;
+        free_eggs(team);
         free(team->name);
         free(team);
     }

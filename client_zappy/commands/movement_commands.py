@@ -1,7 +1,7 @@
 import threading
 
 def send_forward_command(client):
-    command = "USER"
+    command = "Forward"
     client.write_response_to_socket(command)
 
 
