@@ -6,7 +6,7 @@
 */
 
 #include <stdio.h>
-#include "zappy_ server.h"
+#include "zappy_server.h"
 
 void graphical_tna(zappy_client_t *client, char *)
 {
