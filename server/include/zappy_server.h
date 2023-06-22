@@ -130,7 +130,7 @@ void player_look(zappy_client_t *client, char *data);
 void player_right(zappy_client_t *client, char *data);
 void player_set(zappy_client_t *client, char *data);
 void player_take(zappy_client_t *client, char *data);
-int broadcast(zappy_client_t *client);
+int broadcast(zappy_client_t *client, char *data);
 int check_direction(zappy_client_t *cli, zappy_client_t *client);
 void print_direction_nord(zappy_client_t *cli, int x, int y);
 void print_direction_east(zappy_client_t *cli, int x, int y);

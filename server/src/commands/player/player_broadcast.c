@@ -26,7 +26,7 @@ int check_direction(zappy_client_t *cli, zappy_client_t *client)
         print_direction_west(cli, x, y);
 }
 
-int broadcast(zappy_client_t *client)
+int broadcast(zappy_client_t *client, char *data)
 {
     zappy_client_t *cli = NULL;
     for (int i = 0; i < ZAPPY_SERVER_MAX_CLIENTS; ++i) {
@@ -34,6 +34,7 @@ int broadcast(zappy_client_t *client)
         if (cli->sockfd != client->sockfd) {
             dprintf(cli->sockfd, "message ");
             check_direction(cli, client);
+            dprintf(cli->sockfd, "%s\n", data);
         }
     }
 }
