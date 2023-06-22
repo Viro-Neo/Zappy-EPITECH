@@ -58,7 +58,6 @@ class Client:
     def write_response_to_socket(self, response: str):
         try:
             self.sock.send(response.encode())
-            print("Response sent successfully.")
         except Exception as e:
             print(f"Error sending response: {str(e)}")
             exit(84)

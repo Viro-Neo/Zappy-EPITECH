@@ -12,31 +12,44 @@ def decide_right(client, response: str):
 def decide_left(client, response: str):
     pass
 
+from commands.movement_commands import send_forward_command, send_left_command, send_right_command
+
 def decide_look(client, response: str):
-    response = "stone, stone, item,,,,,,,"  # client.receive_server_response()
     response_list = [x.strip() for x in response.split(',')]
     print(response_list)
-    nearest_food = None
+    nearest_food = None # replace with missing
     nearest_distance = float('inf')
     starting_position = response_list.index("stone")
     print("I go forward first of all")
     send_forward_command(client)
+
     for index, tile in enumerate(response_list):
         if tile in client.missing:
             distance = abs(starting_position - index)
             if distance < nearest_distance:
                 nearest_food = index
                 nearest_distance = distance
+
     if nearest_food is not None:
-        if nearest_food < starting_position:
-            send_left_command(client)
-            print("I go left")
-        elif nearest_food > starting_position:
-            send_forward_command(client)
-            print("I go forward")
+        if "food" in client.missing:
+            if nearest_food < starting_position:
+                send_left_command(client)
+                print("I go left")
+            elif nearest_food > starting_position:
+                send_forward_command(client)
+                print("I go forward")
+            else:
+                print("I go right")
+                send_right_command(client)
         else:
-            print("I go right")
-            send_right_command(client)
+            nearest_item = response_list[nearest_food]
+            print(f"I found the nearest {nearest_item}!")
+    else:
+        print("No missing items found in the visible tiles.")
+
+
+    decide_look(client, response)
+
 
 def decide_inventory(client, response: str):
     client.missing = check_inventory(client, response)

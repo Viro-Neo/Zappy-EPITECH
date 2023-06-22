@@ -10,7 +10,6 @@ def network_loop(client):
         
         while True:
             # Handle sending commands here
-            print("atempting to send forward command")
             send_forward_command(client)
             send_left_command(client)
             send_right_command(client)
