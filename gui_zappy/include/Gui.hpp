@@ -9,10 +9,13 @@
     #define B_YEP_400_PAR_4_1_ZAPPY_AURELIEN_DUVAL_GUI_HPP
 
     #include <exception>
+    #include <Map.hpp>
+    #include <SFML/Graphics.hpp>
     #include "GetOpt.hpp"
     #include "ServerCommunication.hpp"
     #include <iostream>
     #include <unistd.h>
+    #include <memory>
 
 class Gui {
     public:
@@ -21,6 +24,7 @@ class Gui {
         ~Gui() = default;
         void printUsage();
         void initGui();
+        void guiLoop();
         std::string getPort() const;
         std::string getHost() const;
 
@@ -28,6 +32,8 @@ class Gui {
         std::string _port;
         std::string _host;
         ServerCommunication _comm;
+        sf::RenderWindow _win;
+        Map _map;
 };
 
 #endif //B_YEP_400_PAR_4_1_ZAPPY_AURELIEN_DUVAL_GUI_HPP

@@ -9,7 +9,9 @@
 #define MAP_HPP_
 #include <SFML/Graphics.hpp>
 #include <vector>
-typedef struct Tile {
+
+
+struct Tile {
     int FOOD;
     int LINEMATE;
     int DERAUMERE;
@@ -21,13 +23,18 @@ typedef struct Tile {
 };
 class Map : public sf::Drawable, public sf::Transformable {
     public:
-        Map(int sizeX, int sizeY);
+        Map(int sizeX = 100, int sizeY = 100);
         ~Map();
         bool updateMap(std::vector<std::string> bct);
         bool updateTexture();
+        int resizeMap(int sizeX, int sizeY);
     protected:
     private:
-        
+        virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const {
+                states.transform *= getTransform();
+                //states.texture = &_tileset;
+                target.draw(_mapRender, states);
+        }
         int _sizeX;
         int _sizeY;
         sf::VertexArray _mapRender;

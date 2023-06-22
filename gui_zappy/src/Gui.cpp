@@ -7,7 +7,7 @@
 
 #include "Gui.hpp"
 
-Gui::Gui(int ac, char **av)
+Gui::Gui(int ac, char **av) : _win(sf::VideoMode(1300, 600), "Zappy")
 {
     if (ac == 2 && std::string(av[1]) == "-help")
         throw std::invalid_argument("Help");
@@ -35,10 +35,35 @@ void Gui::initGui()
         std::cerr << e.what() << '\n';
     }
     this->_comm.writeToServer("msz\n");
-    sleep(2);
     this->_comm.readFromServer();
     std::string mapSize = this->_comm.popCmd();
-    printf("mapSize is %s\n", mapSize.data());
+    while (mapSize != "" && mapSize.substr(0, 3) != "msz")
+    {
+        mapSize = this->_comm.popCmd();
+    }
+    int firstArg = mapSize.find(' ') + 1;
+    int width = atoi( mapSize.substr(firstArg, mapSize.find(' ', firstArg) - firstArg).data());
+    int secondArg = mapSize.find(' ', firstArg) + 1;
+    int height = atoi(mapSize.substr(secondArg, mapSize.find(' ', secondArg) - secondArg).data());
+    this->_map.resizeMap(10, 10);
+    this->_map.updateTexture();
+}
+
+void Gui::guiLoop()
+{
+    while (this->_win.isOpen()) {
+        sf::Event event;
+        while (this->_win.pollEvent(event))
+        {
+            if(event.type == sf::Event::Closed)
+                this->_win.close();
+        }
+        this->_win.clear(sf::Color::Black);
+
+        this->_win.draw(this->_map);
+
+        this->_win.display();
+    }
 }
 
 std::string Gui::getPort() const

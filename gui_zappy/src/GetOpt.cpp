@@ -20,11 +20,11 @@ GetOpt::GetOpt(int ac, char **av)
             if (i + 1 < ac)
                 _host = av[i + 1];
             else
-                _host = "localhost";
+                _host = "127.0.0.1";
         }
     }
     if (_host.empty())
-        _host = "localhost";
+        _host = "127.0.0.1";
 }
 
 std::string GetOpt::getPort() const

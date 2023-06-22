@@ -18,10 +18,12 @@ ServerCommunication::~ServerCommunication()
 
 void ServerCommunication::connectToServer(void)
 {
-    this->status = this->_clientSocket.connect(this->_host, std::atoi(this->_port.data()));
+    this->status = this->_clientSocket.connect(sf::IpAddress(this->_host), std::atoi(this->_port.data()));
     if (this->status != sf::Socket::Done) {
         throw std::exception(); //TODO(zach) : do error handling
     }
+    this->readFromServer();
+    this->writeToServer("GRAPHIC\n");
 }
 
 std::string ServerCommunication::popCmd()
@@ -44,9 +46,9 @@ int ServerCommunication::readFromServer()
     }
     result = msg;
     int size = 0;
-    while (result != "" || result.find('\n') == std::string::npos) {
+    while (result.find('\n', size) != std::string::npos) {
         int index = result.find('\n', size);
-        this->_cmdList.push_back(result.substr(size, index - 1));
+        this->_cmdList.push_back(result.substr(size, index - size));
         size = index + 1;
     }
     return 0;
