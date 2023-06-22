@@ -25,6 +25,8 @@ GetOpt::GetOpt(int ac, char **av)
     }
     if (_host.empty())
         _host = "127.0.0.1";
+    if (_port.empty())
+        throw std::invalid_argument("Invalid argument");
 }
 
 std::string GetOpt::getPort() const
