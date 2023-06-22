@@ -12,6 +12,7 @@ SRCNAME =	main	\
 			GetOpt	\
 			Map	\
 			ServerCommunication\
+			Player\
 
 SRC =	$(addprefix src/, $(addsuffix .cpp, $(SRCNAME)))
 OBJ =	$(SRC:.cpp=.o)

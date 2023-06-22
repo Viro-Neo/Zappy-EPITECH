@@ -9,7 +9,7 @@
 #define MAP_HPP_
 #include <SFML/Graphics.hpp>
 #include <vector>
-
+#include "Player.hpp"
 
 struct Tile {
     int FOOD;
@@ -19,7 +19,7 @@ struct Tile {
     int MENDIANE;
     int PHIRAS;
     int THYSTAME;
-    bool PLAYER;
+    std::vector<Player> PLAYER;
 };
 class Map : public sf::Drawable, public sf::Transformable {
     public:
@@ -28,6 +28,9 @@ class Map : public sf::Drawable, public sf::Transformable {
         bool updateMap(std::vector<std::string> bct);
         bool updateTexture();
         int resizeMap(int sizeX, int sizeY);
+        void moveMap(int , int);
+        void zoom(bool zoomin);
+
     protected:
     private:
         virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const {
@@ -43,6 +46,7 @@ class Map : public sf::Drawable, public sf::Transformable {
         int _squareSize;
         sf::Texture _tileset;
         sf::Vector2u _tileSize;
+        sf::Vector2u pos;
 };
 
 
