@@ -9,3 +9,5 @@ cmake-build-debug
 zappy_gui
 .vscode
 *.pyc
+*~
+.gitignore
