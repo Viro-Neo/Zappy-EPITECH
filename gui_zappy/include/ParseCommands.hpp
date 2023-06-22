@@ -28,7 +28,6 @@ public:
 private:
     std::string _command;
     std::list<std::string> _arguments;
-    // std::map<std::string, void (fct *)(std::list<std::string> arg)> _map;
 };
 
 #endif //B_YEP_400_PAR_4_1_ZAPPY_AURELIEN_DUVAL_PARSECOMMANDS_HPP
