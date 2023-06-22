@@ -32,6 +32,7 @@ int broadcast(zappy_client_t *client)
     for (int i = 0; i < ZAPPY_SERVER_MAX_CLIENTS; ++i) {
         cli = &client->server->clients[i];
         if (cli->sockfd != client->sockfd) {
+            dprintf(cli->sockfd, "message ");
             check_direction(cli, client);
         }
     }
