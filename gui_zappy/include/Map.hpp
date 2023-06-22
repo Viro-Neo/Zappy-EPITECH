@@ -47,6 +47,7 @@ class Map : public sf::Drawable, public sf::Transformable {
         sf::Texture _tileset;
         sf::Vector2u _tileSize;
         sf::Vector2u pos;
+        std::vector<Player> playerList;
 };
 
 
