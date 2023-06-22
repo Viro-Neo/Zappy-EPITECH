@@ -17,6 +17,14 @@ def network_loop(client):
             send_inventory_command(client)
             send_broadcast_text_command(client)
             break  # Remove this line once sending commands is implemented
+            if client.status == SETTING:
+                set_needed_items()
+                continue
+            if client.status == JOINING:
+                join_incant()
+                continue
+            send_look_command()
+            send_inventory_command()
 
         #response_thread.join()
         client.sock.close()
