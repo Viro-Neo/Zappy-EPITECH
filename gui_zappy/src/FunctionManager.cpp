@@ -55,179 +55,141 @@ void FunctionManager::setFct(const std::map<std::string, void (*)(std::list<std:
     _fct = fct;
 }
 
-void FunctionManager::msz(std::list<std::string> arg, Map &myMap)
+void FunctionManager::msz(std::list<std::string> arg, Map &myMap) // msz x y
 {
-    //std::string x;
-    //std::string y;
-
     if (arg.size() != 2)
         return;
-    //x = arg.front();
-    //arg.pop_front();
-    //y = arg.front();
 }
 
-void FunctionManager::bct(std::list<std::string> arg, Map &myMap)
+void FunctionManager::bct(std::list<std::string> arg, Map &myMap) // bct x y q0 q1 q2 q3 q4 q5 q6 (also looped for each tile if needed)
 {
-    //std::string x;
-    //std::string y;
-    //std::list<std::string> ressources = { "food", "linemate", "deraumere",
-    //                                      "sibur", "mendiane", "phiras",
-    //                                      "thystame" };
-    //std::map<std::string, int> ressourcesMap;
-
     if (arg.size() != 9)
         return;
-    //x = arg.front();
-    //arg.pop_front();
-    //y = arg.front();
-    //arg.pop_front();
-    //for (auto &i : ressources) {
-    //    ressourcesMap[i] = std::stoi(arg.front());
-    //    arg.pop_front();
-    //}
 }
 
-void FunctionManager::tna(std::list<std::string> arg, Map &myMap)
+void FunctionManager::tna(std::list<std::string> arg, Map &myMap) // tna N (looped for each team)
 {
-    //std::string teamName;
-
     if (arg.size() != 1)
         return;
-    //teamName = arg.front();
 }
 
-void FunctionManager::pnw(std::list<std::string> arg, Map &myMap)
+void FunctionManager::pnw(std::list<std::string> arg, Map &myMap) // pnw #n X Y O L N
 {
-    //std::string id;
-    //std::list<std::string> pos = { "x", "y" };
-    //std::map<std::string, std::string> posMap;
-    //std::string orientation;
-    //std::string level;
-    //std::string teamName;
-
     if (arg.size() != 6)
         return;
-    //id = arg.front();
-    //arg.pop_front();
-    //for (auto &i : pos) {
-    //    posMap[i] = arg.front();
-    //    arg.pop_front();
-    //}
-    //orientation = arg.front();
-    //arg.pop_front();
-    //level = arg.front();
-    //arg.pop_front();
-    //teamName = arg.front();
 }
 
-void FunctionManager::ppo(std::list<std::string> arg, Map &myMap)
+void FunctionManager::ppo(std::list<std::string> arg, Map &myMap) // ppo #n X Y O
 {
     if (arg.size() != 4)
         return;
 }
 
-void FunctionManager::plv(std::list<std::string> arg, Map &myMap)
+void FunctionManager::plv(std::list<std::string> arg, Map &myMap) // plv #n L
 {
     if (arg.size() != 2)
         return;
 }
 
-void FunctionManager::pin(std::list<std::string> arg, Map &myMap)
+void FunctionManager::pin(std::list<std::string> arg, Map &myMap) // pin #n X Y q0 q1 q2 q3 q4 q5 q6
 {
     if (arg.size() != 10)
         return;
 }
 
-void FunctionManager::pex(std::list<std::string> arg, Map &myMap)
+void FunctionManager::pex(std::list<std::string> arg, Map &myMap) // pex #n
 {
     if (arg.size() != 1)
         return;
 }
 
-void FunctionManager::pbc(std::list<std::string> arg, Map &myMap)
+void FunctionManager::pbc(std::list<std::string> arg, Map &myMap) // pbc #n M
 {
     if (arg.size() != 2)
         return;
 }
 
-void FunctionManager::pic(std::list<std::string> arg, Map &myMap)
+void FunctionManager::pic(std::list<std::string> arg, Map &myMap) // pic X Y L #n #n #n (looped for each player in the tile)
+{
+    if (arg.size() != 5)
+        return;
+}
 {
 }
 
-void FunctionManager::pie(std::list<std::string> arg, Map &myMap)
+void FunctionManager::pie(std::list<std::string> arg, Map &myMap) // pie X Y R (1 if win, 0 if loose)
 {
     if (arg.size() != 3)
         return;
 }
 
-void FunctionManager::pfk(std::list<std::string> arg, Map &myMap)
+void FunctionManager::pfk(std::list<std::string> arg, Map &myMap) // pfk #n
 {
     if (arg.size() != 1)
         return;
 }
 
-void FunctionManager::pdr(std::list<std::string> arg, Map &myMap)
+void FunctionManager::pdr(std::list<std::string> arg, Map &myMap) // pdr #n R
 {
     if (arg.size() != 2)
         return;
 }
 
-void FunctionManager::pgt(std::list<std::string> arg, Map &myMap)
+void FunctionManager::pgt(std::list<std::string> arg, Map &myMap) // pgt #n R
 {
     if (arg.size() != 2)
         return;
 }
 
-void FunctionManager::pdi(std::list<std::string> arg, Map &myMap)
+void FunctionManager::pdi(std::list<std::string> arg, Map &myMap) // pdi #n
 {
     if (arg.size() != 1)
         return;
 }
 
-void FunctionManager::enw(std::list<std::string> arg, Map &myMap)
+void FunctionManager::enw(std::list<std::string> arg, Map &myMap) // enw #e #n X Y
 {
     if (arg.size() != 4)
         return;
 }
 
-void FunctionManager::ebo(std::list<std::string> arg, Map &myMap)
+void FunctionManager::ebo(std::list<std::string> arg, Map &myMap) // ebo #e
 {
     if (arg.size() != 1)
         return;
 }
 
-void FunctionManager::edi(std::list<std::string> arg, Map &myMap)
+void FunctionManager::edi(std::list<std::string> arg, Map &myMap) // edi #e
 {
     if (arg.size() != 1)
         return;
 }
 
-void FunctionManager::sgt(std::list<std::string> arg, Map &myMap)
+void FunctionManager::sgt(std::list<std::string> arg, Map &myMap) // sgt T
 {
     if (arg.size() != 1)
         return;
 }
 
-void FunctionManager::seg(std::list<std::string> arg, Map &myMap)
+void FunctionManager::seg(std::list<std::string> arg, Map &myMap) // seg N
 {
     if (arg.size() != 1)
         return;
 }
 
-void FunctionManager::smg(std::list<std::string> arg, Map &myMap)
+void FunctionManager::smg(std::list<std::string> arg, Map &myMap) // smg M
 {
     if (arg.size() != 1)
         return;
 }
 
-void FunctionManager::suc(std::list<std::string> arg, Map &myMap)
+void FunctionManager::suc(std::list<std::string> arg, Map &myMap) // suc
 {
     if (!arg.empty())
         return;
 }
 
-void FunctionManager::sbp(std::list<std::string> arg, Map &myMap)
+void FunctionManager::sbp(std::list<std::string> arg, Map &myMap) // sbp
 {
     if (!arg.empty())
         return;
