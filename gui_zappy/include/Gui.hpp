@@ -23,12 +23,11 @@ class Gui {
         Gui() = default;
         Gui(int ac, char **av);
         ~Gui() = default;
-        void printUsage();
         void initGui();
         void guiLoop();
         std::string getPort() const;
         std::string getHost() const;
-        
+
 
     private:
         void eventHandler();

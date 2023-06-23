@@ -30,17 +30,10 @@ Gui::Gui(int ac, char **av) : _win(sf::VideoMode(1300, 600), "Zappy")
     std::cout << "Host: " << _host << std::endl;
 }
 
-void Gui::printUsage()
-{
-    std::cout << "USAGE: ./zappy_gui -p port -h machine" << std::endl;
-    std::cout << "\tport\tis the port number" << std::endl;
-    std::cout << "\tmachine\tis the name of the machine; localhost by default" << std::endl;
-}
-
 void Gui::initGui()
 {
     try {
-        this->_comm.connectToServer(); 
+        this->_comm.connectToServer();
     } catch(const std::exception& e) {
         std::cerr << e.what() << '\n';
     }
