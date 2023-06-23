@@ -49,7 +49,7 @@ public:
     static void sbp(std::list<std::string> arg, Map &myMap);
 
 private:
-    std::map<std::string, void (*fct)(std::list<std::string> arg, Map myMap)> _fct;
+    std::map<std::string, void (*)(std::list<std::string> arg, Map myMap)> _fct;
 };
 
 #endif //B_YEP_400_PAR_4_1_ZAPPY_AURELIEN_DUVAL_FUNCTIONMANAGER_HPP

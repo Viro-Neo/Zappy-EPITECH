@@ -59,6 +59,11 @@ void FunctionManager::msz(std::list<std::string> arg, Map &myMap) // msz x y
 {
     if (arg.size() != 2)
         return;
+    int width = std::stoi(arg.front());
+    arg.pop_front();
+    int height = std::stoi(arg.front());
+    myMap.resizeMap(width, height);
+    myMap.updateTexture();
 }
 
 void FunctionManager::bct(std::list<std::string> arg, Map &myMap) // bct x y q0 q1 q2 q3 q4 q5 q6 (also looped for each tile if needed)

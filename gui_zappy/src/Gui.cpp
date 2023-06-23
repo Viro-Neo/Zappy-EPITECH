@@ -7,16 +7,6 @@
 
 #include "Gui.hpp"
 
-void msz(std::list<std::string> argList, Map &myMap)
-{
-    if (argList.size() != 2)
-        throw std::exception();
-    int width = atoi(argList.front().data());
-    int height = atoi(argList.back().data());
-    myMap.resizeMap(width, height);
-    myMap.updateTexture();
-}
-
 Gui::Gui(int ac, char **av) : _win(sf::VideoMode(1300, 600), "Zappy")
 {
     if (ac == 2 && std::string(av[1]) == "-help")
@@ -51,7 +41,7 @@ void Gui::initGui()
     std::list<std::string> list;
     list.push_back(width);
     list.push_back(height);
-    msz(list, this->_map);
+    FunctionManager::msz(list, this->_map);
 }
 
 void Gui::guiLoop()

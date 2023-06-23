@@ -13,6 +13,7 @@
     #include <SFML/Graphics.hpp>
     #include "GetOpt.hpp"
     #include "ServerCommunication.hpp"
+    #include "FunctionManager.hpp"
     #include <iostream>
     #include <unistd.h>
     #include <memory>
