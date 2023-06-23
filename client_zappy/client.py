@@ -2,6 +2,7 @@ import socket
 import threading
 import re
 from command_response_actions_dict import *
+from commands.status import *
 
 class Client:
     def __init__(self, port, team, machine):
@@ -30,19 +31,16 @@ class Client:
         except Exception as e:
             print(f"Error connecting to server: {str(e)}")
             exit(84)
-
-            sock.connect(server_address)
-            print(f"connected to server {self.machine} on port {self.port}")
-        except:
-            print("Can't connect to server. Please try again later.\n")
     
     def get_response_continuously(self):
-        try:
-            response = self.sock.recv(1024).decode()
-            print(f"Got a continuous response : {response}")
-            self.check_response(response)
-        except Exception as e:
-            print(f"Error receiving response: {str(e)}")
+        while self.status != DEAD:
+            try:
+                print("trying to get response from server")
+                response = self.sock.recv(1024).decode()
+                print(f"Got a continuous response : {response}")
+                self.check_response(response)
+            except Exception as e:
+                print(f"Error receiving response: {str(e)}")
     
     def check_response(self, response: str) -> int:
         for cmd in self.cmd_buff:

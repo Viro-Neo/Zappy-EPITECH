@@ -13,13 +13,16 @@ def network_loop(client: Client):
             if client.status == DEAD:
                 break
             if client.status == SETTING:
-                set_needed_items()
+                if "Set" not in client.cmd_buff:
+                    set_needed_items()
                 continue
             if client.status == JOINING:
                 join_incant()
                 continue
-            send_look_command(client)
-            send_inventory_command(client)
+            if "Look" not in client.cmd_buff:
+                send_look_command(client)
+            if "Inventory" not in client.cmd_buff:
+                send_inventory_command(client)
 
         response_thread.join()
         client.sock.close()

@@ -32,6 +32,7 @@ def send_look_command(client):
     command = "Look"
 
     if len(client.cmd_buff) < 10:
+        print("Sending look command")
         client.cmd_buff.append("Look")
         client.write_response_to_socket(command)
 
@@ -40,6 +41,7 @@ def send_inventory_command(client) -> str:
     command = "Inventory"
 
     if len(client.cmd_buff) < 10:
+        print("Sending inventory command")
         client.cmd_buff.append("Inventory")
         client.write_response_to_socket(command)
 
@@ -47,5 +49,6 @@ def send_broadcast_text_command(client, text: str):
     command = "Broadcast" + text
 
     if len(client.cmd_buff) < 10:
+        print("Sending broadcast command")
         client.cmd_buff.append("Broadcast")
         client.write_response_to_socket(command)
