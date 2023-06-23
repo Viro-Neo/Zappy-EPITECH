@@ -47,10 +47,7 @@ static void register_team(zappy_client_t* client, char* data)
         player_join_team(client, team, egg);
     } else if (strcmp(data, "GRAPHIC") == 0) {
         client->graphic = 1;
-        graphical_msz(client, NULL);
-        graphical_sgt(client, NULL);
-        graphical_mct(client, NULL);
-        graphical_tna(client, NULL);
+        graphical_join(client);
     } else {
         dprintf(client->sockfd, "ko\n");
     }

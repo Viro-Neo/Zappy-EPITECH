@@ -8,10 +8,10 @@
 #include <stdlib.h>
 #include "zappy_server.h"
 
-zappy_egg_t *spawn_egg(zappy_server_t *server, zappy_team_t *team)
+zappy_egg_t *spawn_egg(zappy_client_t *client)
 {
     static int egg_id = 0;
-    zappy_egg_t **egg = &team->eggs;
+    zappy_egg_t **egg = &client->player.team->eggs;
 
     while (*egg != NULL) {
         egg = &(*egg)->next;
@@ -21,10 +21,11 @@ zappy_egg_t *spawn_egg(zappy_server_t *server, zappy_team_t *team)
         return NULL;
     }
     (*egg)->id = ++egg_id;
-    (*egg)->x = rand() % server->width;
-    (*egg)->y = rand() % server->height;
+    (*egg)->player_id = client->player.id;
+    (*egg)->x = client->player.x;
+    (*egg)->y = client->player.y;
     (*egg)->next = NULL;
-    ++team->slot;
+    ++client->player.team->slot;
     return (*egg);
 }
 

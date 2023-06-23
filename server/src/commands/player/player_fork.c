@@ -16,11 +16,11 @@ int egg_laying(zappy_client_t *client)
 
 void player_fork(zappy_client_t *client, char *)
 {
-    zappy_egg_t *egg = spawn_egg(client->server, client->player.team);
+    zappy_egg_t *egg = spawn_egg(client);
 
     if (egg != NULL) {
         dprintf(client->sockfd, "ok\n");
-        graphical_enw(client->server, &client->player, egg);
+        graphical_enw(client->server, egg);
     } else {
         dprintf(client->sockfd, "ko\n");
     }

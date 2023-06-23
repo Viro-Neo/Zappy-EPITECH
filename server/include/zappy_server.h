@@ -26,6 +26,7 @@ typedef struct zappy_pcmd_s zappy_pcmd_t;
 
 typedef struct zappy_egg_s {
     int id;
+    int player_id;
     unsigned int x;
     unsigned int y;
     struct zappy_egg_s *next;
@@ -139,7 +140,7 @@ void print_direction_west(zappy_client_t *cli, int x, int y);
 void commands_graphical(zappy_client_t* client, char* data);
 void commands_player(zappy_client_t* client, char* data);
 
-zappy_egg_t *spawn_egg(zappy_server_t *server, zappy_team_t *team);
+zappy_egg_t *spawn_egg(zappy_client_t *client);
 zappy_egg_t* get_random_egg(zappy_team_t *team);
 void free_eggs(zappy_team_t *team);
 
@@ -165,8 +166,8 @@ struct timeval get_remaining_time(zappy_server_t *server, struct timespec ts
 
 void graphical_ebo(zappy_server_t *server, zappy_egg_t *egg);
 void graphical_edi(zappy_server_t *server, zappy_egg_t *egg);
-void graphical_enw(zappy_server_t *server, zappy_player_t *player
-, zappy_egg_t *egg);
+void graphical_enw(zappy_server_t *server, zappy_egg_t *egg);
+void graphical_enw_c(zappy_client_t *client, zappy_egg_t *egg);
 void graphical_pbc(zappy_server_t *server, zappy_player_t *player, char *br);
 void graphical_pdi(zappy_server_t *server, zappy_player_t *player);
 void graphical_pdr(zappy_server_t *server, zappy_player_t *player, int i);
@@ -176,8 +177,10 @@ void graphical_pgt(zappy_server_t *server, zappy_player_t *player, int i);
 void graphical_pic(zappy_server_t *server, zappy_client_t *client);
 void graphical_pie(zappy_server_t *server, zappy_player_t *player, int res);
 void graphical_pnw(zappy_server_t *server, zappy_player_t *player);
+void graphical_pnw_c(zappy_client_t *client, zappy_player_t *player);
 void graphical_seg(zappy_server_t *server, char *team_name);
 
+void graphical_join(zappy_client_t *client);
 void graphical_write(zappy_server_t *server, const char *fmt, ...);
 
 void read_client(zappy_client_t *client);
