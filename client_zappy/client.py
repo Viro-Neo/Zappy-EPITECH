@@ -38,7 +38,7 @@ class Client:
     
     def get_response_continuously(self):
         try:
-            response = self.receive_server_response()
+            response = self.sock.recv(1024).decode()
             print(f"Got a continuous response : {response}")
             self.check_response(response)
         except Exception as e:
