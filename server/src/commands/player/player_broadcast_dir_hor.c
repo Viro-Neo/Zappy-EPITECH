@@ -1,9 +1,10 @@
 /*
 ** EPITECH PROJECT, 2023
-** server
+** B-YEP-400-PAR-4-1-zappy-aurelien.duval
 ** File description:
-** player_broadcast_dir
+** player_broadcast_dir_hor.c
 */
+
 #include "zappy_server.h"
 
 void print_direction_nord(zappy_client_t *cli, int x, int y)

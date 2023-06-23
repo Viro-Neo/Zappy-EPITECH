@@ -1,17 +1,18 @@
 /*
 ** EPITECH PROJECT, 2023
-** server
+** B-YEP-400-PAR-4-1-zappy-aurelien.duval
 ** File description:
-** player_broadcast
+** player_broadcast.c
 */
+
 #include "zappy_server.h"
 
-
-int check_direction(zappy_client_t *cli, zappy_client_t *client)
+static int check_direction(zappy_client_t *cli, zappy_client_t *client)
 {
     int x = client->player.x - cli->player.x;
     int y = client->player.y - cli->player.y;
     int direction = x + y;
+
     if ((60 - direction) < direction) {
         x = -x;
         y = -y;
@@ -31,7 +32,9 @@ int broadcast(zappy_client_t *client, char *data)
     zappy_client_t *cli = NULL;
     for (int i = 0; i < ZAPPY_SERVER_MAX_CLIENTS; ++i) {
         cli = &client->server->clients[i];
-        if (cli->sockfd != client->sockfd) {
+        if (!(cli->sockfd < 0)
+                && cli->player.id != 0
+                && cli->sockfd != client->sockfd) {
             dprintf(cli->sockfd, "message ");
             check_direction(cli, client);
             dprintf(cli->sockfd, "%s\n", data);

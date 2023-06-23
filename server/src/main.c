@@ -21,18 +21,19 @@ static void zappy_init_player_commands(zappy_server_t *server)
 {
     zappy_pcmd_t *pcmds = server->player_commands;
 
-    pcmds[0] = (zappy_pcmd_t){ "Connect_nbr", 0, player_connect_nbr, NULL };
-    pcmds[1] = (zappy_pcmd_t){ "Eject", 7, player_eject, NULL };
-    pcmds[2] = (zappy_pcmd_t){ "Fork", 42, player_fork, egg_laying };
-    pcmds[3] = (zappy_pcmd_t){ "Forward", 7, player_forward, NULL };
-    pcmds[4] = (zappy_pcmd_t){ "Incantation"
+    pcmds[0] = (zappy_pcmd_t){ "Broadcast", 7, broadcast, NULL };
+    pcmds[1] = (zappy_pcmd_t){ "Connect_nbr", 0, player_connect_nbr, NULL };
+    pcmds[2] = (zappy_pcmd_t){ "Eject", 7, player_eject, NULL };
+    pcmds[3] = (zappy_pcmd_t){ "Fork", 42, player_fork, egg_laying };
+    pcmds[4] = (zappy_pcmd_t){ "Forward", 7, player_forward, NULL };
+    pcmds[5] = (zappy_pcmd_t){ "Incantation"
             , 300, player_incantation, can_elevation_start };
-    pcmds[5] = (zappy_pcmd_t){ "Inventory", 1, player_inventory, NULL };
-    pcmds[6] = (zappy_pcmd_t){ "Left", 7, player_left, NULL };
-    pcmds[7] = (zappy_pcmd_t){ "Look", 7, player_look, NULL };
-    pcmds[8] = (zappy_pcmd_t){ "Right", 7, player_right, NULL };
-    pcmds[9] = (zappy_pcmd_t){ "Set", 7, player_set, NULL };
-    pcmds[10] = (zappy_pcmd_t){ "Take", 7, player_take, NULL };
+    pcmds[6] = (zappy_pcmd_t){ "Inventory", 1, player_inventory, NULL };
+    pcmds[7] = (zappy_pcmd_t){ "Left", 7, player_left, NULL };
+    pcmds[8] = (zappy_pcmd_t){ "Look", 7, player_look, NULL };
+    pcmds[9] = (zappy_pcmd_t){ "Right", 7, player_right, NULL };
+    pcmds[10] = (zappy_pcmd_t){ "Set", 7, player_set, NULL };
+    pcmds[11] = (zappy_pcmd_t){ "Take", 7, player_take, NULL };
     server->incantation_wait = (zappy_pcmd_t){ "\0", 300, NULL, NULL };
 }
 
