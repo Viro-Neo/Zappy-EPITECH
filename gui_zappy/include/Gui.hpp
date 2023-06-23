@@ -13,9 +13,11 @@
     #include <SFML/Graphics.hpp>
     #include "GetOpt.hpp"
     #include "ServerCommunication.hpp"
+    #include "FunctionManager.hpp"
     #include <iostream>
     #include <unistd.h>
     #include <memory>
+    #include "FunctionManager.hpp"
     #include <list>
 
 class Gui {
@@ -28,7 +30,6 @@ class Gui {
         void guiLoop();
         std::string getPort() const;
         std::string getHost() const;
-        
 
     private:
         void eventHandler();
@@ -36,11 +37,11 @@ class Gui {
         std::string _host;
         ServerCommunication _comm;
         sf::RenderWindow _win;
+        FunctionManager _cmdHandler;
         Map _map;
         struct Tile _tileClicked;
         bool _interfaceOn;
 };
 
-void msz(std::list<std::string> argList, Map &myMap);
 
 #endif //B_YEP_400_PAR_4_1_ZAPPY_AURELIEN_DUVAL_GUI_HPP

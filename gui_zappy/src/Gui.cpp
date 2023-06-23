@@ -33,17 +33,10 @@ Gui::Gui(int ac, char **av) : _win(sf::VideoMode(1300, 600), "Zappy")
     std::cout << "Host: " << _host << std::endl;
 }
 
-void Gui::printUsage()
-{
-    std::cout << "USAGE: ./zappy_gui -p port -h machine" << std::endl;
-    std::cout << "\tport\tis the port number" << std::endl;
-    std::cout << "\tmachine\tis the name of the machine; localhost by default" << std::endl;
-}
-
 void Gui::initGui()
 {
     try {
-        this->_comm.connectToServer(); 
+        this->_comm.connectToServer();
     } catch(const std::exception& e) {
         std::cerr << e.what() << '\n';
     }
@@ -61,12 +54,18 @@ void Gui::initGui()
     std::list<std::string> list;
     list.push_back(width);
     list.push_back(height);
-    msz(list, this->_map);
+    FunctionManager::msz(list, this->_map);
 }
 
 void Gui::guiLoop()
 {
     while (this->_win.isOpen()) {
+        std::string cmd = "";
+        while ((cmd = this->_comm.popCmd()) != "")
+        {
+               
+        }
+        
         if (_interfaceOn == true)
             printf("tile is cooord is %d %d\n", this->_tileClicked.x, this->_tileClicked.y); 
         this->_map.updateTexture();

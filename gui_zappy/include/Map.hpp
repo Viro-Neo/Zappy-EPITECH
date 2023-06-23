@@ -31,6 +31,7 @@ class Map : public sf::Drawable, public sf::Transformable {
         bool updateTexture();
         int resizeMap(int sizeX, int sizeY);
         void moveMap(int , int);
+        void setTile(struct Tile t);
         void zoom(bool zoomin);
         struct Tile &getTileInfo(sf::Vector2i mousePos);
     protected:

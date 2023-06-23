@@ -90,6 +90,18 @@ void Map::moveMap(int lateral, int vertical)
     this->pos.y += vertical;
 }
 
+void Map::setTile(Tile t)
+{
+  Tile curr = this->_map.at(t.x + t.x * t.y);
+  curr.DERAUMERE = t.DERAUMERE;
+  curr.FOOD = t.FOOD;
+  curr.LINEMATE = t.LINEMATE;
+  curr.MENDIANE = t.MENDIANE;
+  curr.PHIRAS = t.PHIRAS;
+  curr.SIBUR = t.SIBUR;
+  curr.THYSTAME = t.THYSTAME;
+}
+
 void Map::zoom(bool zoomin)
 {
     if (zoomin)
