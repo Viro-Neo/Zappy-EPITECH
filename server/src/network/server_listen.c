@@ -45,8 +45,12 @@ static void find_timeout(zappy_server_t *server, struct timeval **timeout_ptr
     static struct timeval timeout;
     struct timeval remaining = get_remaining_time(server, ts, time_limit);
 
-    if (*timeout_ptr == NULL || (remaining.tv_sec < timeout.tv_sec
-            && remaining.tv_usec < timeout.tv_usec)) {
+    if ((*timeout_ptr == NULL
+            || remaining.tv_sec < timeout.tv_sec
+            || (remaining.tv_sec == timeout.tv_sec
+            && remaining.tv_usec < timeout.tv_usec))
+            && ((remaining.tv_sec > 0 && remaining.tv_usec >= 0)
+            || (remaining.tv_sec == 0 && remaining.tv_usec > 0))) {
         timeout.tv_sec = remaining.tv_sec;
         timeout.tv_usec = remaining.tv_usec;
         *timeout_ptr = &timeout;
