@@ -36,7 +36,7 @@ class Client:
         while self.status != DEAD:
             try:
                 print("trying to get response from server")
-                response = self.sock.recv(1024).decode()
+                response = self.sock.recv(16384).decode()
                 print(f"Got a continuous response : {response}")
                 self.check_response(response)
             except Exception as e:
