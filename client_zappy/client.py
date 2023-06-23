@@ -36,14 +36,12 @@ class Client:
             print("Can't connect to server. Please try again later.\n")
     
     def get_response_continuously(self):
-        while True:
-            try:
-                response = self.receive_server_response()
-                print(f"Got a continuous response : {response}")
-                self.check_response(response)
-            except Exception as e:
-                print(f"Error receiving response: {str(e)}")
-                break
+        try:
+            response = self.receive_server_response()
+            print(f"Got a continuous response : {response}")
+            self.check_response(response)
+        except Exception as e:
+            print(f"Error receiving response: {str(e)}")
     
     def check_response(self, response: str) -> int:
         for cmd in self.cmd_buff:

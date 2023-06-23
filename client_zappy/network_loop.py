@@ -10,6 +10,7 @@ def network_loop(client: Client):
         #response_thread.start()
         
         while True:
+            client.get_response_continuously()
             if client.status == SETTING:
                 set_needed_items()
                 continue
