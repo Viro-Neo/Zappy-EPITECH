@@ -70,4 +70,45 @@ Once connected, the client can send various commands to the server. Here are the
   
 # Zappy Server
   
-  In order to make zappy work, there is a server that receives requests from the IA and then it is visually shown on the GUI. Therefore the server is fundamental for the project. It receives the requests and sends back the responses.
+ The Zappy Server follows the following game rules:
+
+* The game is played on a 2D grid map.
+* Multiple teams can participate, each controlling one or more avatars.
+* Teams compete to gather resources and achieve the highest level.
+* The game is played in turns, with each team taking actions in a specific order.
+* Avatars can perform actions such as moving, collecting resources, and interacting with other avatars.
+* Players need to cooperate and communicate to optimize their actions and succeed in the game.
+
+
+## Server's communication
+
+The Zappy Server communicates with clients using a TCP/IP network protocol. Clients can send commands to the server, and the server responds accordingly.
+
+The server listens on a specific port for incoming client connections. Clients connect to the server using a TCP socket and communicate by sending text-based commands.
+
+# Zappy GUI
+
+The Zappy GUI allows you to configure certain settings to customize your experience. These settings include:
+
+* Server address: Specify the IP address or hostname of the Zappy Server you want to connect to.
+* Server port: Enter the port number on which the Zappy Server is listening.
+* Screen size: Adjust the size of the graphical window to fit your display.
+* You can usually find the configuration options in the GUI's settings or preferences menu.
+
+## User interface
+
+The Zappy GUI provides a user-friendly interface to interact with the Zappy Server. The interface typically includes the following components:
+
+* Game map: A visual representation of the virtual world where the game is played. It displays the terrain, avatars, resources, and other relevant elements.
+* Sidebar: Contains various panels with information such as player details, resource inventories, chat window, and game statistics.
+* Command input: A text field where users can enter commands to send to the Zappy Server.
+* Output log: Displays the server's responses and other messages for user feedback.
+* The interface may vary depending on the specific implementation of the Zappy GUI.
+
+# Credits
+* Aurélien Duval
+* Ulysse Villanueva
+* Victor Doucet
+* Van Do Pham
+* Zacharie Lacombe
+* Benjamin Besnainou
