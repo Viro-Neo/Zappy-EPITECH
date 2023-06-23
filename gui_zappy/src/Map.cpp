@@ -16,7 +16,17 @@ Map::Map(int sizeX, int sizeY) : _mapRender(sf::Quads, 0)
     this->pos = sf::Vector2u(0, 0);
     for (unsigned int i = 0; i < _sizeY; i++)
         for (unsigned int j = 0; j < _sizeX; j++) {
-            this->_map.push_back(Tile());
+            Tile tmp;
+            tmp.x = i;
+            tmp.y = j;
+            tmp.DERAUMERE = 0;
+            tmp.FOOD = 0;
+            tmp.LINEMATE = 0;
+            tmp.MENDIANE = 0;
+            tmp.PHIRAS = 0;
+            tmp.SIBUR = 0;
+            tmp.THYSTAME = 0;
+            this->_map.push_back(tmp);
         }
     this->_mapRender.resize(sizeX * sizeY * 4);
 }
@@ -32,8 +42,19 @@ int Map::resizeMap(int sizeX, int sizeY)
     this->_mapRender.resize(sizeX * sizeY * 4);
     this->_map.clear();
     for (unsigned int i = 0; i < _sizeY; i++)
-      for (unsigned int j = 0; j < _sizeX; j++)
-          this->_map.push_back(Tile());
+        for (unsigned int j = 0; j < _sizeX; j++) {
+            Tile tmp;
+            tmp.x = i;
+            tmp.y = j;
+            tmp.DERAUMERE = 0;
+            tmp.FOOD = 0;
+            tmp.LINEMATE = 0;
+            tmp.MENDIANE = 0;
+            tmp.PHIRAS = 0;
+            tmp.SIBUR = 0;
+            tmp.THYSTAME = 0;
+            this->_map.push_back(tmp);
+        }
     return 0;
 }
 
@@ -75,4 +96,15 @@ void Map::zoom(bool zoomin)
         this->_zoom += 0.1;
     else
         this->_zoom -= 0.1;
+}
+
+struct Tile &Map::getTileInfo(sf::Vector2i mousePos)
+{
+    for (int x = 0; x < this->_sizeX; x++)
+        for (int y = 0; y < this->_sizeY; y++) {
+            sf::Vertex *quad = &this->_mapRender[(x + y * _sizeX) * 4];
+            if (quad[0].position.x <= mousePos.x && quad[0].position.y <= mousePos.y && quad[2].position.x >= mousePos.x && quad[2].position.y >= mousePos.y)
+                return this->_map.at(x + y * _sizeX);
+        }
+    throw std::exception();
 }

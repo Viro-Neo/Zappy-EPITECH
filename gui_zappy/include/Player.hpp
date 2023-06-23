@@ -32,7 +32,9 @@ class Player {
     protected:
     private:
         sf::Vector2u pos;
-        int level;  
+        int level;
+        std::string _teamName;
+        bool _incantation;
 };
 
 #endif /* !PLAYER_HPP_ */

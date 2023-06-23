@@ -23,7 +23,7 @@ class Gui {
         Gui() = default;
         Gui(int ac, char **av);
         ~Gui() = default;
-        void printUsage();
+        static void printUsage();
         void initGui();
         void guiLoop();
         std::string getPort() const;
@@ -37,6 +37,8 @@ class Gui {
         ServerCommunication _comm;
         sf::RenderWindow _win;
         Map _map;
+        struct Tile _tileClicked;
+        bool _interfaceOn;
 };
 
 void msz(std::list<std::string> argList, Map &myMap);

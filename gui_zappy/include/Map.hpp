@@ -12,6 +12,8 @@
 #include "Player.hpp"
 
 struct Tile {
+    int x;
+    int y;
     int FOOD;
     int LINEMATE;
     int DERAUMERE;
@@ -30,7 +32,7 @@ class Map : public sf::Drawable, public sf::Transformable {
         int resizeMap(int sizeX, int sizeY);
         void moveMap(int , int);
         void zoom(bool zoomin);
-
+        struct Tile &getTileInfo(sf::Vector2i mousePos);
     protected:
     private:
         virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const {

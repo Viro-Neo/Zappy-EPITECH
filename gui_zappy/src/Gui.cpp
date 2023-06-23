@@ -17,6 +17,8 @@ void msz(std::list<std::string> argList, Map &myMap)
     myMap.updateTexture();
 }
 
+
+
 Gui::Gui(int ac, char **av) : _win(sf::VideoMode(1300, 600), "Zappy")
 {
     if (ac == 2 && std::string(av[1]) == "-help")
@@ -26,6 +28,7 @@ Gui::Gui(int ac, char **av) : _win(sf::VideoMode(1300, 600), "Zappy")
     _host = getOpt.getHost();
     _comm.setHost(_host);
     _comm.setPort(_port);
+    this->_interfaceOn = false;
     std::cout << "Port: " << _port << std::endl;
     std::cout << "Host: " << _host << std::endl;
 }
@@ -64,6 +67,8 @@ void Gui::initGui()
 void Gui::guiLoop()
 {
     while (this->_win.isOpen()) {
+        if (_interfaceOn == true)
+            printf("tile is cooord is %d %d\n", this->_tileClicked.x, this->_tileClicked.y); 
         this->_map.updateTexture();
         this->eventHandler();
         this->_win.clear(sf::Color::Black);
@@ -101,5 +106,17 @@ void Gui::eventHandler()
             this->_map.zoom(true);
         if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::X)
             this->_map.zoom(false);
+        if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+            try {
+                printf("hezre\n");
+                this->_tileClicked = this->_map.getTileInfo(sf::Mouse::getPosition(this->_win));
+                this->_interfaceOn = true;
+            } catch (std::exception &e) {
+                e.what();
+            }
+        }
+        if (sf::Mouse::isButtonPressed(sf::Mouse::Right)) {
+            this->_interfaceOn = false;
+        }
     }
 }
