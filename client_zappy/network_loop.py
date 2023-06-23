@@ -18,8 +18,8 @@ def network_loop(client: Client):
             if client.status == JOINING:
                 join_incant()
                 continue
-            send_look_command()
-            send_inventory_command()
+            send_look_command(client)
+            send_inventory_command(client)
 
         response_thread.join()
         client.sock.close()

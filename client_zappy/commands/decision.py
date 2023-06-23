@@ -5,7 +5,7 @@ from broadcast import check_broadcast_pattern
 from commands.movement_commands import *
 from commands.players_commands import *
 from commands.object_commands import *
-from status import *
+from commands.status import *
 
 def decide_forward(client, response: str):
     client.cmd_buff.remove("Forward")
