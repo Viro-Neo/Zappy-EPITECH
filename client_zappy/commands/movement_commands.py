@@ -1,7 +1,7 @@
 import threading
 
 def send_forward_command(client):
-    command = "Forward"
+    command = "Forward\n"
 
     if len(client.cmd_buff) < 10:
         client.cmd_buff.append("Forward")
@@ -9,14 +9,14 @@ def send_forward_command(client):
 
 
 def send_right_command(client):
-    command = "Right"
+    command = "Right\n"
 
     if len(client.cmd_buff) < 10:
         client.cmd_buff.append("Right")
         client.write_response_to_socket(command)
 
 def send_left_command(client):
-    command = "Left"
+    command = "Left\n"
 
     if len(client.cmd_buff) < 10:
         client.cmd_buff.append("Left")
@@ -29,7 +29,7 @@ def process_response(response):
     return response_table
 
 def send_look_command(client):
-    command = "Look"
+    command = "Look\n"
 
     if len(client.cmd_buff) < 10:
         print("Sending look command")
@@ -38,7 +38,7 @@ def send_look_command(client):
 
 
 def send_inventory_command(client) -> str:
-    command = "Inventory"
+    command = "Inventory\n"
 
     if len(client.cmd_buff) < 10:
         print("Sending inventory command")
@@ -46,7 +46,7 @@ def send_inventory_command(client) -> str:
         client.write_response_to_socket(command)
 
 def send_broadcast_text_command(client, text: str):
-    command = "Broadcast" + text
+    command = "Broadcast\n" + text
 
     if len(client.cmd_buff) < 10:
         print("Sending broadcast command")

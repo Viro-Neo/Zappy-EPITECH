@@ -20,39 +20,49 @@ def decide_look(client, response: str):
     client.cmd_buff.remove("Look")
     response_list = [x.strip() for x in response.split(',')]
     print(response_list)
-    nearest_food = None # replace with missing
+    nearest_item = None
     nearest_distance = float('inf')
-    starting_position = response_list.index("stone")
+    starting_position = response_list.index("linemate")
+
     print("I go forward first of all")
     send_forward_command(client)
 
     for index, tile in enumerate(response_list):
-        if tile in client.missing:
-            distance = abs(starting_position - index)
+        if tile in client.missing and tile != "food":
+            distance = starting_position - index
             if distance < nearest_distance:
-                nearest_food = index
+                nearest_item = tile
                 nearest_distance = distance
 
-    if nearest_food is not None:
-        if "food" in client.missing:
-            if nearest_food < starting_position:
+    if nearest_item is not None:
+        if nearest_item in ["linemate", "deraumere", "sibur", "mendiane", "phiras", "thystame"]:
+            print(f"I found the nearest {nearest_item}!")
+            send_take_object_command(client, nearest_item)
+        else:
+            if nearest_item < starting_position:
                 send_left_command(client)
                 print("I go left")
-            elif nearest_food > starting_position:
+            elif nearest_item > starting_position:
                 send_forward_command(client)
                 print("I go forward")
             else:
-                print("I go right")
                 send_right_command(client)
-        else:
-            nearest_item = response_list[nearest_food]
-            print(f"I found the nearest {nearest_item}!")
-            send_take_object_command(client, nearest_item)
+                print("I go right")
     else:
-        print("No missing items found in the visible tiles.")
-
+        for index, tile in enumerate(response_list):
+            if tile == "food":
+                distance = starting_position - index
+                if distance < nearest_distance:
+                    nearest_item = tile
+                    nearest_distance = distance
+        if nearest_item is not None:
+            print("I found the nearest food!")
+            send_take_object_command(client, "food")
+        else:
+            print("No missing items or food found in the visible tiles.")
 
     decide_look(client, response)
+
 
 
 def decide_inventory(client, response: str):
