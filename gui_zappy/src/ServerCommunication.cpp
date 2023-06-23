@@ -7,8 +7,7 @@
 
 #include "ServerCommunication.hpp"
 
-
-ServerCommunication::ServerCommunication(const std::string port, const std::string host) : _port(port), _host(host)
+ServerCommunication::ServerCommunication()
 {
 }
 
@@ -19,10 +18,11 @@ ServerCommunication::~ServerCommunication()
 
 void ServerCommunication::connectToServer(void)
 {
-    this->status = this->_clientSocket.connect(this->_host, std::atoi(this->_port.data()));
+    this->status = this->_clientSocket.connect(sf::IpAddress(this->_host), std::atoi(this->_port.data()));
     if (this->status != sf::Socket::Done) {
         throw std::exception(); //TODO(zach) : do error handling
     }
+    this->readFromServer();
     this->writeToServer("GRAPHIC\n");
 }
 
@@ -46,15 +46,27 @@ int ServerCommunication::readFromServer()
     }
     result = msg;
     int size = 0;
-    while (result != "" || result.find('\n') == std::string::npos) {
+    while (result.find('\n', size) != std::string::npos) {
         int index = result.find('\n', size);
-        this->_cmdList.push_back(result.substr(size, index - 1));
+        this->_cmdList.push_back(result.substr(size, index - size));
         size = index + 1;
     }
+    return 0;
 }
 
 int ServerCommunication::writeToServer(std::string cmd)
 {
-    if (this->_clientSocket.send(cmd.data(), 100) != sf::Socket::Done)
+    if (this->_clientSocket.send(cmd.data(), cmd.size() + 1) != sf::Socket::Done)
         throw std::exception(); //TODO(zach): do error handling
+    return 0;
+}
+
+void ServerCommunication::setPort(std::string port)
+{
+    this->_port = port;
+}
+
+void ServerCommunication::setHost(std::string host)
+{
+    this->_host = host;
 }

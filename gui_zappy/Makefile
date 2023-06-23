@@ -9,19 +9,24 @@ CC =	g++
 
 SRCNAME =	main	\
 			Gui		\
-			GetOpt
+			GetOpt	\
+			Map	\
+			ServerCommunication\
+			Player\
+
 SRC =	$(addprefix src/, $(addsuffix .cpp, $(SRCNAME)))
 OBJ =	$(SRC:.cpp=.o)
 
+CSFMLFLAGS	= -lsfml-audio -lsfml-graphics -lsfml-window -lsfml-network -lsfml-system
 CFLAGS	=	-W -Wall -Wextra
-CPPFLAGS +=	-I./include
+CPPFLAGS +=	-I include -fno-gnu-unique $(CSFMLFLAGS) 
 
 NAME =	zappy_gui
 
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	@$(CC) -o $(NAME) $(OBJ)
+	$(CC) -o $(NAME) $(OBJ) $(CPPFLAGS)
 	@mv $(NAME) ../
 
 clean:

@@ -11,6 +11,8 @@ int main(int ac, char **av)
 {
    try {
        Gui gui(ac, av);
+       gui.initGui();
+       gui.guiLoop();
    } catch (const std::exception &e) {
        std::cerr << e.what() << std::endl;
        Gui::printUsage();
