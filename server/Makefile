@@ -16,6 +16,8 @@ SRCS	=	src/commands/graphical/graphical_bct.c \
 			src/commands/graphical/graphical_sgt.c \
 			src/commands/graphical/graphical_sst.c \
 			src/commands/graphical/graphical_tna.c \
+			src/commands/player/player_broadcast_dir_hor.c \
+			src/commands/player/player_broadcast.c \
 			src/commands/player/player_connect_nbr.c \
 			src/commands/player/player_eject.c \
 			src/commands/player/player_fork.c \
@@ -37,6 +39,7 @@ SRCS	=	src/commands/graphical/graphical_bct.c \
 			src/graphical/events/graphical_ebo.c \
 			src/graphical/events/graphical_edi.c \
 			src/graphical/events/graphical_enw.c \
+			src/graphical/events/graphical_pbc.c \
 			src/graphical/events/graphical_pdi.c \
 			src/graphical/events/graphical_pdr.c \
 			src/graphical/events/graphical_pex.c \

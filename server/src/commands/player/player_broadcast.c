@@ -5,9 +5,10 @@
 ** player_broadcast.c
 */
 
+#include <stdio.h>
 #include "zappy_server.h"
 
-static int check_direction(zappy_client_t *cli, zappy_client_t *client)
+static void check_direction(zappy_client_t *cli, zappy_client_t *client)
 {
     int x = client->player.x - cli->player.x;
     int y = client->player.y - cli->player.y;
@@ -27,9 +28,10 @@ static int check_direction(zappy_client_t *cli, zappy_client_t *client)
         print_direction_west(cli, x, y);
 }
 
-int broadcast(zappy_client_t *client, char *data)
+void broadcast(zappy_client_t *client, char *data)
 {
     zappy_client_t *cli = NULL;
+
     for (int i = 0; i < ZAPPY_SERVER_MAX_CLIENTS; ++i) {
         cli = &client->server->clients[i];
         if (!(cli->sockfd < 0)
@@ -40,4 +42,5 @@ int broadcast(zappy_client_t *client, char *data)
             dprintf(cli->sockfd, "%s\n", data);
         }
     }
+    graphical_pbc(client->server, &client->player, data);
 }

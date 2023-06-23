@@ -130,8 +130,7 @@ void player_look(zappy_client_t *client, char *data);
 void player_right(zappy_client_t *client, char *data);
 void player_set(zappy_client_t *client, char *data);
 void player_take(zappy_client_t *client, char *data);
-int broadcast(zappy_client_t *client, char *data);
-int check_direction(zappy_client_t *cli, zappy_client_t *client);
+void broadcast(zappy_client_t *client, char *data);
 void print_direction_nord(zappy_client_t *cli, int x, int y);
 void print_direction_east(zappy_client_t *cli, int x, int y);
 void print_direction_sud(zappy_client_t *cli, int x, int y);
@@ -168,6 +167,7 @@ void graphical_ebo(zappy_server_t *server, zappy_egg_t *egg);
 void graphical_edi(zappy_server_t *server, zappy_egg_t *egg);
 void graphical_enw(zappy_server_t *server, zappy_player_t *player
 , zappy_egg_t *egg);
+void graphical_pbc(zappy_server_t *server, zappy_player_t *player, char *br);
 void graphical_pdi(zappy_server_t *server, zappy_player_t *player);
 void graphical_pdr(zappy_server_t *server, zappy_player_t *player, int i);
 void graphical_pex(zappy_server_t *server, zappy_player_t *player);

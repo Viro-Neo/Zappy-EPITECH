@@ -5,6 +5,7 @@
 ** player_broadcast_dir_hor.c
 */
 
+#include <stdio.h>
 #include "zappy_server.h"
 
 void print_direction_nord(zappy_client_t *cli, int x, int y)
@@ -22,7 +23,7 @@ void print_direction_nord(zappy_client_t *cli, int x, int y)
     if (x < 0 && y < 0)
         dprintf(cli->sockfd, "2, ");
     if (x > 0 && y < 0)
-        dprint(cli->sockfd, "4, ");
+        dprintf(cli->sockfd, "4, ");
     if (x < 0 && y > 0)
         dprintf(cli->sockfd, "8, ");
 }
@@ -42,7 +43,7 @@ void print_direction_east(zappy_client_t *cli, int x, int y)
     if (x < 0 && y < 0)
         dprintf(cli->sockfd, "4, ");
     if (x > 0 && y < 0)
-        dprint(cli->sockfd, "6, ");
+        dprintf(cli->sockfd, "6, ");
     if (x < 0 && y > 0)
         dprintf(cli->sockfd, "2, ");
 }
@@ -62,7 +63,7 @@ void print_direction_sud(zappy_client_t *cli, int x, int y)
     if (x < 0 && y < 0)
         dprintf(cli->sockfd, "6, ");
     if (x > 0 && y < 0)
-        dprint(cli->sockfd, "8, ");
+        dprintf(cli->sockfd, "8, ");
     if (x < 0 && y > 0)
         dprintf(cli->sockfd, "4, ");
 }
@@ -82,7 +83,7 @@ void print_direction_west(zappy_client_t *cli, int x, int y)
     if (x < 0 && y < 0)
         dprintf(cli->sockfd, "8, ");
     if (x > 0 && y < 0)
-        dprint(cli->sockfd, "2, ");
+        dprintf(cli->sockfd, "2, ");
     if (x < 0 && y > 0)
         dprintf(cli->sockfd, "6, ");
 }
