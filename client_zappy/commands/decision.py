@@ -47,6 +47,7 @@ def decide_look(client, response: str):
         else:
             nearest_item = response_list[nearest_food]
             print(f"I found the nearest {nearest_item}!")
+            send_take_object_command(client, nearest_item)
     else:
         print("No missing items found in the visible tiles.")
 
