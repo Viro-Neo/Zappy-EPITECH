@@ -10,14 +10,16 @@ class Client:
         self.machine = machine
         self.sock = None
         self.level = 1
+        self.inventory = init_items()
         self.missing = []
         self.cmd_buff = []
         self.direction = []
         self.direction_index = 0
         self.reposition = []
         self.reposition_index = 0
-        self.ready = 0
-        self.team_items = init_team_items()
+        self.setting_items = init_items()
+        self.status = 0
+        self.team_items = init_items()
 
     def connect_to_server(self):
         try:
@@ -60,12 +62,12 @@ class Client:
             print(f"Error sending response: {str(e)}")
             exit(84)
 
-def init_team_items():
-    team_items = {}
-    team_items["linemate"] = 0
-    team_items["deraumere"] = 0
-    team_items["sibur"] = 0
-    team_items["mendiane"] = 0
-    team_items["phiras"] = 0
-    team_items["thystame"] = 0
-    return team_items
+def init_items():
+    items = {}
+    items["linemate"] = 0
+    items["deraumere"] = 0
+    items["sibur"] = 0
+    items["mendiane"] = 0
+    items["phiras"] = 0
+    items["thystame"] = 0
+    return items
