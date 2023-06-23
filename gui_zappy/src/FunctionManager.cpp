@@ -223,8 +223,12 @@ void FunctionManager::smg(std::list<std::string> arg, Map &myMap)
 
 void FunctionManager::suc(std::list<std::string> arg, Map &myMap)
 {
+    if (!arg.empty())
+        return;
 }
 
 void FunctionManager::sbp(std::list<std::string> arg, Map &myMap)
 {
+    if (!arg.empty())
+        return;
 }
