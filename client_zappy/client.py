@@ -34,13 +34,15 @@ class Client:
     
     def get_response_continuously(self):
         while self.status != DEAD:
-            try:
-                print("trying to get response from server")
-                response = self.sock.recv(16384).decode()
-                print(f"Got a continuous response : {response}")
-                self.check_response(response)
-            except Exception as e:
-                print(f"Error receiving response: {str(e)}")
+            response = ""
+            print("trying to get response from server")
+            while response == "" or response[-1] != "\n":
+                try:
+                    response += self.sock.recv(1024).decode()
+                    self.check_response(response)
+                except Exception as e:
+                    print(f"Error receiving response: {str(e)}")
+            print(f"Got a continuous response : {response}")
     
     def check_response(self, response: str) -> int:
         for cmd in self.cmd_buff:
