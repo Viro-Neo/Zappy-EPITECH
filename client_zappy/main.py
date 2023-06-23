@@ -38,4 +38,5 @@ def main():
         sys.exit(84)
     client = Client(port, name, machine)
     client.connect_to_server()
+    client.write_response_to_socket(client.team + "\n")
     network_loop(client)
