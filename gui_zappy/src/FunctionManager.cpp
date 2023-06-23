@@ -57,26 +57,68 @@ void FunctionManager::setFct(const std::map<std::string, void (*)(std::list<std:
 
 void FunctionManager::msz(std::list<std::string> arg, Map &myMap)
 {
+    //std::string x;
+    //std::string y;
+
     if (arg.size() != 2)
         return;
+    //x = arg.front();
+    //arg.pop_front();
+    //y = arg.front();
 }
 
 void FunctionManager::bct(std::list<std::string> arg, Map &myMap)
 {
+    //std::string x;
+    //std::string y;
+    //std::list<std::string> ressources = { "food", "linemate", "deraumere",
+    //                                      "sibur", "mendiane", "phiras",
+    //                                      "thystame" };
+    //std::map<std::string, int> ressourcesMap;
+
     if (arg.size() != 9)
         return;
+    //x = arg.front();
+    //arg.pop_front();
+    //y = arg.front();
+    //arg.pop_front();
+    //for (auto &i : ressources) {
+    //    ressourcesMap[i] = std::stoi(arg.front());
+    //    arg.pop_front();
+    //}
 }
 
 void FunctionManager::tna(std::list<std::string> arg, Map &myMap)
 {
+    //std::string teamName;
+
     if (arg.size() != 1)
         return;
+    //teamName = arg.front();
 }
 
 void FunctionManager::pnw(std::list<std::string> arg, Map &myMap)
 {
+    //std::string id;
+    //std::list<std::string> pos = { "x", "y" };
+    //std::map<std::string, std::string> posMap;
+    //std::string orientation;
+    //std::string level;
+    //std::string teamName;
+
     if (arg.size() != 6)
         return;
+    //id = arg.front();
+    //arg.pop_front();
+    //for (auto &i : pos) {
+    //    posMap[i] = arg.front();
+    //    arg.pop_front();
+    //}
+    //orientation = arg.front();
+    //arg.pop_front();
+    //level = arg.front();
+    //arg.pop_front();
+    //teamName = arg.front();
 }
 
 void FunctionManager::ppo(std::list<std::string> arg, Map &myMap)
