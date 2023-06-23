@@ -10,6 +10,8 @@ def network_loop(client: Client):
         response_thread.start()
         
         while True:
+            if client.status == DEAD:
+                break
             if client.status == SETTING:
                 set_needed_items()
                 continue

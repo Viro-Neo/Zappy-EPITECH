@@ -97,7 +97,7 @@ def decide_incantation(client, response: str):
     client.level += 1
 
 def died(client, response: str):
-    pass
+    client.status = DEAD
 
 def decide_heard(client, response: str):
     check_broadcast_pattern(response, client)
