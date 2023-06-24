@@ -7,18 +7,6 @@
 
 #include "Gui.hpp"
 
-void msz(std::list<std::string> argList, Map &myMap)
-{
-    if (argList.size() != 2)
-        throw std::exception();
-    int width = atoi(argList.front().data());
-    int height = atoi(argList.back().data());
-    myMap.resizeMap(width, height);
-    myMap.updateTexture();
-}
-
-
-
 Gui::Gui(int ac, char **av) : _win(sf::VideoMode(1300, 600), "Zappy")
 {
     if (ac == 2 && std::string(av[1]) == "-help")
@@ -43,14 +31,14 @@ void Gui::initGui()
     this->_comm.writeToServer("msz\n");
     this->_comm.readFromServer();
     std::string mapSize = this->_comm.popCmd();
-    while (mapSize != "" && mapSize.substr(0, 3) != "msz")
+    while (!mapSize.empty() && mapSize.substr(0, 3) != "msz")
     {
         mapSize = this->_comm.popCmd();
     }
     int firstArg = mapSize.find(' ') + 1;
-    std::string width =  mapSize.substr(firstArg, mapSize.find(' ', firstArg) - firstArg).data();
+    std::string width =  mapSize.substr(firstArg, mapSize.find(' ', firstArg) - firstArg);
     int secondArg = mapSize.find(' ', firstArg) + 1;
-    std::string height = mapSize.substr(secondArg, mapSize.find(' ', secondArg) - secondArg).data();
+    std::string height = mapSize.substr(secondArg, mapSize.find(' ', secondArg) - secondArg);
     std::list<std::string> list;
     list.push_back(width);
     list.push_back(height);
@@ -60,14 +48,14 @@ void Gui::initGui()
 void Gui::guiLoop()
 {
     while (this->_win.isOpen()) {
-        std::string cmd = "";
-        while ((cmd = this->_comm.popCmd()) != "")
+        std::string cmd;
+        while (!(cmd = this->_comm.popCmd()).empty())
         {
-               
+
         }
-        
-        if (_interfaceOn == true)
-            printf("tile is cooord is %d %d\n", this->_tileClicked.x, this->_tileClicked.y); 
+        if (_interfaceOn) {
+            printf("tile is cooord is %d %d\n", this->_tileClicked.x, this->_tileClicked.y);
+        }
         this->_map.updateTexture();
         this->eventHandler();
         this->_win.clear(sf::Color::Black);
@@ -88,7 +76,7 @@ std::string Gui::getHost() const
 
 void Gui::eventHandler()
 {
-    sf::Event event;
+    sf::Event event{};
     while (this->_win.pollEvent(event))
     {
         if(event.type == sf::Event::Closed)
@@ -107,9 +95,10 @@ void Gui::eventHandler()
             this->_map.zoom(false);
         if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
             try {
-                printf("hezre\n");
                 this->_tileClicked = this->_map.getTileInfo(sf::Mouse::getPosition(this->_win));
                 this->_interfaceOn = true;
+                this->_interface = Interface(this->_tileClicked);
+                this->_interface.updateInterface(this->_tileClicked);
             } catch (std::exception &e) {
                 e.what();
             }

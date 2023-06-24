@@ -11,21 +11,21 @@
     #include <exception>
     #include <Map.hpp>
     #include <SFML/Graphics.hpp>
-    #include "GetOpt.hpp"
-    #include "ServerCommunication.hpp"
-    #include "FunctionManager.hpp"
     #include <iostream>
     #include <unistd.h>
     #include <memory>
-    #include "FunctionManager.hpp"
     #include <list>
+
+    #include "GetOpt.hpp"
+    #include "ServerCommunication.hpp"
+    #include "FunctionManager.hpp"
+    #include "Interface.hpp"
 
 class Gui {
     public:
         Gui() = default;
         Gui(int ac, char **av);
         ~Gui() = default;
-        static void printUsage();
         void initGui();
         void guiLoop();
         std::string getPort() const;
@@ -41,6 +41,7 @@ class Gui {
         Map _map;
         struct Tile _tileClicked;
         bool _interfaceOn;
+        Interface _interface;
 };
 
 
