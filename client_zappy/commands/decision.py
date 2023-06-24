@@ -7,6 +7,7 @@ from commands.players_commands import *
 from commands.object_commands import *
 from commands.status import *
 
+
 def decide_forward(client, response: str):
     client.cmd_buff.remove("Forward")
 
@@ -65,6 +66,9 @@ def decide_look(client, response: str):
                     nearest_distance = distance
                 print("I found the nearest food!")
                 send_take_object_command(client, "food")
+
+    if not check_inventory(client, response) and check_tile_for_players(client, response) and client.status == WAITING:
+        decide_incantation(client, response)
 
     decide_look(client, response)
 
