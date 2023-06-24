@@ -63,11 +63,8 @@ def decide_look(client, response: str):
                 if distance < nearest_distance:
                     nearest_item = tile
                     nearest_distance = distance
-        if nearest_item is not None:
-            print("I found the nearest food!")
-            send_take_object_command(client, "food")
-        else:
-            print("No missing items or food found in the visible tiles.")
+                print("I found the nearest food!")
+                send_take_object_command(client, "food")
 
     decide_look(client, response)
 
