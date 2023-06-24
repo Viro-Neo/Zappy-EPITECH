@@ -14,7 +14,7 @@ def network_loop(client: Client):
                 break
             if client.status == SETTING:
                 if "Set" not in client.cmd_buff:
-                    set_needed_items()
+                    set_needed_items(client)
                 continue
             if client.status == JOINING:
                 join_incant()
@@ -31,13 +31,18 @@ def set_needed_items(client: Client):
     if len(client.setting_items) == 0:
         client.status = WAITING
         return
-    while len(client.cmd_buff) < 10:
-        for item in client.setting_items:
-            for i in range (client.setting_items[item]):
-                if len(client.cmd_buff) == 10:
-                    break
-                send_set_object_command(client, item)
-                client.setting_items[item] -= 1
+    print(f"setting items : {client.setting_items}")
+    while len(client.setting_items) > 0:
+        if len(client.cmd_buff) == 10:
+            continue
+        send_set_object_command(client, client.setting_items[0])
+        client.setting_items.pop(0)
+
+def all_items_set(items):
+    for item in items:
+        if items[item] > 0:
+            return False
+    return True 
 
 def join_incant(client: Client):
     while len(client.cmd_buff) < 10:

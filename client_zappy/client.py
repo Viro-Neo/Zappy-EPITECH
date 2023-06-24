@@ -18,7 +18,7 @@ class Client:
         self.direction_index = 0
         self.reposition = []
         self.reposition_index = 0
-        self.setting_items = init_items()
+        self.setting_items = []
         self.status = 0
         self.team_items = init_items()
 
@@ -39,18 +39,20 @@ class Client:
             while response == "" or response[-1] != "\n":
                 try:
                     response += self.sock.recv(1024).decode()
-                    self.check_response(response)
                 except Exception as e:
                     print(f"Error receiving response: {str(e)}")
+            self.check_response(response)
             print(f"Got a continuous response : {response}")
     
     def check_response(self, response: str) -> int:
         for cmd in self.cmd_buff:
             if re.match(response_dict[cmd], response):
+                print(f"Starting decision for cmd {cmd}")
                 action_dict[cmd](self, response)
                 return 1
         for stray in stray_response_dict:
             if re.match(stray_response_dict[stray], response):
+                print(f"Starting decision for stray {stray}")
                 action_dict[stray](self, response)
                 return 2
         return 0

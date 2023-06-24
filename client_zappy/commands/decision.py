@@ -17,12 +17,20 @@ def decide_left(client, response: str):
     client.cmd_buff.remove("Left")
 
 def decide_look(client, response: str):
+    if not "Look" in client.cmd_buff:
+        return 
     client.cmd_buff.remove("Look")
     response_list = [x.strip() for x in response.split(',')]
     print(response_list)
     nearest_item = None
     nearest_distance = float('inf')
-    starting_position = response_list.index("linemate")
+    available_items = ["linemate", "deraumere", "sibur", "mendiane", "phiras", "thystame"]
+
+    starting_position = 0
+    for item in available_items:
+        if item in response_list:
+            starting_position = response_list.index(item)
+            break
 
     print("I go forward first of all")
     send_forward_command(client)
@@ -35,7 +43,7 @@ def decide_look(client, response: str):
                 nearest_distance = distance
 
     if nearest_item is not None:
-        if nearest_item in ["linemate", "deraumere", "sibur", "mendiane", "phiras", "thystame"]:
+        if nearest_item in available_items:
             print(f"I found the nearest {nearest_item}!")
             send_take_object_command(client, nearest_item)
         else:
@@ -55,14 +63,10 @@ def decide_look(client, response: str):
                 if distance < nearest_distance:
                     nearest_item = tile
                     nearest_distance = distance
-        if nearest_item is not None:
-            print("I found the nearest food!")
-            send_take_object_command(client, "food")
-        else:
-            print("No missing items or food found in the visible tiles.")
+                print("I found the nearest food!")
+                send_take_object_command(client, "food")
 
     decide_look(client, response)
-
 
 
 def decide_inventory(client, response: str):
@@ -72,7 +76,7 @@ def decide_inventory(client, response: str):
     client.missing = check_inventory(client, response)
     global_missing = True
     for item in client.missing:
-        if client.missing[item] > client.team_items.missing:
+        if client.missing[item] > client.team_items[item]:
             global_missing = False
             break
     if global_missing == False and client.level != 1:
@@ -80,8 +84,10 @@ def decide_inventory(client, response: str):
         client.status = CALLING
     elif global_missing == False and client.level == 1:
         for item in ritual_needs[client.level]:
-            if client.inventory[item] > 0:
-                client.setting_items[item] += (min(client.inventory[item], ritual_needs[client.level][item]))
+            if item == "players":
+                continue
+            for i in range(min(client.inventory[item], ritual_needs[client.level][item])):
+                client.setting_items.append(item)
             client.status = SETTING
 
 def decide_broadcast(client, response: str):
