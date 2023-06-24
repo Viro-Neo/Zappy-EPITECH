@@ -31,15 +31,18 @@ class Player {
     public:
         Player(int id, int x, int y, Orientation o, int level, std::string teamName);
         ~Player();
-        int getLevel();
+        Player(const Player &);
+        int getLevel() const;
         void setLevel(int lv);
-        int getId();
-        bool getIncantation();
+        int getId() const;
+        bool getIncantation() const;
         void setIncantation(bool);
-        std::string getTeamName();
+        std::string getTeamName() const;
         void setTeamName(std::string);
-        sf::Vector2u getPos();
+        sf::Vector2u getPos() const;
         void setPos(sf::Vector2u pos);
+        Orientation getOrientation() const;
+        void setOrientation(Orientation);
         Inventory inventory;
     protected:
     private:
@@ -50,6 +53,8 @@ class Player {
         std::string _teamName;
         bool _incantation;
 };
+
+
 
 
 

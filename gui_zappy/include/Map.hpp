@@ -11,6 +11,7 @@
 #include <vector>
 #include "Player.hpp"
 #include "Team.hpp"
+#include "Incantation.hpp"
 
 struct Tile {
     int x;
@@ -55,6 +56,7 @@ class Map : public sf::Drawable, public sf::Transformable {
         sf::Vector2u _tileSize;
         sf::Vector2i pos;
         std::vector<Team> team;
+        std::vector<Incantation> _incantationList;
         int _winWidth;
         int _winHeight;
 };
