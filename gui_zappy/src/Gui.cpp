@@ -7,19 +7,8 @@
 
 #include "Gui.hpp"
 
-void msz(std::list<std::string> argList, Map &myMap)
-{
-    if (argList.size() != 2)
-        throw std::exception();
-    int width = atoi(argList.front().data());
-    int height = atoi(argList.back().data());
-    myMap.resizeMap(width, height);
-    myMap.updateTexture();
-}
 
-
-
-Gui::Gui(int ac, char **av) : _win(sf::VideoMode(1300, 600), "Zappy")
+Gui::Gui(int ac, char **av) : _win(sf::VideoMode(_winWidth, _winHeight), "Zappy") , _map(_winWidth, _winHeight), _cmdHandler()
 {
     if (ac == 2 && std::string(av[1]) == "-help")
         throw std::invalid_argument("Help");
@@ -60,12 +49,7 @@ void Gui::initGui()
 void Gui::guiLoop()
 {
     while (this->_win.isOpen()) {
-        std::string cmd = "";
-        while ((cmd = this->_comm.popCmd()) != "")
-        {
-               
-        }
-        
+        this->updateGui();
         if (_interfaceOn == true)
             printf("tile is cooord is %d %d\n", this->_tileClicked.x, this->_tileClicked.y); 
         this->_map.updateTexture();
@@ -84,6 +68,18 @@ std::string Gui::getPort() const
 std::string Gui::getHost() const
 {
     return _host;
+}
+
+void Gui::updateGui()
+{
+    this->_comm.readFromServer();
+    std::string cmd = "";
+    while ((cmd = this->_comm.popCmd()) != "")
+    {
+        if (cmd.compare("WELCOME") != 0) {      
+            this->_cmdHandler.callFunction(cmd, this->_map);
+        }
+    }
 }
 
 void Gui::eventHandler()
@@ -107,7 +103,6 @@ void Gui::eventHandler()
             this->_map.zoom(false);
         if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
             try {
-                printf("hezre\n");
                 this->_tileClicked = this->_map.getTileInfo(sf::Mouse::getPosition(this->_win));
                 this->_interfaceOn = true;
             } catch (std::exception &e) {

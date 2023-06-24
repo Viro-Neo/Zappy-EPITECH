@@ -9,6 +9,7 @@
     #define SERVERCOMMUNICATION_HPP_
     #include "HostentByName.hpp"
     #include <SFML/Network.hpp>
+    #include <list>
 class ServerCommunication {
     public:
         ServerCommunication();
@@ -29,7 +30,8 @@ class ServerCommunication {
         sf::Socket::Status status;
         std::string _port;
         std::string _host;
-        std::vector<std::string> _cmdList;
+        std::list<std::string> _cmdList;
+        sf::SocketSelector _selector;
 };
 
 #endif /* !SERVERCOMMUNICATION_HPP_ */

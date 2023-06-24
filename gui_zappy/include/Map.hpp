@@ -10,6 +10,7 @@
 #include <SFML/Graphics.hpp>
 #include <vector>
 #include "Player.hpp"
+#include "Team.hpp"
 
 struct Tile {
     int x;
@@ -25,7 +26,7 @@ struct Tile {
 };
 class Map : public sf::Drawable, public sf::Transformable {
     public:
-        Map(int sizeX = 100, int sizeY = 100);
+        Map(int winW, int winH, int sizeX = 100, int sizeY = 100);
         ~Map();
         bool updateMap(std::vector<std::string> bct);
         bool updateTexture();
@@ -33,12 +34,14 @@ class Map : public sf::Drawable, public sf::Transformable {
         void moveMap(int , int);
         void setTile(struct Tile t);
         void zoom(bool zoomin);
+        void addTeam(Team t);
+        std::vector<Team> &getTeam();
         struct Tile &getTileInfo(sf::Vector2i mousePos);
     protected:
     private:
         virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const {
                 states.transform *= getTransform();
-                //states.texture = &_tileset;
+                states.texture = &_tileset;
                 target.draw(_mapRender, states);
         }
         int _sizeX;
@@ -49,8 +52,10 @@ class Map : public sf::Drawable, public sf::Transformable {
         int _squareSize;
         sf::Texture _tileset;
         sf::Vector2u _tileSize;
-        sf::Vector2u pos;
-        std::vector<Player> playerList;
+        sf::Vector2i pos;
+        std::vector<Team> team;
+        int _winWidth;
+        int _winHeight;
 };
 
 

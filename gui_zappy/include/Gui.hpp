@@ -30,6 +30,7 @@ class Gui {
         void guiLoop();
         std::string getPort() const;
         std::string getHost() const;
+        void updateGui();
 
     private:
         void eventHandler();
@@ -41,7 +42,8 @@ class Gui {
         Map _map;
         struct Tile _tileClicked;
         bool _interfaceOn;
+        int _winWidth = 1920;
+        int _winHeight = 1080;
 };
-
 
 #endif //B_YEP_400_PAR_4_1_ZAPPY_AURELIEN_DUVAL_GUI_HPP
