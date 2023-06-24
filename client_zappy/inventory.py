@@ -115,3 +115,9 @@ def check_inventory(client, response: str):
 
     print(f"missing items are {missing}")
     return missing
+
+def check_tile_for_players(client, tile: str):
+    players = tile.count("player")
+    if players < ritual_needs[client.level]["players"]:
+        return False
+    return True

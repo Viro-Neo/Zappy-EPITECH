@@ -6,6 +6,7 @@ zappy_server
 CMakeLists.txt
 cmake-build-debug
 *_zappy/src/*o
+server/src/*o
 zappy_gui
 .vscode
 *.pyc

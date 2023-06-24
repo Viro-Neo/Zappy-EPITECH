@@ -68,6 +68,11 @@ def decide_look(client, response: str):
                     print("I found the nearest food!")
                     send_take_object_command(client, "food")
 
+    # check condition for level up
+    if client.missing == {} and check_tile_for_players(client, response) and \
+            client == WAITING:
+        send_incantation_command(client)
+
     decide_look(client, response)
 
 
