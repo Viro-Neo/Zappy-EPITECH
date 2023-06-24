@@ -11,26 +11,25 @@
     #include <exception>
     #include <Map.hpp>
     #include <SFML/Graphics.hpp>
-    #include "GetOpt.hpp"
-    #include "ServerCommunication.hpp"
-    #include "FunctionManager.hpp"
     #include <iostream>
     #include <unistd.h>
     #include <memory>
-    #include "FunctionManager.hpp"
     #include <list>
+
+    #include "GetOpt.hpp"
+    #include "ServerCommunication.hpp"
+    #include "FunctionManager.hpp"
+    #include "Interface.hpp"
 
 class Gui {
     public:
         Gui() = default;
         Gui(int ac, char **av);
         ~Gui() = default;
-        static void printUsage();
         void initGui();
         void guiLoop();
         std::string getPort() const;
         std::string getHost() const;
-        void updateGui();
 
     private:
         void eventHandler();
@@ -42,8 +41,8 @@ class Gui {
         Map _map;
         struct Tile _tileClicked;
         bool _interfaceOn;
-        int _winWidth = 1920;
-        int _winHeight = 1080;
+        Interface _interface;
 };
+
 
 #endif //B_YEP_400_PAR_4_1_ZAPPY_AURELIEN_DUVAL_GUI_HPP

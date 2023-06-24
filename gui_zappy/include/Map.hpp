@@ -27,6 +27,7 @@ struct Tile {
 };
 class Map : public sf::Drawable, public sf::Transformable {
     public:
+        Map() = default;
         Map(int winW, int winH, int sizeX = 100, int sizeY = 100);
         ~Map();
         bool updateMap(std::vector<std::string> bct);
