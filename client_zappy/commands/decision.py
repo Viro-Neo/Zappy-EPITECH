@@ -1,6 +1,7 @@
 import math
 from inventory import check_inventory
 from inventory import ritual_needs
+from inventory import check_tile_for_players
 from broadcast import check_broadcast_pattern
 from commands.movement_commands import *
 from commands.players_commands import *
@@ -17,9 +18,16 @@ def decide_right(client, response: str):
 def decide_left(client, response: str):
     client.cmd_buff.remove("Left")
 
+def check_tile_for_players(client, tile: str):
+    players = tile.count("player")
+    if players < ritual_needs[client.level]["players"]:
+        return False
+    return True
+
+
 def decide_look(client, response: str):
     if not "Look" in client.cmd_buff:
-        return 
+        return
     client.cmd_buff.remove("Look")
     response_list = [x.strip() for x in response.split(',')]
     print(response_list)
@@ -33,42 +41,44 @@ def decide_look(client, response: str):
             starting_position = response_list.index(item)
             break
 
-    if client.missing in check_tile_for_players(client, response):
+    if not check_tile_for_players(client, response):
         print("I go forward first of all")
         send_forward_command(client)
+
+    for index, tile in enumerate(response_list):
+        if tile in client.missing and tile != "food":
+            distance = starting_position - index
+            if distance < nearest_distance:
+                nearest_item = tile
+                nearest_distance = distance
+
+    if nearest_item is not None:
+        if nearest_item in available_items:
+            print(f"I found the nearest {nearest_item}!")
+            send_take_object_command(client, nearest_item)
+        else:
+            if nearest_distance < starting_position:
+                send_left_command(client)
+                print("I go left")
+            elif nearest_distance > starting_position:
+                send_forward_command(client)
+                print("I go forward")
+            else:
+                send_right_command(client)
+                print("I go right")
     else:
         for index, tile in enumerate(response_list):
-            if tile in client.missing and tile != "food":
+            if tile == "food":
                 distance = starting_position - index
                 if distance < nearest_distance:
                     nearest_item = tile
                     nearest_distance = distance
-
-        if nearest_item is not None:
-            if nearest_item in available_items:
-                print(f"I found the nearest {nearest_item}!")
-                send_take_object_command(client, nearest_item)
-            else:
-                if nearest_item < starting_position:
-                    send_left_command(client)
-                    print("I go left")
-                elif nearest_item > starting_position:
-                    send_forward_command(client)
-                    print("I go forward")
-                else:
-                    send_right_command(client)
-                    print("I go right")
-        else:
-            for index, tile in enumerate(response_list):
-                if tile == "food":
-                    distance = starting_position - index
-                    if distance < nearest_distance:
-                        nearest_item = tile
-                        nearest_distance = distance
-                    print("I found the nearest food!")
-                    send_take_object_command(client, "food")
+                print("I found the nearest food!")
+                send_take_object_command(client, "food")
 
     decide_look(client, response)
+
+
 
 
 def decide_inventory(client, response: str):
