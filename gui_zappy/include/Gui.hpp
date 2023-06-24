@@ -11,13 +11,15 @@
     #include <exception>
     #include <Map.hpp>
     #include <SFML/Graphics.hpp>
-    #include "GetOpt.hpp"
-    #include "ServerCommunication.hpp"
-    #include "FunctionManager.hpp"
     #include <iostream>
     #include <unistd.h>
     #include <memory>
     #include <list>
+
+    #include "GetOpt.hpp"
+    #include "ServerCommunication.hpp"
+    #include "FunctionManager.hpp"
+    #include "Interface.hpp"
 
 class Gui {
     public:
@@ -29,16 +31,18 @@ class Gui {
         std::string getPort() const;
         std::string getHost() const;
 
-
     private:
         void eventHandler();
         std::string _port;
         std::string _host;
         ServerCommunication _comm;
         sf::RenderWindow _win;
+        FunctionManager _cmdHandler;
         Map _map;
+        struct Tile _tileClicked;
+        bool _interfaceOn;
+        Interface _interface;
 };
 
-void msz(std::list<std::string> argList, Map &myMap);
 
 #endif //B_YEP_400_PAR_4_1_ZAPPY_AURELIEN_DUVAL_GUI_HPP

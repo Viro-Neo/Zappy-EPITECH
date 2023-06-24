@@ -11,6 +11,7 @@
     #include <map>
     #include <list>
     #include <string>
+    #include "Map.hpp"
     #include "ParseCommands.hpp"
 
 class FunctionManager {
@@ -18,10 +19,10 @@ public:
     FunctionManager(); // Constructor initializes the map
     ~FunctionManager() = default;
 
-    void callFunction(std::string, Map);
+    void callFunction(std::string, Map&);
 
-    std::map<std::string, void (*)(std::list<std::string> arg, Map myMap)> getFct() const;
-    void setFct(const std::map<std::string, void (*)(std::list<std::string> arg, Map myMap)> &fct);
+    std::map<std::string, void (*)(std::list<std::string> arg, Map &myMap)> getFct() const;
+    void setFct(const std::map<std::string, void (*)(std::list<std::string> arg, Map &myMap)> &fct);
 
     // Functions for each command
     static void msz(std::list<std::string> arg, Map &myMap);
@@ -49,7 +50,7 @@ public:
     static void sbp(std::list<std::string> arg, Map &myMap);
 
 private:
-    std::map<std::string, void (*)(std::list<std::string> arg, Map myMap)> _fct;
+    std::map<std::string, void (*)(std::list<std::string> arg, Map &myMap)> _fct;
 };
 
 #endif //B_YEP_400_PAR_4_1_ZAPPY_AURELIEN_DUVAL_FUNCTIONMANAGER_HPP
