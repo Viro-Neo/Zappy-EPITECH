@@ -81,7 +81,7 @@ def decide_inventory(client, response: str):
     client.missing = check_inventory(client, response)
     global_missing = True
     for item in client.missing:
-        if client.missing[item] > client.team_items.missing:
+        if client.missing[item] > client.team_items[item]:
             global_missing = False
             break
     if global_missing == False and client.level != 1:
