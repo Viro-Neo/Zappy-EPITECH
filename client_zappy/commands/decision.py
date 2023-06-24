@@ -17,12 +17,20 @@ def decide_left(client, response: str):
     client.cmd_buff.remove("Left")
 
 def decide_look(client, response: str):
+    if not "Look" in client.cmd_buff:
+        return 
     client.cmd_buff.remove("Look")
     response_list = [x.strip() for x in response.split(',')]
     print(response_list)
     nearest_item = None
     nearest_distance = float('inf')
-    starting_position = response_list.index("linemate")
+    available_items = ["linemate", "deraumere", "sibur", "mendiane", "phiras", "thystame"]
+
+    starting_position = 0
+    for item in available_items:
+        if item in response_list:
+            starting_position = response_list.index(item)
+            break
 
     print("I go forward first of all")
     send_forward_command(client)
@@ -35,7 +43,7 @@ def decide_look(client, response: str):
                 nearest_distance = distance
 
     if nearest_item is not None:
-        if nearest_item in ["linemate", "deraumere", "sibur", "mendiane", "phiras", "thystame"]:
+        if nearest_item in available_items:
             print(f"I found the nearest {nearest_item}!")
             send_take_object_command(client, nearest_item)
         else:
@@ -62,6 +70,7 @@ def decide_look(client, response: str):
             print("No missing items or food found in the visible tiles.")
 
     decide_look(client, response)
+
 
 
 

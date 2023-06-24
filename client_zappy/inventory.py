@@ -89,6 +89,8 @@ def get_inventory(client, inventory_str: str) -> Dict[str, int]:
     # iterate through items in the inventory and add them to the dict
     for item in items:
         item = item.strip()
+        item = item.strip("[")
+        item = item.strip("]")
         item_name, item_quantity = item.split()
         item_quantity = int(item_quantity)
         inventory[item_name] = item_quantity
