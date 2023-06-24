@@ -77,6 +77,7 @@ std::string Gui::getHost() const
 void Gui::eventHandler()
 {
     sf::Event event{};
+    sf::RenderStates s;
     while (this->_win.pollEvent(event))
     {
         if(event.type == sf::Event::Closed)
@@ -98,7 +99,8 @@ void Gui::eventHandler()
                 this->_tileClicked = this->_map.getTileInfo(sf::Mouse::getPosition(this->_win));
                 this->_interfaceOn = true;
                 this->_interface = Interface(this->_tileClicked);
-                this->_interface.updateInterface(this->_tileClicked);
+                this->_interface.print_tile();
+                this->_interface.draw(_win, s);
             } catch (std::exception &e) {
                 e.what();
             }
