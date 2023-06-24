@@ -79,8 +79,6 @@ def decide_look(client, response: str):
     decide_look(client, response)
 
 
-
-
 def decide_inventory(client, response: str):
     client.cmd_buff.remove("Inventory")
     if client.status != NORMAL:

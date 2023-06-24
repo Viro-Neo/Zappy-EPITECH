@@ -14,12 +14,12 @@ response_dict = {
     'Left': 'ok',
     'Look': r'\[([^,\[\]]*\s*,\s*)*([^,\[\]]*)\]',
     'Inventory': r"\[([\w\s]+ \d+)(, [\w\s]+ \d+)*\]",
-    'Broadcast text': 'ok',
+    'Broadcast': 'ok',
     'Connect_nbr': r"\b(?:0|[1-9]\d*)\b",
     'Fork': 'ok',
     'Eject': r'ok|ko',
-    'Take object': r'ok|ko',
-    'Set object': r'ok|ko',
+    'Take': r'ok|ko',
+    'Set': r'ok|ko',
     'Incantation': r'Elevation underway Current level: [1-7]|ko'
 }
 
