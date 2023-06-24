@@ -16,7 +16,10 @@ class Interface : public sf::Drawable, public sf::Transformable {
         Interface() = default;
         Interface(struct Tile tile);
         ~Interface() = default;
-        void updateInterface(struct Tile tile);
+        void displayInterface();
+
+        void setText(std::string text, sf::Vector2f pos, int size);
+        void setRect(sf::Vector2f pos, sf::Vector2f size);
 
     protected:
     private:
@@ -26,6 +29,8 @@ class Interface : public sf::Drawable, public sf::Transformable {
                 target.draw(_backRect, states);
         }
         sf::RectangleShape _backRect;
+        sf::Text _text;
+        sf::Font _font;
         struct Tile _tile;
 };
 

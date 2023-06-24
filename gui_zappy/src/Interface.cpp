@@ -14,11 +14,24 @@ Interface::Interface(struct Tile tile)
     _tile = std::move(tile);
 }
 
-void Interface::updateInterface(struct Tile tile)
+void Interface::displayInterface()
 {
-    _backRect.setSize(sf::Vector2f(200, 200));
+    // display background
+    // display text
+}
+
+void Interface::setText(std::string text, sf::Vector2f pos, int size)
+{
+    _font.loadFromFile("assets/arial.ttf");
+    _text.setString(text);
+    _text.setPosition(pos);
+    _text.setFont(_font);
+    _text.setCharacterSize(size);
+}
+
+void Interface::setRect(sf::Vector2f pos, sf::Vector2f size)
+{
+    _backRect.setPosition(pos);
+    _backRect.setSize(size);
     _backRect.setFillColor(sf::Color::Black);
-    _backRect.setOutlineThickness(2);
-    _backRect.setOutlineColor(sf::Color::White);
-    _backRect.setPosition(0, 0);
 }
