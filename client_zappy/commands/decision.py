@@ -39,13 +39,15 @@ def decide_look(client, response: str):
         for item in client.missing:
             if item in response_list:
                 print(f"I found the item I need to level up: {item}")
-                send_take_object_command(client, item)
+                if "Take" not in client.cmd_buff:
+                    send_take_object_command(client, item)
                 print(f"I pick up the item: {item}")
                 return
 
     if "food" in response_list:
         print("I found food!")
-        send_take_object_command(client, "food")
+        if "Take" not in client.cmd_buff:
+            send_take_object_command(client, "food")
         print("I pick up the food!")
         return
 
@@ -59,7 +61,8 @@ def decide_look(client, response: str):
 
     if rarest_item is not None:
         print(f"I found the rarest item: {rarest_item}")
-        send_take_object_command(client, rarest_item)
+        if "Take" not in client.cmd_buff:
+            send_take_object_command(client, rarest_item)
         print(f"I pick up the item: {rarest_item}")
         return
 
