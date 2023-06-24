@@ -72,8 +72,6 @@ def decide_look(client, response: str):
     decide_look(client, response)
 
 
-
-
 def decide_inventory(client, response: str):
     client.cmd_buff.remove("Inventory")
     if client.status != NORMAL:
@@ -89,6 +87,8 @@ def decide_inventory(client, response: str):
         client.status = CALLING
     elif global_missing == False and client.level == 1:
         for item in ritual_needs[client.level]:
+            if item == "players":
+                continue
             if client.inventory[item] > 0:
                 client.setting_items[item] += (min(client.inventory[item], ritual_needs[client.level][item]))
             client.status = SETTING

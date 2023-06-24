@@ -14,7 +14,7 @@ def network_loop(client: Client):
                 break
             if client.status == SETTING:
                 if "Set" not in client.cmd_buff:
-                    set_needed_items()
+                    set_needed_items(client)
                 continue
             if client.status == JOINING:
                 join_incant()
