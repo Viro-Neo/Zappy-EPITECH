@@ -8,7 +8,7 @@
 #include "Gui.hpp"
 
 
-Gui::Gui(int ac, char **av) : _win(sf::VideoMode(_winWidth, _winHeight), "Zappy") , _map(_winWidth, _winHeight), _cmdHandler()
+Gui::Gui(int ac, char **av) : _win(sf::VideoMode(1920, 1080), "Zappy") , _map(1920, 1080), _cmdHandler()
 {
     if (ac == 2 && std::string(av[1]) == "-help")
         throw std::invalid_argument("Help");
@@ -53,6 +53,7 @@ void Gui::guiLoop()
         if (_interfaceOn == true)
             printf("tile is cooord is %d %d\n", this->_tileClicked.x, this->_tileClicked.y); 
         this->_map.updateTexture();
+        this->_map.updateMap();
         this->eventHandler();
         this->_win.clear(sf::Color::Black);
         this->_win.draw(this->_map);
@@ -78,6 +79,13 @@ void Gui::updateGui()
     {
         if (cmd.compare("WELCOME") != 0) {      
             this->_cmdHandler.callFunction(cmd, this->_map);
+        }
+    }
+    this->_comm.writeToServer("mct\n");
+    for (auto it = this->_map.getTeam().begin(); it != this->_map.getTeam().end(); it++) {
+        for (auto player = (*it).getPlayerList().begin() ; player != (*it).getPlayerList().end(); player++) {
+            this->_comm.writeToServer(std::string("ppo ").append(std::to_string((*player).getId())).append("\n"));
+            this->_comm.writeToServer(std::string("pin ").append(std::to_string((*player).getId())).append("\n"));
         }
     }
 }

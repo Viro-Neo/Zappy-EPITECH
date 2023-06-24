@@ -29,7 +29,7 @@ class Map : public sf::Drawable, public sf::Transformable {
     public:
         Map(int winW, int winH, int sizeX = 100, int sizeY = 100);
         ~Map();
-        bool updateMap(std::vector<std::string> bct);
+        bool updateMap();
         bool updateTexture();
         int resizeMap(int sizeX, int sizeY);
         void moveMap(int , int);
@@ -38,6 +38,8 @@ class Map : public sf::Drawable, public sf::Transformable {
         void addTeam(Team t);
         std::vector<Team> &getTeam();
         struct Tile &getTileInfo(sf::Vector2i mousePos);
+        std::vector<Incantation> &getIncantationList();
+        int chooseText(unsigned int i,unsigned int j);
     protected:
     private:
         virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const {

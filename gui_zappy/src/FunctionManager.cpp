@@ -223,6 +223,7 @@ void FunctionManager::pic(std::list<std::string> arg, Map &myMap) // pic X Y L #
 {
     if (arg.size() >= 5)
         return;
+    std::vector<Incantation> incList = myMap.getIncantationList();;
     auto it = arg.begin();
     int x = atoi((*it).data());
     it++;
@@ -231,6 +232,8 @@ void FunctionManager::pic(std::list<std::string> arg, Map &myMap) // pic X Y L #
     int level = atoi((*it).data());
     it++;
     std::vector<int> playersId;
+    std::list<Player> playerList;
+    
     while (it != arg.end()) {
         playersId.push_back(atoi((*it).data()));
         it++;
@@ -240,11 +243,15 @@ void FunctionManager::pic(std::list<std::string> arg, Map &myMap) // pic X Y L #
             for (auto iteratorID = playersId.begin(); iteratorID != playersId.end(); iteratorID++) {
                 if ((*player).getId() == (*iteratorID)) {
                     (*player).setIncantation(true);
+                    playerList.push_back((*player));
                     return;
                 }
             }
         }
     }
+    Player starter = playerList.front();
+    playerList.pop_front();
+    incList.push_back(Incantation(level, sf::Vector2u(x, y), starter, playerList));
 }
 
 void FunctionManager::pie(std::list<std::string> arg, Map &myMap) // pie X Y R (1 if win, 0 if loose)
@@ -257,9 +264,21 @@ void FunctionManager::pie(std::list<std::string> arg, Map &myMap) // pie X Y R (
     int y = atoi((*it).data());
     it++;
     int result = atoi((*it).data());
+    std::vector<int> listId;
+    for (auto it = myMap.getIncantationList().begin(); it !=myMap.getIncantationList().end(); it++) {
+        if ((*it).getPos() == sf::Vector2u(x, y)) {
+            (*it).finishIncantation(result);
+            listId.push_back((*it).getStarter().getId());
+            for (auto id = (*it).getParticipent().begin(); id != (*it).getParticipent().end(); id++)
+                 listId.push_back((*id).getId());
+            myMap.getIncantationList().erase(it);
+        }
+    }
     for (auto it = myMap.getTeam().begin(); it != myMap.getTeam().end(); it++) {
         for (auto player = (*it).getPlayerList().begin() ; player != (*it).getPlayerList().end(); player++) {
-            (*player).setIncantation(false);
+            for (auto iteratorID = listId.begin(); iteratorID != listId.end(); iteratorID++) {
+                 (*player).setIncantation(false);
+            }
         }
     }
 }
