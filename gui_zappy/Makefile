@@ -15,7 +15,8 @@ SRCNAME =	main	\
 			Map	\
 			ParseCommands	\
 			ServerCommunication	\
-			Player
+			Player	\
+			Team
 
 SRC =	$(addprefix src/, $(addsuffix .cpp, $(SRCNAME)))
 OBJ =	$(SRC:.cpp=.o)
