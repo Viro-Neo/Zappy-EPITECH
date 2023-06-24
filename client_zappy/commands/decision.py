@@ -89,8 +89,8 @@ def decide_inventory(client, response: str):
         for item in ritual_needs[client.level]:
             if item == "players":
                 continue
-            if client.inventory[item] > 0:
-                client.setting_items[item] += (min(client.inventory[item], ritual_needs[client.level][item]))
+            for i in range(min(client.inventory[item], ritual_needs[client.level][item])):
+                client.setting_items.append(item)
             client.status = SETTING
 
 def decide_broadcast(client, response: str):
