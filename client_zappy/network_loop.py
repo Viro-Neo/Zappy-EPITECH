@@ -10,6 +10,10 @@ def network_loop(client: Client):
         response_thread.start()
         
         while True:
+            #print(f"client status : {client.status}")
+            #print(f"missing items : {client.missing}")
+            #print(f"inventory : {client.inventory}")
+            #print(f"setting items : {client.setting_items}")
             if client.status == DEAD:
                 break
             if client.status == SETTING:
