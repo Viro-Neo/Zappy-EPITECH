@@ -1,5 +1,7 @@
 import math
-from inventory import *
+from inventory import check_inventory
+from inventory import ritual_needs
+from inventory import check_tile_for_players
 from broadcast import check_broadcast_pattern
 from commands.movement_commands import *
 from commands.players_commands import *
@@ -67,14 +69,13 @@ def decide_look(client, response: str):
                     print("I found the nearest food!")
                     send_take_object_command(client, "food")
 
-    # check condition for level up
-    if client.missing == {} and check_tile_for_players(client, response) and \
-            client == WAITING:
-        send_incantation_command(client)
+    # if client.missing == {} and check_tile_for_players(client, response) and \
+    #         client == WAITING:
+    #     send_incantation_command(client)
 
-    if client.status == JOINING and check_tile_for_players(client, response):
-        client.status = SETTING
-        return
+    # if client.status == JOINING and check_tile_for_players(client, response):
+    #     client.status = SETTING
+    #     return
 
     decide_look(client, response)
 
