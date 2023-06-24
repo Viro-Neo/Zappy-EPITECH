@@ -9,6 +9,7 @@
 
 Team::Team(std::string name)
 {
+    this->_name = name;
 }
 
 Team::~Team()

@@ -69,9 +69,8 @@ bool Map::updateMap()
             this->_map.at(i + j * _sizeX).PLAYER.clear();
         }
     for (auto it = this->getTeam().begin(); it != this->getTeam().end(); it++) {
-        for (auto player = (*it).getPlayerList().begin() ; player != (*it).getPlayerList().end(); player++) {
-            Tile t = this->_map.at((*player).getPos().x + (*player).getPos().y * this->_sizeX);
-            t.PLAYER.push_back(*player);
+        for (auto player = (*it).getPlayerList().begin(); player != (*it).getPlayerList().end(); player++) {
+            this->_map.at((*player).getPos().x + (*player).getPos().y * this->_sizeX).PLAYER.push_back(*player);
         }
     }
     return true;
@@ -108,14 +107,13 @@ void Map::moveMap(int lateral, int vertical)
 
 void Map::setTile(Tile t)
 {
-  Tile curr = this->_map.at(t.x + t.x * t.y);
-  curr.DERAUMERE = t.DERAUMERE;
-  curr.FOOD = t.FOOD;
-  curr.LINEMATE = t.LINEMATE;
-  curr.MENDIANE = t.MENDIANE;
-  curr.PHIRAS = t.PHIRAS;
-  curr.SIBUR = t.SIBUR;
-  curr.THYSTAME = t.THYSTAME;
+    this->_map.at(t.y + t.x * this->_sizeY).DERAUMERE = t.DERAUMERE;
+    this->_map.at(t.y + t.x * this->_sizeY).FOOD = t.FOOD;
+    this->_map.at(t.y + t.x * this->_sizeY).LINEMATE = t.LINEMATE;
+    this->_map.at(t.y + t.x * this->_sizeY).MENDIANE = t.MENDIANE;
+    this->_map.at(t.y + t.x * this->_sizeY).PHIRAS = t.PHIRAS;
+    this->_map.at(t.y + t.x * this->_sizeY).SIBUR = t.SIBUR;
+    this->_map.at(t.y + t.x * this->_sizeY).THYSTAME = t.THYSTAME;
 }
 
 void Map::zoom(bool zoomin)

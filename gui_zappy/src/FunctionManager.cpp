@@ -116,12 +116,15 @@ void FunctionManager::pnw(std::list<std::string> arg, Map &myMap) // pnw #n X Y 
     int level = atoi((*it).data());
     it++;
     std::string name = (*it);
+    int i = 0;
     for (auto it = myMap.getTeam().begin(); it != myMap.getTeam().end(); it++) {
-        if ((*it).gatName() == name) {
-            (*it).addPlayer(Player(id, x, y, orientation, level, name));
+        if ((*it).gatName().compare(name.data()) == 0) {
+            myMap.getTeam().at(i).addPlayer(Player(id, x, y, orientation, level, name));
             return;
         }
+        i++;
     }
+    
 }
 
 void FunctionManager::ppo(std::list<std::string> arg, Map &myMap) // ppo #n X Y O
@@ -136,14 +139,18 @@ void FunctionManager::ppo(std::list<std::string> arg, Map &myMap) // ppo #n X Y 
     int y = atoi((*it).data());
     it++;
     Orientation orientation = Orientation(atoi((*it).data()));
+    int i = 0;
+    int t = 0;
     for (auto it = myMap.getTeam().begin(); it != myMap.getTeam().end(); it++) {
         for (auto player = (*it).getPlayerList().begin() ; player != (*it).getPlayerList().end(); player++) {
             if ((*player).getId() == id) {
-                (*player).setPos(sf::Vector2u(x, y));
-                (*player).setOrientation(orientation);
+                myMap.getTeam().at(t).getPlayerList().at(i).setPos(sf::Vector2u(x, y));
+                myMap.getTeam().at(t).getPlayerList().at(i).setOrientation(orientation);
                 return;
             }
+            i++;
         }
+        t++;
     }
 }
 
@@ -155,13 +162,17 @@ void FunctionManager::plv(std::list<std::string> arg, Map &myMap) // plv #n L
     int id = atoi((*it).data());
     it++;
     int level = atoi((*it).data());
+    int i = 0;
+    int t = 0;
     for (auto it = myMap.getTeam().begin(); it != myMap.getTeam().end(); it++) {
         for (auto player = (*it).getPlayerList().begin() ; player != (*it).getPlayerList().end(); player++) {
             if ((*player).getId() == id) {
-                (*player).setLevel(level);
+                myMap.getTeam().at(t).getPlayerList().at(i).setLevel(level);
                 return;
             }
+            i++;
         }
+        t++;
     }
 }
 
@@ -189,21 +200,24 @@ void FunctionManager::pin(std::list<std::string> arg, Map &myMap) // pin #n X Y 
     int phiras = atoi((*it).data());
     it++;
     int thystame = atoi((*it).data());
-
+    int i = 0;
+    int t = 0;
     for (auto it = myMap.getTeam().begin(); it != myMap.getTeam().end(); it++) {
         for (auto player = (*it).getPlayerList().begin() ; player != (*it).getPlayerList().end(); player++) {
             if ((*player).getId() == id) {
-                (*player).setPos(sf::Vector2u(x, y));
-                (*player).inventory.DERAUMERE = deraumere;
-                (*player).inventory.FOOD = food;
-                (*player).inventory.LINEMATE = lienmate;
-                (*player).inventory.MENDIANE = mendiane;
-                (*player).inventory.PHIRAS = phiras;
-                (*player).inventory.SIBUR = sibur;
-                (*player).inventory.THYSTAME = thystame;
+                myMap.getTeam().at(t).getPlayerList().at(i).setPos(sf::Vector2u(x, y));
+                myMap.getTeam().at(t).getPlayerList().at(i).inventory.DERAUMERE = deraumere;
+                myMap.getTeam().at(t).getPlayerList().at(i).inventory.FOOD = food;
+                myMap.getTeam().at(t).getPlayerList().at(i).inventory.LINEMATE = lienmate;
+                myMap.getTeam().at(t).getPlayerList().at(i).inventory.MENDIANE = mendiane;
+                myMap.getTeam().at(t).getPlayerList().at(i).inventory.PHIRAS = phiras;
+                myMap.getTeam().at(t).getPlayerList().at(i).inventory.SIBUR = sibur;
+                myMap.getTeam().at(t).getPlayerList().at(i).inventory.THYSTAME = thystame;
                 return;
             }
+            i++;
         }
+        t++;
     }
 }
 
@@ -238,11 +252,13 @@ void FunctionManager::pic(std::list<std::string> arg, Map &myMap) // pic X Y L #
         playersId.push_back(atoi((*it).data()));
         it++;
     }
+    int i = 0;
+    int t = 0;
     for (auto it = myMap.getTeam().begin(); it != myMap.getTeam().end(); it++) {
         for (auto player = (*it).getPlayerList().begin(); player != (*it).getPlayerList().end(); player++) {
             for (auto iteratorID = playersId.begin(); iteratorID != playersId.end(); iteratorID++) {
                 if ((*player).getId() == (*iteratorID)) {
-                    (*player).setIncantation(true);
+                    myMap.getTeam().at(t).getPlayerList().at(i).setIncantation(true);
                     playerList.push_back((*player));
                     return;
                 }
@@ -265,21 +281,27 @@ void FunctionManager::pie(std::list<std::string> arg, Map &myMap) // pie X Y R (
     it++;
     int result = atoi((*it).data());
     std::vector<int> listId;
+    int i = 0;
     for (auto it = myMap.getIncantationList().begin(); it !=myMap.getIncantationList().end(); it++) {
         if ((*it).getPos() == sf::Vector2u(x, y)) {
-            (*it).finishIncantation(result);
+            myMap.getIncantationList().at(i).finishIncantation(result);
             listId.push_back((*it).getStarter().getId());
             for (auto id = (*it).getParticipent().begin(); id != (*it).getParticipent().end(); id++)
                  listId.push_back((*id).getId());
             myMap.getIncantationList().erase(it);
         }
+        i++;
     }
+    i = 0;
+    int t = 0;
     for (auto it = myMap.getTeam().begin(); it != myMap.getTeam().end(); it++) {
         for (auto player = (*it).getPlayerList().begin() ; player != (*it).getPlayerList().end(); player++) {
             for (auto iteratorID = listId.begin(); iteratorID != listId.end(); iteratorID++) {
-                 (*player).setIncantation(false);
+                 myMap.getTeam().at(t).getPlayerList().at(i).setIncantation(false);
             }
+            i++;
         }
+        t++;
     }
 }
 
