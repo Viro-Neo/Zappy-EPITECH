@@ -13,8 +13,10 @@
 
 class Interface : public sf::Drawable, public sf::Transformable {
     public:
+        Interface() = default;
         Interface(struct Tile tile);
-        ~Interface();
+        ~Interface() = default;
+        void updateInterface(struct Tile tile);
 
     protected:
     private:

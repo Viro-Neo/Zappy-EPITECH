@@ -72,23 +72,23 @@ void FunctionManager::bct(std::list<std::string> arg, Map &myMap) // bct x y q0 
     if (arg.size() != 9)
         return;
     Tile t;
-    t.x = atoi(arg.front().data());
+    t.x = std::stoi(arg.front());
     arg.pop_front();
-    t.y = atoi(arg.front().data());
+    t.y = std::stoi(arg.front());
     arg.pop_front();
-    t.FOOD = atoi(arg.front().data());
+    t.FOOD = std::stoi(arg.front());
     arg.pop_front();
-    t.LINEMATE = atoi(arg.front().data());
+    t.LINEMATE = std::stoi(arg.front());
     arg.pop_front();
-    t.DERAUMERE = atoi(arg.front().data());
+    t.DERAUMERE = std::stoi(arg.front());
     arg.pop_front();
-    t.SIBUR = atoi(arg.front().data());
+    t.SIBUR = std::stoi(arg.front());
     arg.pop_front();
-    t.MENDIANE = atoi(arg.front().data());
+    t.MENDIANE = std::stoi(arg.front());
     arg.pop_front();
-    t.PHIRAS = atoi(arg.front().data());
+    t.PHIRAS = std::stoi(arg.front());
     arg.pop_front();
-    t.THYSTAME = atoi(arg.front().data());
+    t.THYSTAME = std::stoi(arg.front());
     myMap.setTile(t);
 }
 
