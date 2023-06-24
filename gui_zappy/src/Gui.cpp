@@ -6,10 +6,19 @@
 */
 
 #include "Gui.hpp"
+<<<<<<< HEAD
 
 
 Gui::Gui(int ac, char **av) : _win(sf::VideoMode(1920, 1080), "Zappy") , _map(1920, 1080), _cmdHandler()
+=======
+#include "Errors.hpp"
+#include "GetOpt.hpp"
+
+
+Gui::Gui(int ac, char **av)
+>>>>>>> origin/main
 {
+    
     if (ac == 2 && std::string(av[1]) == "-help")
         throw std::invalid_argument("Help");
     GetOpt getOpt(ac, av);
