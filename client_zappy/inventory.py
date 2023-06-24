@@ -79,10 +79,7 @@ def init_inventory() -> Dict[str, int]:
 
     return inventory
 
-def get_inventory(client) -> Dict[str, int]:
-    # get string describing inventory from server
-    inventory_str = send_inventory_command(client)
-
+def get_inventory(client, inventory_str: str) -> Dict[str, int]:
     # we initialize a dict to store the items
     inventory = init_inventory()
 
@@ -100,9 +97,9 @@ def get_inventory(client) -> Dict[str, int]:
     
     return inventory
 
-def check_inventory(client):
+def check_inventory(client, response: str):
     # get the inventory
-    inventory = get_inventory(client)
+    inventory = get_inventory(client, response)
 
     missing = {}
 
