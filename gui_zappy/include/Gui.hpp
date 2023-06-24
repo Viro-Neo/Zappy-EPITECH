@@ -42,6 +42,8 @@ class Gui {
         struct Tile _tileClicked;
         bool _interfaceOn;
         Interface _interface;
+        int _winWidth = 1920;
+        int _winHeight = 1080;
 };
 
 

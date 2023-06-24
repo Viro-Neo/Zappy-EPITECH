@@ -8,7 +8,6 @@
 CC =	g++
 
 SRCNAME =	main	\
-			FunctionManager	\
 			Gui		\
 			GetOpt	\
 			Interface	\
