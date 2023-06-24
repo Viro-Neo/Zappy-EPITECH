@@ -18,7 +18,7 @@ class Client:
         self.direction_index = 0
         self.reposition = []
         self.reposition_index = 0
-        self.setting_items = init_items()
+        self.setting_items = []
         self.status = 0
         self.team_items = init_items()
 
