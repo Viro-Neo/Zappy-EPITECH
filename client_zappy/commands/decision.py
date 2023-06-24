@@ -32,7 +32,7 @@ def decide_look(client, response: str):
             starting_position = response_list.index(item)
             break
 
-    if client.missing in check_tile_for_players(client, response):
+    if client.missing in response.count("player"):
         print("I go forward first of all")
         send_forward_command(client)
     else:
