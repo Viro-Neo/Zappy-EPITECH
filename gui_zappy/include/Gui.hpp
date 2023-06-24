@@ -30,7 +30,7 @@ class Gui {
         void guiLoop();
         std::string getPort() const;
         std::string getHost() const;
-        void updateGui();
+        void updateGui(int updater);
     private:
         void eventHandler();
         std::string _port;

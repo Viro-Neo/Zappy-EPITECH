@@ -37,8 +37,7 @@ void Gui::guiLoop()
 {
     int updater = 0;
     while (this->_win.isOpen()) {
-        if (updater % 10 == 0)
-            this->updateGui();
+        this->updateGui(updater);
         if (_interfaceOn == true)
             printf("tile is cooord is %d %d\n", this->_tileClicked.x, this->_tileClicked.y); 
         this->_map.updateMap();
@@ -61,7 +60,7 @@ std::string Gui::getHost() const
     return _host;
 }
 
-void Gui::updateGui()
+void Gui::updateGui(int updater)
 {
     this->_comm.readFromServer();
     std::string cmd = "";
@@ -69,7 +68,8 @@ void Gui::updateGui()
     {
         this->_cmdHandler.callFunction(cmd, this->_map);
     }
-    this->_comm.writeToServer("mct\n");
+    if (updater % 5 == 0)
+        this->_comm.writeToServer("mct\n");
     for (auto it = this->_map.getTeam().begin(); it != this->_map.getTeam().end(); it++) {
         for (auto player = (*it).getPlayerList().begin() ; player != (*it).getPlayerList().end(); player++) {
             this->_comm.writeToServer(std::string("ppo ").append(std::to_string((*player).getId())).append("\n"));
