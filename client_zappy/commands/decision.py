@@ -1,7 +1,6 @@
 import math
 from inventory import check_inventory
 from inventory import ritual_needs
-from inventory import check_tile_for_players
 from broadcast import check_broadcast_pattern
 from commands.movement_commands import *
 from commands.players_commands import *
@@ -34,7 +33,7 @@ def decide_look(client, response: str):
             starting_position = response_list.index(item)
             break
 
-    if client.missing in check_tile_for_players(client, response):
+    if client.missing in response.count("player"):
         print("I go forward first of all")
         send_forward_command(client)
     else:
@@ -73,6 +72,10 @@ def decide_look(client, response: str):
     if client.missing == {} and check_tile_for_players(client, response) and \
             client == WAITING:
         send_incantation_command(client)
+
+    if client.status == JOINING and check_tile_for_players(client, response):
+        client.status = SETTING
+        return
 
     decide_look(client, response)
 
