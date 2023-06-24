@@ -13,10 +13,13 @@ SRCNAME =	main	\
 			GetOpt	\
 			Interface	\
 			Map	\
-			ParseCommands	\
-			ServerCommunication	\
-			Player	\
-			Team
+			ServerCommunication\
+			Player\
+			FunctionManager\
+			ParseCommands\
+			Team\
+			Incantation\
+
 
 SRC =	$(addprefix src/, $(addsuffix .cpp, $(SRCNAME)))
 OBJ =	$(SRC:.cpp=.o)
