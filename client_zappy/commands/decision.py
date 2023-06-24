@@ -72,6 +72,10 @@ def decide_look(client, response: str):
             client == WAITING:
         send_incantation_command(client)
 
+    if client.status == JOINING and check_tile_for_players(client, response):
+        client.status = SETTING
+        return
+
     decide_look(client, response)
 
 
