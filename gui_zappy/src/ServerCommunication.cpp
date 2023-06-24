@@ -22,8 +22,9 @@ void ServerCommunication::connectToServer(void)
     if (this->status != sf::Socket::Done) {
         throw std::exception(); //TODO(zach) : do error handling
     }
-    this->readFromServer();
+    this->_selector.add(this->_clientSocket);
     this->writeToServer("GRAPHIC\n");
+    this->readFromServer();
 }
 
 std::string ServerCommunication::popCmd()
@@ -40,16 +41,17 @@ int ServerCommunication::readFromServer()
     char msg[4096] = "";
     std::string result;
     std::size_t received;
-
-    if (this->_clientSocket.receive(msg, 4096, received) != sf::Socket::Done) {
-        throw std::exception(); //TODO(zach): do error  handling
-    }
-    result = msg;
-    int size = 0;
-    while (result.find('\n', size) != std::string::npos) {
-        int index = result.find('\n', size);
-        this->_cmdList.push_back(result.substr(size, index - size));
-        size = index + 1;
+    if (_selector.wait(sf::milliseconds(16))) {
+        if (this->_clientSocket.receive(msg, 4096, received) != sf::Socket::Done) {
+            throw std::exception(); //TODO(zach): do error  handling
+        }
+        result = msg;
+        int size = 0;
+        while (result.find('\n', size) != std::string::npos) {
+            int index = result.find('\n', size);
+            this->_cmdList.push_front(result.substr(size, index - size));
+            size = index + 1;
+        }
     }
     return 0;
 }

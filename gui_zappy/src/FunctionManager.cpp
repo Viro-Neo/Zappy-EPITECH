@@ -9,29 +9,29 @@
 
 FunctionManager::FunctionManager()
 {
-    _fct["msz"] = &msz;
-    _fct["bct"] = &bct;
-    _fct["tna"] = &tna;
-    _fct["pnw"] = &pnw;
-    _fct["ppo"] = &ppo;
-    _fct["plv"] = &plv;
-    _fct["pin"] = &pin;
-    _fct["pex"] = &pex;
-    _fct["pbc"] = &pbc;
-    _fct["pic"] = &pic;
-    _fct["pie"] = &pie;
-    _fct["pfk"] = &pfk;
-    _fct["pdr"] = &pdr;
-    _fct["pgt"] = &pgt;
-    _fct["pdi"] = &pdi;
-    _fct["enw"] = &enw;
-    _fct["ebo"] = &ebo;
-    _fct["edi"] = &edi;
-    _fct["sgt"] = &sgt;
-    _fct["seg"] = &seg;
-    _fct["smg"] = &smg;
-    _fct["suc"] = &suc;
-    _fct["sbp"] = &sbp;
+    _fct["msz"] = msz;
+    _fct["bct"] = bct;
+    _fct["tna"] = tna;
+    _fct["pnw"] = pnw;
+    _fct["ppo"] = ppo;
+    _fct["plv"] = plv;
+    _fct["pin"] = pin;
+    _fct["pex"] = pex;
+    _fct["pbc"] = pbc;
+    _fct["pic"] = pic;
+    _fct["pie"] = pie;
+    _fct["pfk"] = pfk;
+    _fct["pdr"] = pdr;
+    _fct["pgt"] = pgt;
+    _fct["pdi"] = pdi;
+    _fct["enw"] = enw;
+    _fct["ebo"] = ebo;
+    _fct["edi"] = edi;
+    _fct["sgt"] = sgt;
+    _fct["seg"] = seg;
+    _fct["smg"] = smg;
+    _fct["suc"] = suc;
+    _fct["sbp"] = sbp;
 }
 
 void FunctionManager::callFunction(std::string command, Map &myMap)
@@ -42,7 +42,8 @@ void FunctionManager::callFunction(std::string command, Map &myMap)
     if (command.empty())
         return;
     parser.parseCommand(command);
-    _fct[arguments.front()](arguments, myMap);
+    if (_fct.find(parser.getCommand()) != _fct.end())
+        _fct[parser.getCommand()](parser.getArguments(), myMap);
 }
 
 std::map<std::string, void (*)(std::list<std::string> arg, Map &myMap)> FunctionManager::getFct() const
@@ -95,12 +96,28 @@ void FunctionManager::tna(std::list<std::string> arg, Map &myMap) // tna N (loop
 {
     if (arg.size() != 1)
         return;
+    myMap.addTeam(Team(arg.front()));
 }
 
 void FunctionManager::pnw(std::list<std::string> arg, Map &myMap) // pnw #n X Y O L N
 {
     if (arg.size() != 6)
         return;
+    auto it = arg.begin();
+    int id = atoi((*it).data());
+    it++;
+    int x = atoi((*it).data());
+    it++;
+    int y = atoi((*it).data());
+    it++;
+    int o = atoi((*it).data());
+    it++;
+    Orientation orientation = Orientation(o);
+    int level = atoi((*it).data());
+    it++;
+    std::string name = (*it);
+    Player(id, x, y, orientation, level, name);
+
 }
 
 void FunctionManager::ppo(std::list<std::string> arg, Map &myMap) // ppo #n X Y O
