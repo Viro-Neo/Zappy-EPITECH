@@ -1,6 +1,5 @@
 import math
-from inventory import check_inventory
-from inventory import ritual_needs
+from inventory import *
 from broadcast import check_broadcast_pattern
 from commands.movement_commands import *
 from commands.players_commands import *
