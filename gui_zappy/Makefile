@@ -16,6 +16,7 @@ SRCNAME =	main	\
 			FunctionManager\
 			ParseCommands\
 			Team\
+			Incantation\
 
 SRC =	$(addprefix src/, $(addsuffix .cpp, $(SRCNAME)))
 OBJ =	$(SRC:.cpp=.o)
