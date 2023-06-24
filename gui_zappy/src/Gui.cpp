@@ -52,6 +52,7 @@ void Gui::initGui()
 void Gui::guiLoop()
 {
     while (this->_win.isOpen()) {
+        this->_comm.readFromServer();
         std::string cmd;
         while (!(cmd = this->_comm.popCmd()).empty())
         {
