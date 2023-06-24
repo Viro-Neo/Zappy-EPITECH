@@ -67,9 +67,6 @@ def decide_look(client, response: str):
                 print("I found the nearest food!")
                 send_take_object_command(client, "food")
 
-    if not check_inventory(client, response) and check_tile_for_players(client, response) and client.status == WAITING:
-        decide_incantation(client, response)
-
     decide_look(client, response)
 
 
