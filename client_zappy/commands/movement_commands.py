@@ -46,7 +46,7 @@ def send_inventory_command(client) -> str:
         client.write_response_to_socket(command)
 
 def send_broadcast_text_command(client, text: str):
-    command = "Broadcast\n" + text
+    command = "Broadcast \n" + text
 
     if len(client.cmd_buff) < 10:
         print("Sending broadcast command")

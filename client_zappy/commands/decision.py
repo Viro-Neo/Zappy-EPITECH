@@ -26,62 +26,65 @@ def check_tile_for_players(client, tile: str):
 
 
 def decide_look(client, response: str):
-    if not "Look" in client.cmd_buff:
-        return
     client.cmd_buff.remove("Look")
     response_list = [x.strip() for x in response.split(',')]
     print(response_list)
-    nearest_item = None
-    nearest_distance = float('inf')
     available_items = ["linemate", "deraumere", "sibur", "mendiane", "phiras", "thystame"]
 
-    starting_position = 0
-    for item in available_items:
-        if item in response_list:
-            starting_position = response_list.index(item)
-            break
+    if any(item in response_list for item in available_items) and client.status == JOINING:
+        client.status = SETTING
+        return
 
-    if check_tile_for_players(client, response):
-        print("I pick the item!")
-        send_take_object_command(client, item)
-    else:
-        for index, tile in enumerate(response_list):
-            if tile in client.missing and tile != "food":
-                distance = starting_position - index
-                if distance < nearest_distance:
-                    nearest_item = tile
-                    nearest_distance = distance
-        send_forward_command(client)
-        print("Since there is nothing, I go forward")
-        if nearest_item is not None:
-            if nearest_item in available_items:
-                print(f"I found the nearest {nearest_item}!")
-                send_take_object_command(client, nearest_item)
-                print(f"I pick this item, {nearest_item}")
-            elif nearest_distance < starting_position:
-                send_left_command(client)
-                print("I go left")
-            elif nearest_distance > starting_position:
-                send_forward_command(client)
-                print("I go forward")
-            else:
-                send_right_command(client)
-                print("I go right")
+    if any(item in response_list for item in client.missing):
+        for item in client.missing:
+            if item in response_list:
+                print(f"I found the item I need to level up: {item}")
+                send_take_object_command(client, item)
+                print(f"I pick up the item: {item}")
+                return
+
+    if "food" in response_list:
+        print("I found food!")
+        send_take_object_command(client, "food")
+        print("I pick up the food!")
+        return
+
+    rarest_item = None
+    rarest_count = float('inf')
+    for item in available_items:
+        count = response_list.count(item)
+        if count < rarest_count:
+            rarest_item = item
+            rarest_count = count
+
+    if rarest_item is not None:
+        print(f"I found the rarest item: {rarest_item}")
+        send_take_object_command(client, rarest_item)
+        print(f"I pick up the item: {rarest_item}")
+        return
+
+    nearest_item = None
+    nearest_distance = float('inf')
+    starting_position = response_list.index(client.missing[0])
+    for index, tile in enumerate(response_list):
+        if any(item in tile for item in available_items):
+            distance = abs(starting_position - index)
+            if distance < nearest_distance:
+                nearest_item = tile
+                nearest_distance = distance
+
+    if nearest_item is not None:
+        if nearest_distance > 0:
+            send_forward_command(client)
+            print("I go forward")
+        elif nearest_distance < 0:
+            send_right_command(client)
+            print("I go right")
         else:
-            for index, tile in enumerate(response_list):
-                if tile == "food":
-                    distance = starting_position - index
-                    if distance < nearest_distance:
-                        nearest_item = tile
-                        nearest_distance = distance
-            if nearest_item is not None:
-                print("I found the nearest food!")
-                send_take_object_command(client, "food")
-                print("I pick this item, food")
+            send_left_command(client)
+            print("I go left")
 
     decide_look(client, response)
-
-
 
 
 
