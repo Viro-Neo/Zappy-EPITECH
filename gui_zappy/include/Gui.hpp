@@ -30,7 +30,7 @@ class Gui {
         void guiLoop();
         std::string getPort() const;
         std::string getHost() const;
-
+        void updateGui(int updater);
     private:
         void eventHandler();
         std::string _port;
@@ -40,8 +40,8 @@ class Gui {
         FunctionManager _cmdHandler;
         Map _map;
         struct Tile _tileClicked;
-        bool _interfaceOn;
         Interface _interface;
+        bool _interfaceOn;
 };
 
 

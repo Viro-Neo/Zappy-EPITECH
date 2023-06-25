@@ -16,35 +16,29 @@ static zappy_team_t *create_team(char *team_name)
     char *name = strdup(team_name);
 
     if (team != NULL && name != NULL) {
+        memset(team, 0, sizeof(*team));
         team->name = name;
-        team->next = NULL;
-        return team;
+        if (strcmp(team_name, "GRAPHIC") != 0) {
+            return team;
+        } else {
+            dprintf(2, "An internal error has occurred: GRAPHIC is reserved\n");
+        }
+    } else {
+        dprintf(2, "An internal error has occurred: Unable to create a team\n");
     }
-    fprintf(stderr, "An internal error has occurred: Unable to create a team");
     free(team);
     free(name);
     return NULL;
 }
 
-static int team_names_index(char *argv[])
-{
-    int argc = 1;
-
-    for (; argv[argc] != NULL; ++argc) {
-        if (strcmp(argv[argc], "-n") == 0) {
-            return argc + 1;
-        }
-    }
-    return argc;
-}
-
-int parse_team_names(char *argv[], zappy_server_t *server)
+static int create_default_teams(zappy_server_t *server)
 {
     zappy_team_t **next_team = &server->teams;
-    int i = team_names_index(argv);
+    char team_name[6] = "Team ";
 
-    for (; (argv[i] != NULL && argv[i][0] != '-'); ++i) {
-        *next_team = create_team(argv[i]);
+    for (int i = 0; i < 4; ++i) {
+        team_name[4] = '1' + i;
+        *next_team = create_team(team_name);
         if (*next_team == NULL) {
             return 0;
         }
@@ -53,16 +47,41 @@ int parse_team_names(char *argv[], zappy_server_t *server)
     return 1;
 }
 
-int get_num_teams(zappy_server_t *server)
+int parse_team_names(char *argv[], zappy_server_t *server)
 {
     zappy_team_t **next_team = &server->teams;
-    int num = 0;
+    int i = 1;
 
-    while (*next_team != NULL) {
-        ++num;
+    for (; argv[i] != NULL; ++i) {
+        if (strcmp(argv[i], "-n") == 0) {
+            ++i;
+            break;
+        }
+    }
+    for (; (argv[i] != NULL && argv[i][0] != '-'); ++i) {
+        *next_team = create_team(argv[i]);
+        if (*next_team == NULL) {
+            return 0;
+        }
         next_team = &(*next_team)->next;
     }
-    return num;
+    if (server->teams == NULL) {
+        return create_default_teams(server);
+    }
+    return 1;
+}
+
+zappy_team_t *get_team(zappy_server_t *server, char *team_name)
+{
+    zappy_team_t *next_team = server->teams;
+
+    while (next_team != NULL) {
+        if (strcmp(next_team->name, team_name) == 0) {
+            return next_team;
+        }
+        next_team = next_team->next;
+    }
+    return NULL;
 }
 
 void free_teams(zappy_server_t *server)
@@ -73,6 +92,7 @@ void free_teams(zappy_server_t *server)
     while (next_team != NULL) {
         team = next_team;
         next_team = team->next;
+        free_eggs(team);
         free(team->name);
         free(team);
     }

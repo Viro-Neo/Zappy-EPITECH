@@ -7,8 +7,10 @@
 
 #include "Gui.hpp"
 
-Gui::Gui(int ac, char **av) : _win(sf::VideoMode(1300, 600), "Zappy")
+
+Gui::Gui(int ac, char **av) : _win(sf::VideoMode(1920, 1080), "Zappy") , _map(1920, 1080), _cmdHandler()
 {
+    
     if (ac == 2 && std::string(av[1]) == "-help")
         throw std::invalid_argument("Help");
     GetOpt getOpt(ac, av);
@@ -17,6 +19,7 @@ Gui::Gui(int ac, char **av) : _win(sf::VideoMode(1300, 600), "Zappy")
     _comm.setHost(_host);
     _comm.setPort(_port);
     this->_interfaceOn = false;
+    this->_win.setFramerateLimit(60);
     std::cout << "Port: " << _port << std::endl;
     std::cout << "Host: " << _host << std::endl;
 }
@@ -28,39 +31,22 @@ void Gui::initGui()
     } catch(const std::exception& e) {
         std::cerr << e.what() << '\n';
     }
-    this->_comm.writeToServer("msz\n");
-    this->_comm.readFromServer();
-    std::string mapSize = this->_comm.popCmd();
-    while (!mapSize.empty() && mapSize.substr(0, 3) != "msz")
-    {
-        mapSize = this->_comm.popCmd();
-    }
-    int firstArg = mapSize.find(' ') + 1;
-    std::string width =  mapSize.substr(firstArg, mapSize.find(' ', firstArg) - firstArg);
-    int secondArg = mapSize.find(' ', firstArg) + 1;
-    std::string height = mapSize.substr(secondArg, mapSize.find(' ', secondArg) - secondArg);
-    std::list<std::string> list;
-    list.push_back(width);
-    list.push_back(height);
-    FunctionManager::msz(list, this->_map);
 }
 
 void Gui::guiLoop()
 {
+    int updater = 0;
     while (this->_win.isOpen()) {
-        std::string cmd;
-        while (!(cmd = this->_comm.popCmd()).empty())
-        {
-
-        }
-        if (_interfaceOn) {
-            printf("tile is cooord is %d %d\n", this->_tileClicked.x, this->_tileClicked.y);
-        }
+        this->updateGui(updater);
+        if (_interfaceOn == true)
+            printf("tile is cooord is %d %d\n", this->_tileClicked.x, this->_tileClicked.y); 
+        this->_map.updateMap();
         this->_map.updateTexture();
         this->eventHandler();
         this->_win.clear(sf::Color::Black);
         this->_win.draw(this->_map);
         this->_win.display();
+        updater++;
     }
 }
 
@@ -72,6 +58,24 @@ std::string Gui::getPort() const
 std::string Gui::getHost() const
 {
     return _host;
+}
+
+void Gui::updateGui(int updater)
+{
+    this->_comm.readFromServer();
+    std::string cmd = "";
+    while ((cmd = this->_comm.popCmd()) != "")
+    {
+        this->_cmdHandler.callFunction(cmd, this->_map);
+    }
+    // if (updater % 5 == 0)
+        // this->_comm.writeToServer("mct\n");
+    for (auto it = this->_map.getTeam().begin(); it != this->_map.getTeam().end(); it++) {
+        for (auto player = (*it).getPlayerList().begin() ; player != (*it).getPlayerList().end(); player++) {
+            this->_comm.writeToServer(std::string("ppo ").append(std::to_string((*player).getId())).append("\n"));
+            this->_comm.writeToServer(std::string("pin ").append(std::to_string((*player).getId())).append("\n"));
+        }
+    }
 }
 
 void Gui::eventHandler()

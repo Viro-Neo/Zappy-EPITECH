@@ -62,18 +62,29 @@ int Map::resizeMap(int sizeX, int sizeY)
     return 0;
 }
 
-bool Map::updateMap(std::vector<std::string> bct)
+bool Map::updateMap()
 {
+    for (unsigned int i = 0; i < _sizeX; i++)
+        for (unsigned int j = 0; j < _sizeY; j++) {
+            this->_map.at(i + j * _sizeX).PLAYER.clear();
+        }
+    for (auto it = this->getTeam().begin(); it != this->getTeam().end(); it++) {
+        for (auto player = (*it).getPlayerList().begin(); player != (*it).getPlayerList().end(); player++) {
+            this->_map.at((*player).getPos().x + (*player).getPos().y * this->_sizeX).PLAYER.push_back(*player);
+        }
+    }
     return true;
 }
+
+
 
 bool Map::updateTexture()
 {
     for (unsigned int i = 0; i < _sizeX; i++)
         for (unsigned int j = 0; j < _sizeY; j++) {
-            // Tile curr = this->_map[i + j * _sizeX];
-            int tu = 0 % (this->_tileset.getSize().x / _tileSize.x);
-            int tv = 0 / (this->_tileset.getSize().x / _tileSize.x);
+            int curr = chooseText(i, j);
+            int tu = curr % (this->_tileset.getSize().x / _tileSize.x);
+            int tv = curr / (this->_tileset.getSize().x / _tileSize.x);
             sf::Vertex *quad = &this->_mapRender[(i + j * _sizeX) * 4];
             quad[0].position = sf::Vector2f(i * _tileSize.x * this->_zoom + this->pos.x, j * _tileSize.y * this->_zoom  + this->pos.y);
             quad[1].position = sf::Vector2f((i + 1) * _tileSize.x * this->_zoom + this->pos.x, j * _tileSize.y * this->_zoom + this->pos.y);
@@ -96,14 +107,13 @@ void Map::moveMap(int lateral, int vertical)
 
 void Map::setTile(Tile t)
 {
-  Tile curr = this->_map.at(t.x + t.x * t.y);
-  curr.DERAUMERE = t.DERAUMERE;
-  curr.FOOD = t.FOOD;
-  curr.LINEMATE = t.LINEMATE;
-  curr.MENDIANE = t.MENDIANE;
-  curr.PHIRAS = t.PHIRAS;
-  curr.SIBUR = t.SIBUR;
-  curr.THYSTAME = t.THYSTAME;
+    this->_map.at(t.y + t.x * this->_sizeY).DERAUMERE = t.DERAUMERE;
+    this->_map.at(t.y + t.x * this->_sizeY).FOOD = t.FOOD;
+    this->_map.at(t.y + t.x * this->_sizeY).LINEMATE = t.LINEMATE;
+    this->_map.at(t.y + t.x * this->_sizeY).MENDIANE = t.MENDIANE;
+    this->_map.at(t.y + t.x * this->_sizeY).PHIRAS = t.PHIRAS;
+    this->_map.at(t.y + t.x * this->_sizeY).SIBUR = t.SIBUR;
+    this->_map.at(t.y + t.x * this->_sizeY).THYSTAME = t.THYSTAME;
 }
 
 void Map::zoom(bool zoomin)
@@ -133,4 +143,33 @@ struct Tile &Map::getTileInfo(sf::Vector2i mousePos)
                 return this->_map.at(x + y * _sizeX);
         }
     throw std::exception();
+}
+
+std::vector<Incantation> &Map::getIncantationList()
+{
+    return this->_incantationList;
+}
+
+int Map::chooseText(unsigned int i,unsigned int j)
+{
+    Tile t = this->_map.at(i + j * this->_sizeX);
+    if (t.PLAYER.empty()) {
+        if (t.FOOD < 2 && t.DERAUMERE < 2)
+            return 0;
+        if (t.FOOD > t.DERAUMERE * 2)
+            return 6;
+        else 
+            return 5;
+    } else {
+        Orientation o = t.PLAYER.front().getOrientation();
+        if (o == Orientation::WEST)
+            return 1;
+        if (o == Orientation::NORTH)
+            return 2;
+        if (o == Orientation::EAST)
+            return 3;
+        if (o == Orientation::SOUTH)
+            return 4;
+    }
+    return 0;
 }
