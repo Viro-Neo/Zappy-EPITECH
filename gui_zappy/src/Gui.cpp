@@ -68,8 +68,8 @@ void Gui::updateGui(int updater)
     {
         this->_cmdHandler.callFunction(cmd, this->_map);
     }
-    if (updater % 5 == 0)
-        this->_comm.writeToServer("mct\n");
+    // if (updater % 5 == 0)
+        // this->_comm.writeToServer("mct\n");
     for (auto it = this->_map.getTeam().begin(); it != this->_map.getTeam().end(); it++) {
         for (auto player = (*it).getPlayerList().begin() ; player != (*it).getPlayerList().end(); player++) {
             this->_comm.writeToServer(std::string("ppo ").append(std::to_string((*player).getId())).append("\n"));

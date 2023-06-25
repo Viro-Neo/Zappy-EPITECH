@@ -40,6 +40,7 @@ class Gui {
         FunctionManager _cmdHandler;
         Map _map;
         struct Tile _tileClicked;
+        Interface _interface;
         bool _interfaceOn;
 };
 

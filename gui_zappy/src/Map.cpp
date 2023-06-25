@@ -156,7 +156,7 @@ int Map::chooseText(unsigned int i,unsigned int j)
     if (t.PLAYER.empty()) {
         if (t.FOOD < 2 && t.DERAUMERE < 2)
             return 0;
-        if (t.FOOD > t.DERAUMERE * 1.66)
+        if (t.FOOD > t.DERAUMERE * 2)
             return 6;
         else 
             return 5;
