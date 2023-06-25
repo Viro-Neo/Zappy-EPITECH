@@ -195,7 +195,7 @@ struct Tile &Map::getTileInfo(sf::Vector2i mousePos)
     for (int x = 0; x < this->_sizeX; x++)
         for (int y = 0; y < this->_sizeY; y++) {
             sf::Vertex *quad = &this->_mapRender[(x + y * _sizeX) * 4];
-            if (quad[0].position.x <= mousePos.x && quad[0].position.y <= mousePos.y && quad[2].position.x >= mousePos.x && quad[2].position.y >= mousePos.y)
+            if (quad[0].position.x <= mousePos.x && quad[0].position.y  <= mousePos.y && quad[2].position.x  >= mousePos.x && quad[2].position.y >= mousePos.y)
                 return this->_map.at(x + y * _sizeX);
         }
     throw std::exception();
