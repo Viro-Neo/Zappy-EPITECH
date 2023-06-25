@@ -7,12 +7,22 @@
 
 #include "Gui.hpp"
 
+void printUsage()
+{
+    std::cout << "USAGE: ./zappy_gui -p port -h machine" << std::endl;
+    std::cout << "\tport\tis the port number" << std::endl;
+    std::cout << "\tmachine\tis the name of the machine; localhost by default" << std::endl;
+}
+
 int main(int ac, char **av)
 {
-   try {
-       Gui gui(ac, av);
-   } catch (const std::exception &e) {
-       std::cerr << e.what() << std::endl;
-       return 84;
-   }
+    try {
+        Gui gui(ac, av);
+        gui.initGui();
+        gui.guiLoop();
+    } catch (const std::exception &e) {
+        std::cerr << e.what() << std::endl;
+        printUsage();
+        return 84;
+    }
 }
