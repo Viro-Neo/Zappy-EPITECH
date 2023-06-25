@@ -67,19 +67,24 @@ def decide_look(client, response: str):
     
     print(f"current tile : {tiles[0]}")
     
+    if client.status == NORMAL and client.level == 1 and check_tile_for_needed_items(client, tiles[0]):
+        client.status == CHANTING
+        return
+
     if check_tile_for_players(client, tiles[0]):
         if (client.status == JOINING or client.status == CALLING):
             client.status = SETTING
             return
-        if (client.status == WAITING or client.status == NORMAL) and check_tile_for_needed_items(client, tiles[0]):
+        if client.status == WAITING and check_tile_for_needed_items(client, tiles[0]):
             client.status = CHANTING
             return
     
-    if client.status == JOINING or client.status == CALLING:
+    if client.status == JOINING or client.status == CALLING or client.status == SETTING:
         return
 
     for tile_no in tile_order:
         if pick_up_decision(client, tiles[tile_no], tile_no):
+            print(f"Deciding to go to tile {tile_no}")
             if tile_no > 0:
                 setup_movement(client, tile_no)
             return
@@ -132,14 +137,14 @@ def decide_set(client, response: str):
     client.cmd_buff.remove("Set")
 
 def decide_incantation_start(client, response: str):
+    client.cmd_buff.remove("Incantation_start")
     if response == "ko":
-        client.cmd_buff.remove("Incantation")
         client.status = 0
         return
     print("Elevation has started")
 
 def decide_incantation_end(client, response: str):
-    client.cmd_buff.remove("Incantation")
+    client.cmd_buff.remove("Incantation_end")
     client.status = 0
     if response == "ko":
         return

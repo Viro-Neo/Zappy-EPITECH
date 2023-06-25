@@ -28,7 +28,7 @@ def network_loop(client: Client):
             if client.status == JOINING:
                 join_incant()
             if client.status == GATHERING:
-                gather()
+                gather(client)
                 continue
             if "Look" not in client.cmd_buff:
                 send_look_command(client)
@@ -50,6 +50,9 @@ def gather(client: Client):
             else:
                 send_forward_command(client)
                 client.gathering.pop(0)
+        else:
+            client.status = NORMAL
+            break
 
 def set_needed_items(client: Client):
     if len(client.setting_items) == 0:

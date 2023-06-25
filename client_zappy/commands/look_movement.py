@@ -1,3 +1,5 @@
+from commands.status import *
+
 def setup_movement(client, tile_no):
     if tile_no == 1:
         client.gathering = ["Forward", "Left", "Forward"]
@@ -29,3 +31,4 @@ def setup_movement(client, tile_no):
         client.gathering = ["Forward", "Forward", "Forward", "Right", "Forward", "Forward"]
     elif tile_no == 15:
         client.gathering = ["Forward", "Forward", "Forward", "Right", "Forward", "Forward", "Forward"]
+    client.status = GATHERING
