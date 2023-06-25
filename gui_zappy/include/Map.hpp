@@ -57,10 +57,6 @@ class Map : public sf::Drawable, public sf::Transformable {
                 states.transform *= getTransform();
                 states.texture = &_tileset;
                 target.draw(_mapRender, states);
-                for (auto it = this->_incantationList.begin(); it != _incantationList.end(); it++) {
-                    const sf::Sprite sprite = (*it).getSprite();
-                    target.draw(sprite, states);
-                }
                 for (auto i = 0; i < _boradcastList.size(); i) {
                     target.draw(_boradcastList.at(i), states);
                 }
