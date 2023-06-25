@@ -55,7 +55,7 @@ class Interface : public sf::Drawable, public sf::Transformable {
         text_t _text;
         sf::Font _font;
         struct Tile _tile;
-        std::string _fontTTf = "arial.ttf";
+        std::string _fontTTf = "gui_zappy/assets/fonts/arial.ttf";
 };
 
 #endif /* !INTERFACE_HPP_ */
