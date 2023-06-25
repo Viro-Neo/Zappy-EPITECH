@@ -1,8 +1,8 @@
 import socket
-import threading
 import re
 from command_response_actions_dict import *
 from commands.status import *
+from inventory import init_inventory
 
 class Client:
     def __init__(self, port, team, machine):
@@ -11,7 +11,7 @@ class Client:
         self.machine = machine
         self.sock = None
         self.level = 1
-        self.inventory = init_items()
+        self.inventory = init_inventory()
         self.missing = []
         self.cmd_buff = []
         self.direction = []

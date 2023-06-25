@@ -1,4 +1,3 @@
-from commands.movement_commands import send_inventory_command
 from typing import Dict
 
 ritual_needs = {
