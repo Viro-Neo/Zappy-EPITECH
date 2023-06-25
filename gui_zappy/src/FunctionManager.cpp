@@ -235,15 +235,15 @@ void FunctionManager::pex(std::list<std::string> arg, Map &myMap) // pex #n
 
 void FunctionManager::pbc(std::list<std::string> arg, Map &myMap) // pbc #n M
 {
-    if (arg.size() != 2)
+    if (arg.size() < 2)
         return;
     int id = stoi(arg.front());
     std::string msg = arg.back();
-
-     for (auto it = myMap.getTeam().begin(); it != myMap.getTeam().end(); it++) {
+    for (auto it = myMap.getTeam().begin(); it != myMap.getTeam().end(); it++) {
         for (auto player = (*it).getPlayerList().begin(); player != (*it).getPlayerList().end(); player++) {
             if ((*player).getId() == id) {
-                myMap.getBroadcastList().push_back(Broadcast(sf::Vector2f(((*player).getPos().x * myMap.getTileSize().x * myMap.getZomm()) + myMap.getPosition().x + 16, ((*player).getPos().y * myMap.getTileSize().y * myMap.getZomm()) + myMap.getPosition().y + 16),16 * myMap.getZomm(), msg));
+                myMap.getBroadcastList().push_back(Broadcast(sf::Vector2f((((*player).getPos().x * myMap.getTileSize().x + 8) * myMap.getZomm()) + myMap.getPosition().x, (((*player).getPos().y * myMap.getTileSize().y + 8) * myMap.getZomm()) + myMap.getPosition().y), 16 * myMap.getZomm(), msg));
+                return;
             }
         }
     }

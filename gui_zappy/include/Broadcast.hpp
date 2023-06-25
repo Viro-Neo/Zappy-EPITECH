@@ -23,7 +23,7 @@ class Broadcast : public sf::Drawable, public sf::Transformable {
         }
         sf::CircleShape _circle;
         sf::Text _text;
-        sf::Font _font;
+        std::shared_ptr<sf::Font> _font;
         float _nbScale;
         float scale;
     private:

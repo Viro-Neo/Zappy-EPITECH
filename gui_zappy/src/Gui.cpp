@@ -47,7 +47,12 @@ void Gui::guiLoop()
            this->_win.draw(this->_interface);
         // printf("size of Incantation list is = %ld\n", this->_map.getIncantationList().size());
         for (auto i = 0; i < this->_map.getIncantationList().size(); i++) {
-                _win.draw(this->_map.getIncantationList().at(i));
+            _win.draw(this->_map.getIncantationList().at(i));
+        }
+        if ( this->_map.getBroadcastList().size() >= 1)
+            printf("WOOOOOOOO\n");
+        for (auto i = 0; i < this->_map.getBroadcastList().size(); i) {
+            this->_win.draw(this->_map.getBroadcastList().at(i));
         }
         this->_win.display();
         updater++;
