@@ -231,6 +231,22 @@ void FunctionManager::pbc(std::list<std::string> arg, Map &myMap) // pbc #n M
 {
     if (arg.size() != 2)
         return;
+    int id = stoi(arg.front());
+    std::string msg = arg.back();
+
+     for (auto it = myMap.getTeam().begin(); it != myMap.getTeam().end(); it++) {
+        for (auto player = (*it).getPlayerList().begin(); player != (*it).getPlayerList().end(); player++) {
+            if ((*player).getId() == id) {
+                sf::CircleShape circle;
+                circle.setPosition(((*player).getPos().x * myMap.getTileSize().x * myMap.getZomm()) + myMap.getPosition().x + 16, ((*player).getPos().y * myMap.getTileSize().y * myMap.getZomm()) + myMap.getPosition().y + 16);
+                circle.setRadius(16 * myMap.getZomm());
+                circle.setFillColor(sf::Color::Transparent);
+                circle.setOutlineColor(sf::Color::Blue);
+                circle.setOutlineThickness(2);
+                myMap.getBroadcastList().push_back(Broadcast(circle, msg));
+            }
+        }
+    }    
 }
 
 void FunctionManager::pic(std::list<std::string> arg, Map &myMap) // pic X Y L #n #n #n (looped for each player in the tile)
@@ -267,7 +283,8 @@ void FunctionManager::pic(std::list<std::string> arg, Map &myMap) // pic X Y L #
     }
     Player starter = playerList.front();
     playerList.pop_front();
-    incList.push_back(Incantation(level, sf::Vector2u(x, y), starter, playerList));
+    incList.push_back(Incantation(level, sf::Vector2i(x, y), starter, playerList));
+    incList.back().setSpirtePos(sf::Vector2i((x * myMap.getTileSize().x * myMap.getZomm()) + myMap.getPosition().x, (y * myMap.getTileSize().y * myMap.getZomm()) + myMap.getPosition().y));
 }
 
 void FunctionManager::pie(std::list<std::string> arg, Map &myMap) // pie X Y R (1 if win, 0 if loose)
@@ -283,7 +300,7 @@ void FunctionManager::pie(std::list<std::string> arg, Map &myMap) // pie X Y R (
     std::vector<int> listId;
     int i = 0;
     for (auto it = myMap.getIncantationList().begin(); it !=myMap.getIncantationList().end(); it++) {
-        if ((*it).getPos() == sf::Vector2u(x, y)) {
+        if ((*it).getPos() == sf::Vector2i(x, y)) {
             myMap.getIncantationList().at(i).finishIncantation(result);
             listId.push_back((*it).getStarter().getId());
             for (auto id = (*it).getParticipent().begin(); id != (*it).getParticipent().end(); id++)
@@ -327,12 +344,33 @@ void FunctionManager::pdi(std::list<std::string> arg, Map &myMap) // pdi #n
 {
     if (arg.size() != 1)
         return;
+    int id = stoi(arg.front());
+    int t = 0;
+    for (auto it = myMap.getTeam().begin(); it != myMap.getTeam().end(); it++) {
+        for (auto player = (*it).getPlayerList().begin() ;player != (*it).getPlayerList().end(); player++) {
+            if ((*player).getId() == id) {
+                myMap.getTeam().at(t).getPlayerList().erase(player);
+                return;
+            }
+        }
+        t++;
+    }
+    
 }
 
 void FunctionManager::enw(std::list<std::string> arg, Map &myMap) // enw #e #n X Y
 {
     if (arg.size() != 4)
         return;
+    auto it = arg.begin();
+    int idEgg = atoi((*it).data());
+    it++;
+    int idPLayer = atoi((*it).data());
+    it++;
+    int x = atoi((*it).data());
+    it++;
+    int y = atoi((*it).data());
+    myMap.addEgg(x, y, idEgg);
 }
 
 void FunctionManager::ebo(std::list<std::string> arg, Map &myMap) // ebo #e
@@ -345,6 +383,15 @@ void FunctionManager::edi(std::list<std::string> arg, Map &myMap) // edi #e
 {
     if (arg.size() != 1)
         return;
+    int id = stoi(arg.front());
+    for (auto it = myMap.getEggList().begin(); it != myMap.getEggList().end(); it++) {
+        if ((*it).getId() == id) {
+            myMap.removeEgg(id, (*it).getPos().x, (*it).getPos().y);
+            myMap.getEggList().erase(it);
+            return;
+        }
+    }
+
 }
 
 void FunctionManager::sgt(std::list<std::string> arg, Map &myMap) // sgt T
@@ -357,6 +404,7 @@ void FunctionManager::seg(std::list<std::string> arg, Map &myMap) // seg N
 {
     if (arg.size() != 1)
         return;
+    throw std::exception(); // end of game
 }
 
 void FunctionManager::smg(std::list<std::string> arg, Map &myMap) // smg M

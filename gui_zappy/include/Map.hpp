@@ -12,6 +12,8 @@
 #include "Player.hpp"
 #include "Team.hpp"
 #include "Incantation.hpp"
+#include "Egg.hpp"
+#include "Broadcast.hpp"
 
 struct Tile {
     int x;
@@ -24,6 +26,7 @@ struct Tile {
     int PHIRAS;
     int THYSTAME;
     std::vector<Player> PLAYER;
+    std::vector<Egg> EGG;
 };
 class Map : public sf::Drawable, public sf::Transformable {
     public:
@@ -35,10 +38,17 @@ class Map : public sf::Drawable, public sf::Transformable {
         int resizeMap(int sizeX, int sizeY);
         void moveMap(int , int);
         void setTile(struct Tile t);
+        void addEgg(int x, int y, int id);
+        void removeEgg(int id, int x, int y);
         void zoom(bool zoomin);
         void addTeam(Team t);
+        sf::Vector2u getSize();
         std::vector<Team> &getTeam();
+        sf::Vector2u getTileSize();
+        std::vector<Broadcast> getBroadcastList();
+        float getZomm();
         struct Tile &getTileInfo(sf::Vector2i mousePos);
+        std::vector<Egg> getEggList();
         std::vector<Incantation> &getIncantationList();
         int chooseText(unsigned int i,unsigned int j);
     protected:
@@ -47,6 +57,13 @@ class Map : public sf::Drawable, public sf::Transformable {
                 states.transform *= getTransform();
                 states.texture = &_tileset;
                 target.draw(_mapRender, states);
+                for (auto it = this->_incantationList.begin(); it != _incantationList.end(); it++) {
+                    const sf::Sprite sprite = (*it).getSprite();
+                    target.draw(sprite, states);
+                }
+                for (auto it = this->_boradcastList.begin(); it != _boradcastList.end(); it++) {
+                    target.draw((*it), states);
+                }
         }
         int _sizeX;
         int _sizeY;
@@ -59,6 +76,8 @@ class Map : public sf::Drawable, public sf::Transformable {
         sf::Vector2i pos;
         std::vector<Team> team;
         std::vector<Incantation> _incantationList;
+        std::vector<Egg> _eggList;
+        std::vector<Broadcast> _boradcastList;
         int _winWidth;
         int _winHeight;
 };

@@ -67,16 +67,27 @@ void Gui::updateGui(int updater)
     std::string cmd = "";
     while ((cmd = this->_comm.popCmd()) != "")
     {
+        if (cmd.substr(0, 3).compare("pdi") == 0)
+            printf("cmd is %s\n", cmd.data());
         this->_cmdHandler.callFunction(cmd, this->_map);
     }
-    // if (updater % 5 == 0)
-        // this->_comm.writeToServer("mct\n");
+    if (updater % (this->_map.getSize().x * this->_map.getSize().y) == 0)
+        this->_comm.writeToServer("mct\n");
     for (auto it = this->_map.getTeam().begin(); it != this->_map.getTeam().end(); it++) {
         for (auto player = (*it).getPlayerList().begin() ; player != (*it).getPlayerList().end(); player++) {
             this->_comm.writeToServer(std::string("ppo ").append(std::to_string((*player).getId())).append("\n"));
             this->_comm.writeToServer(std::string("pin ").append(std::to_string((*player).getId())).append("\n"));
+            if (updater % 120 == 0) {
+                this->_comm.writeToServer(std::string("plv ").append(std::to_string((*player).getId())).append("\n"));
+            }
         }
     }
+    int i = 0;
+    if (updater % 10 == 0)
+        while (i != this->_map.getIncantationList().size()) {
+            this->_map.getIncantationList().at(i).addTime(5);
+            i++;
+        }
 }
 
 void Gui::eventHandler()
