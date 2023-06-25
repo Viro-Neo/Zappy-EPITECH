@@ -10,7 +10,8 @@
     #include <SFML/Graphics.hpp>
     #include <list>
     #include <Player.hpp>
-class Incantation {
+    #include <memory>
+class Incantation : public sf::Drawable, public sf::Transformable {
     public:
         Incantation(int level, sf::Vector2i pos, Player starter, std::list<Player> &participent);
         ~Incantation();
@@ -23,12 +24,17 @@ class Incantation {
         void setSpirtePos(sf::Vector2i pos);
     protected:
     private:
+        virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const {
+            states.transform *= getTransform();
+            states.texture = &(*_text);
+            target.draw(_sprite, states);
+        }
         int _level;
         sf::Vector2i _pos;
         Player _starter;
         std::list<Player> _participent;
         sf::Sprite _sprite;
-        sf::Texture _text;
+        std::shared_ptr<sf::Texture> _text;
         int _time;
 };
 

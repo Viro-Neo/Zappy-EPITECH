@@ -115,13 +115,13 @@ void Map::moveMap(int lateral, int vertical)
 
 void Map::setTile(Tile t)
 {
-    this->_map.at(t.y + t.x * this->_sizeY).DERAUMERE = t.DERAUMERE;
-    this->_map.at(t.y + t.x * this->_sizeY).FOOD = t.FOOD;
-    this->_map.at(t.y + t.x * this->_sizeY).LINEMATE = t.LINEMATE;
-    this->_map.at(t.y + t.x * this->_sizeY).MENDIANE = t.MENDIANE;
-    this->_map.at(t.y + t.x * this->_sizeY).PHIRAS = t.PHIRAS;
-    this->_map.at(t.y + t.x * this->_sizeY).SIBUR = t.SIBUR;
-    this->_map.at(t.y + t.x * this->_sizeY).THYSTAME = t.THYSTAME;
+    this->_map.at(t.x + t.y * this->_sizeX).DERAUMERE = t.DERAUMERE;
+    this->_map.at(t.x + t.y * this->_sizeX).FOOD = t.FOOD;
+    this->_map.at(t.x + t.y * this->_sizeX).LINEMATE = t.LINEMATE;
+    this->_map.at(t.x + t.y * this->_sizeX).MENDIANE = t.MENDIANE;
+    this->_map.at(t.x + t.y * this->_sizeX).PHIRAS = t.PHIRAS;
+    this->_map.at(t.x + t.y * this->_sizeX).SIBUR = t.SIBUR;
+    this->_map.at(t.x + t.y * this->_sizeX).THYSTAME = t.THYSTAME;
 }
 
 void Map::addEgg(int x, int y, int id)
@@ -199,9 +199,9 @@ int Map::chooseText(unsigned int i,unsigned int j)
     Tile t = this->_map.at(i + j * this->_sizeX);
     if (t.PLAYER.empty()) {
         if (t.EGG.empty()) {
-            if (t.FOOD < 2 && t.DERAUMERE < 2)
+            if (t.FOOD < 1 && t.LINEMATE < 1)
                 return 0;
-            if (t.FOOD > t.DERAUMERE * 2)
+            if (t.FOOD > t.LINEMATE * 2)
                 return 6;
             else 
                 return 5;
@@ -210,14 +210,14 @@ int Map::chooseText(unsigned int i,unsigned int j)
         }
     } else {
         Orientation o = t.PLAYER.front().getOrientation();
-        if (o == Orientation::WEST)
+        if (o == Orientation::EAST)
             return 1;
         if (o == Orientation::NORTH)
-            return 2;
-        if (o == Orientation::EAST)
+            return 4;
+        if (o == Orientation::WEST)
             return 3;
         if (o == Orientation::SOUTH)
-            return 4;
+            return 2;
     }
     return 0;
 }

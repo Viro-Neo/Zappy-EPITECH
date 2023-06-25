@@ -13,12 +13,13 @@ Incantation::Incantation(int level, sf::Vector2i pos, Player starter, std::list<
     this->_pos = pos;
     this->_participent = participent;
     this->_time = 0;
-    if (this->_text.loadFromFile("gui_zappy/assets/GrassText.png"))
-    {   
-        return;
+    this->_text = std::make_shared<sf::Texture>(sf::Texture());
+    if (!(this->_text)->loadFromFile("gui_zappy/assets/GrassText.png", sf::IntRect(256, 0, 32, 32)))
+    {
+        throw std::exception();
     }
-    this->_sprite.setTexture(this->_text);
-    this->_sprite.setTextureRect(sf::IntRect(sf::Vector2i(255, 0), sf::Vector2i(32, 32)));
+    this->_sprite.setTexture((*this->_text), true);
+    this->_sprite.setOrigin(16, 16);
 }
 
 Incantation::~Incantation()
@@ -48,7 +49,7 @@ std::list<Player>& Incantation::getParticipent(void)
 void Incantation::addTime(int time)
 {
     this->_time += time;
-    this->_sprite.setRotation(time % 360);
+    this->_sprite.setRotation(_time % 360);
 }
 
 const sf::Sprite & Incantation::getSprite() const
