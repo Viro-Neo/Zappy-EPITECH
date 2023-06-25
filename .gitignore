@@ -13,8 +13,8 @@ cmake-build-debug
 *_zappy/src/*o
 zappy_gui
 .vscode
-*.pyc
 *~
 .gitignore
 *.o
+__pycache__
 *.pyc

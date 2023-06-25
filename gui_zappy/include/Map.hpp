@@ -61,8 +61,8 @@ class Map : public sf::Drawable, public sf::Transformable {
                     const sf::Sprite sprite = (*it).getSprite();
                     target.draw(sprite, states);
                 }
-                for (auto it = this->_boradcastList.begin(); it != _boradcastList.end(); it++) {
-                    target.draw((*it), states);
+                for (auto i = 0; i < _boradcastList.size(); i) {
+                    target.draw(_boradcastList.at(i), states);
                 }
         }
         int _sizeX;

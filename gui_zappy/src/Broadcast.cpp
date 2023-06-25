@@ -7,15 +7,19 @@
 
 #include "Broadcast.hpp"
 
-Broadcast::Broadcast(sf::CircleShape _circle, std::string text)
+Broadcast::Broadcast(sf::Vector2f pos, float radius, std::string text)
 {
-    if (!this->_font.loadFromFile("gui_zappy/assets/arial.tts"))
+    if (!this->_font.loadFromFile("gui_zappy/assets/arial.ttf"))
         throw std::exception();
     this->_text.setFillColor(sf::Color::Yellow);
     this->_text.setString(text);
     this->_text.setFont(this->_font);
     this->_text.setCharacterSize(24);
-    this->_circle = _circle;
+    _circle.setPosition(pos);
+    _circle.setRadius(radius);
+    _circle.setOutlineThickness(2);
+    _circle.setFillColor(sf::Color::Transparent);
+    _circle.setOutlineColor(sf::Color::Blue);
     this->_nbScale = 0;
     this->scale = 1;
 }
