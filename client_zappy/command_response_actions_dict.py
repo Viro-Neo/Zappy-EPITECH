@@ -27,7 +27,9 @@ response_dict = {
 stray_response_dict = {
     'Dead': 'dead',
     'Message': r'message (\d+), (.+)',
-    'Ejected': r'eject: [A-Za-z]'
+    'Ejected': r'eject: [A-Za-z]',
+    'Incantation_start': r'Elevation underway|ko',
+    'Incantation_end': r'Current level: [2-8]|ko'
 }
 
 action_dict = {

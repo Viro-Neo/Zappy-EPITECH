@@ -4,6 +4,7 @@ item_found = r'^message ([1-8]), ([A-Za-z]+) ([1-7]) ([A-Za-z]+)$'
 ready = r'^message ([1-8]), ([A-Za-z]+) ([1-7]) READY+$'
 
 def check_broadcast_pattern(pattern: str, client):
+    print(f"received broadcast pattern {pattern}")
     match = re.match(ready, pattern)
     if match:
         ready_for_upgrade_signal(match, client)

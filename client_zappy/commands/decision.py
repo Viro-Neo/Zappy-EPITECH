@@ -161,14 +161,16 @@ def decide_set(client, response: str):
     client.cmd_buff.remove("Set")
 
 def decide_incantation_start(client, response: str):
-    client.cmd_buff.remove("Incantation_start")
+    if "Incantation_start" in client.cmd_buff:
+        client.cmd_buff.remove("Incantation_start")
     if response == "ko":
         client.status = 0
         return
     print("Elevation has started")
 
 def decide_incantation_end(client, response: str):
-    client.cmd_buff.remove("Incantation_end")
+    if "Incantation_end" in client.cmd_buff:
+        client.cmd_buff.remove("Incantation_end")
     client.status = 0
     if response == "ko":
         return
