@@ -10,6 +10,7 @@
 Team::Team(std::string name)
 {
     this->_name = name;
+    this->_teamColor = sf::Color(std::rand() % 255, std::rand() % 255, std::rand() % 255);
 }
 
 Team::~Team()
@@ -34,4 +35,9 @@ void Team::addPlayer(Player player)
 int Team::getNbPlayer()
 {
     return this->_nbPlayer;
+}
+
+sf::Color Team::getTeamColor()
+{
+    return this->_teamColor;
 }
