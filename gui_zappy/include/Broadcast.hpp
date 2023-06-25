@@ -10,7 +10,7 @@
     #include <SFML/Graphics.hpp>
 class Broadcast : public sf::Drawable, public sf::Transformable {
     public:
-        Broadcast(sf::CircleShape _circle, std::string text);
+        Broadcast(sf::Vector2f pos, float radius, std::string text);
         ~Broadcast();
         void scaleCircle();
         float getScaleNb();

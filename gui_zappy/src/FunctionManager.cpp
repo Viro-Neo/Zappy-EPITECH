@@ -237,13 +237,7 @@ void FunctionManager::pbc(std::list<std::string> arg, Map &myMap) // pbc #n M
      for (auto it = myMap.getTeam().begin(); it != myMap.getTeam().end(); it++) {
         for (auto player = (*it).getPlayerList().begin(); player != (*it).getPlayerList().end(); player++) {
             if ((*player).getId() == id) {
-                sf::CircleShape circle;
-                circle.setPosition(((*player).getPos().x * myMap.getTileSize().x * myMap.getZomm()) + myMap.getPosition().x + 16, ((*player).getPos().y * myMap.getTileSize().y * myMap.getZomm()) + myMap.getPosition().y + 16);
-                circle.setRadius(16 * myMap.getZomm());
-                circle.setFillColor(sf::Color::Transparent);
-                circle.setOutlineColor(sf::Color::Blue);
-                circle.setOutlineThickness(2);
-                myMap.getBroadcastList().push_back(Broadcast(circle, msg));
+                myMap.getBroadcastList().push_back(Broadcast(sf::Vector2f(((*player).getPos().x * myMap.getTileSize().x * myMap.getZomm()) + myMap.getPosition().x + 16, ((*player).getPos().y * myMap.getTileSize().y * myMap.getZomm()) + myMap.getPosition().y + 16),16 * myMap.getZomm(), msg));
             }
         }
     }    

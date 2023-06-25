@@ -68,6 +68,8 @@ void Gui::updateGui(int updater)
     {
         if (cmd.substr(0, 3).compare("pdi") == 0)
             printf("cmd is %s\n", cmd.data());
+        if (cmd.substr(0, 3).compare("pbc") == 0)
+            printf("cmd is %s\n", cmd.data());
         this->_cmdHandler.callFunction(cmd, this->_map);
     }
     if (updater % (this->_map.getSize().x * this->_map.getSize().y) == 0)

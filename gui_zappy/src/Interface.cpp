@@ -12,7 +12,7 @@
 Interface::Interface(struct Tile tile)
 {
     _tile = std::move(tile);
-    _font.loadFromFile("assets/arial.ttf");
+    _font.loadFromFile("gui_zappy/assets/arial.ttf");
     _text._textFood.setFont(_font);
     _text._textLinemate.setFont(_font);
     _text._textDeraumere.setFont(_font);
