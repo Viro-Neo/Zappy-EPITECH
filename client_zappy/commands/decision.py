@@ -7,6 +7,7 @@ from commands.movement_commands import *
 from commands.players_commands import *
 from commands.object_commands import *
 from commands.status import *
+from commands.look_movement import setup_movement
 
 
 def decide_forward(client, response: str):
@@ -24,75 +25,52 @@ def check_tile_for_players(client, tile: str):
         return False
     return True
 
+tile_order = [0, 2, 1, 3, 6, 12, 5, 7, 11, 13, 4, 8, 10, 14, 9, 15]
+
+def pick_up_decision(client, tile, no) -> bool:
+    print(f"in pick_up decision for tile {no}")
+    rarity_sorted = ["food", "linemate", "deraumere", "sibur", "mendiane", "phiras", "thystame"]
+    for item in client.missing:
+        print(f"checking for item {item}")
+        if item in tile:
+            if no == 0 and "Take" not in client.cmd_buff:
+                print(f"attempting to pick up {item}")
+                send_take_object_command(client, item)
+                client.taking.append(item)
+            return True
+    if "food" in tile:
+        if no == 0 and "Take" not in client.cmd_buff:
+            print(f"attempting to pick up food")
+            send_take_object_command(client, "food")
+            client.taking.append("food")
+        return True
+    for item in rarity_sorted:
+        if item in tile:
+            if no == 0 and "Take" not in client.cmd_buff:
+                print(f"attempting to pick up {item}")
+                send_take_object_command(client, item)
+                client.taking.append(item)
+            return True
+    return False
 
 def decide_look(client, response: str):
     client.cmd_buff.remove("Look")
-    response_list = [x.strip() for x in response.split(',')]
-    print(response_list)
-    available_items = ["linemate", "deraumere", "sibur", "mendiane", "phiras", "thystame"]
-
-    if any(item in response_list for item in available_items) and client.status == JOINING:
-        client.status = SETTING
+    tile_list = [x.strip() for x in response.split(',')]
+    tiles = []
+    for tile in tile_list:
+        tiles.append(tile.strip("[]").split(' '))
+    for i in range(len(tiles), 16):
+        tiles.append([])
+    
+    if check_tile_for_players(client, tiles[0]) and client.status == JOINING:
+        client.status == SETTING
         return
 
-    if any(item in response_list for item in client.missing):
-        for item in client.missing:
-            if item in response_list:
-                print(f"I found the item I need to level up: {item}")
-                if "Take" not in client.cmd_buff:
-                    send_take_object_command(client, item)
-                print(f"I pick up the item: {item}")
-                return
-
-    if "food" in response_list:
-        print("I found food!")
-        if "Take" not in client.cmd_buff:
-            send_take_object_command(client, "food")
-        print("I pick up the food!")
-        return
-
-    rarest_item = None
-    rarest_count = float('inf')
-    for item in available_items:
-        count = response_list.count(item)
-        if count < rarest_count:
-            rarest_item = item
-            rarest_count = count
-
-    if rarest_item is not None:
-        print(f"I found the rarest item: {rarest_item}")
-        if "Take" not in client.cmd_buff:
-            send_take_object_command(client, rarest_item)
-        print(f"I pick up the item: {rarest_item}")
-        return
-
-    nearest_item = None
-    nearest_distance = float('inf')
-    starting_position = response_list.index(client.missing[0])
-    for index, tile in enumerate(response_list):
-        if any(item in tile for item in available_items):
-            distance = abs(starting_position - index)
-            if distance < nearest_distance:
-                nearest_item = tile
-                nearest_distance = distance
-
-    if nearest_item is not None:
-        if nearest_distance > 0:
-            send_forward_command(client)
-            print("I go forward")
-        elif nearest_distance < 0:
-            send_right_command(client)
-            print("I go right")
-        else:
-            send_left_command(client)
-            print("I go left")
-
-    decide_look(client, response)
-
-
-
-
-
+    for tile_no in tile_order:
+        if pick_up_decision(client, tiles[tile_no], tile_no):
+            if tile_no > 0:
+                setup_movement(client, tile_no)
+            return
 
 def decide_inventory(client, response: str):
     client.cmd_buff.remove("Inventory")
@@ -101,9 +79,11 @@ def decide_inventory(client, response: str):
     client.missing = check_inventory(client, response)
     global_missing = True
     for item in client.missing:
-        if client.missing[item] > client.team_items[item]:
+        if client.missing[item] <= client.team_items[item]:
             global_missing = False
             break
+    if client.missing == {}:
+        global_missing = False
     if global_missing == False and client.level != 1:
         send_broadcast_text_command(client, f"{client.team} {client.level} READY")
         client.status = CALLING
@@ -113,7 +93,7 @@ def decide_inventory(client, response: str):
                 continue
             for i in range(min(client.inventory[item], ritual_needs[client.level][item])):
                 client.setting_items.append(item)
-            client.status = SETTING
+        client.status = SETTING
 
 def decide_broadcast(client, response: str):
     client.cmd_buff.remove("Broadcast")
@@ -129,6 +109,12 @@ def decide_eject(client, response: str):
 
 def decide_take(client, response: str):
     client.cmd_buff.remove("Take")
+    if response == "ko" or client.taking[0] == "food":
+        client.taking.pop(0)
+        return
+    if client.level > 1:
+        send_broadcast_text_command(client, f"{client.team} {client.level} {client.taking[0]}")
+    client.taking.pop(0)
 
 def decide_set(client, response: str):
     client.cmd_buff.remove("Set")
@@ -136,7 +122,10 @@ def decide_set(client, response: str):
 def decide_incantation(client, response: str):
     client.cmd_buff.remove("Incantation")
     client.status = 0
+    if response == "ko":
+        return
     client.level += 1
+    print("succesfully leveled up after incantation")
 
 def died(client, response: str):
     client.status = DEAD

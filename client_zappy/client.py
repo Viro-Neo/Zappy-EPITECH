@@ -16,11 +16,13 @@ class Client:
         self.cmd_buff = []
         self.direction = []
         self.direction_index = 0
+        self.gathering = []
         self.reposition = []
         self.reposition_index = 0
         self.setting_items = []
         self.status = 0
         self.team_items = init_items()
+        self.taking = []
 
     def connect_to_server(self):
         try:
