@@ -12,17 +12,17 @@
 Interface::Interface(struct Tile tile)
 {
     _tile = std::move(tile);
-    _font.loadFromFile(_fontTTf);
+    _font.loadFromFile("gui_zappy/assets/fonts/arial.ttf");
     sf::Vector2f pos = {10, 10};
-    sf::Vector2f size = {5, 10};
+    sf::Vector2f size = {100, 100};
     setRect(pos, size);
-    _text._textFood.setFont(_font);
-    _text._textLinemate.setFont(_font);
-    _text._textDeraumere.setFont(_font);
-    _text._textMendiane.setFont(_font);
-    _text._textSibur.setFont(_font);
-    _text._textPhiras.setFont(_font);
-    _text._textThystame.setFont(_font);
+    // _text._textFood.setFont(_font);
+    // _text._textLinemate.setFont(_font);
+    // _text._textDeraumere.setFont(_font);
+    // _text._textMendiane.setFont(_font);
+    // _text._textSibur.setFont(_font);
+    // _text._textPhiras.setFont(_font);
+    // _text._textThystame.setFont(_font);
 }
 
 void Interface::displayInterface()

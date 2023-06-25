@@ -38,13 +38,14 @@ void Gui::guiLoop()
     int updater = 0;
     while (this->_win.isOpen()) {
         this->updateGui(updater);
-        if (_interfaceOn == true)
-            printf("tile is cooord is %d %d\n", this->_tileClicked.x, this->_tileClicked.y); 
+        
         this->_map.updateMap();
         this->_map.updateTexture();
         this->eventHandler();
         this->_win.clear(sf::Color::Black);
         this->_win.draw(this->_map);
+        if (_interfaceOn == true)
+           this->_win.draw(this->_interface); 
         this->_win.display();
         updater++;
     }
@@ -103,9 +104,6 @@ void Gui::eventHandler()
                 this->_tileClicked = this->_map.getTileInfo(sf::Mouse::getPosition(this->_win));
                 this->_interfaceOn = true;
                 this->_interface = Interface(this->_tileClicked);
-                this->_interface.print_tile();
-                this->_interface.draw(_win, s);
-                this->_win.draw(this->_interface);
             } catch (std::exception &e) {
                 e.what();
             }
