@@ -55,6 +55,7 @@ int can_elevation_start(zappy_client_t *client)
         }
     }
     client->player.elevation = 1;
+    dprintf(client->sockfd, "Elevation underway\n");
     return 1;
 }
 
@@ -88,7 +89,7 @@ void player_incantation(zappy_client_t *client, char *)
             client->server->clients[i].player.elevation = 0;
         }
     }
-    dprintf(client->sockfd, "ok\n");
+    dprintf(client->sockfd, "Current level: %d\n", client->player.lvl);
     graphical_pie(client->server, &client->player, 1);
     if (win_detector(client)) {
         graphical_seg(client->server, client->player.team->name);

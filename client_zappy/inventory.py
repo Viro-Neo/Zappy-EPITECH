@@ -97,11 +97,11 @@ def get_inventory(client, inventory_str: str) -> Dict[str, int]:
     
     print(f"player inventory is {inventory}")
     
-    return inventory
+    client.inventory = inventory
 
 def check_inventory(client, response: str):
     # get the inventory
-    inventory = get_inventory(client, response)
+    get_inventory(client, response)
 
     missing = {}
 
@@ -110,8 +110,14 @@ def check_inventory(client, response: str):
         if item == "players":
             continue
         q = ritual_needs[client.level][item]
-        if q > inventory[item]:
-            missing[item] = q - inventory[item]
+        if q > client.inventory[item]:
+            missing[item] = q - client.inventory[item]
 
     print(f"missing items are {missing}")
     return missing
+
+def check_tile_for_players(client, tile: str):
+    players = tile.count("player")
+    if players < ritual_needs[client.level]["players"]:
+        return False
+    return True
