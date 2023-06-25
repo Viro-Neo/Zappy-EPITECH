@@ -96,11 +96,15 @@ void FunctionManager::tna(std::list<std::string> arg, Map &myMap) // tna N (loop
 {
     if (arg.size() != 1)
         return;
+    for (auto it = myMap.getTeam().begin(); it != myMap.getTeam().end(); it++)
+        if ((*it).gatName() == arg.front())
+            return;
     myMap.addTeam(Team(arg.front()));
 }
 
 void FunctionManager::pnw(std::list<std::string> arg, Map &myMap) // pnw #n X Y O L N
 {
+    printf("pnw\n");
     if (arg.size() != 6)
         return;
     auto it = arg.begin();
@@ -120,6 +124,7 @@ void FunctionManager::pnw(std::list<std::string> arg, Map &myMap) // pnw #n X Y 
     for (auto it = myMap.getTeam().begin(); it != myMap.getTeam().end(); it++) {
         if ((*it).gatName().compare(name.data()) == 0) {
             myMap.getTeam().at(i).addPlayer(Player(id, x, y, orientation, level, name));
+            printf("done\n");
             return;
         }
         i++;
@@ -129,6 +134,7 @@ void FunctionManager::pnw(std::list<std::string> arg, Map &myMap) // pnw #n X Y 
 
 void FunctionManager::ppo(std::list<std::string> arg, Map &myMap) // ppo #n X Y O
 {
+    printf("ppo\n");
     if (arg.size() != 4)
         return;
     auto it = arg.begin();
@@ -138,19 +144,24 @@ void FunctionManager::ppo(std::list<std::string> arg, Map &myMap) // ppo #n X Y 
     it++;
     int y = atoi((*it).data());
     it++;
+     printf("oor problem?\n");
     Orientation orientation = Orientation(atoi((*it).data()));
     int i = 0;
     int t = 0;
+     printf("before lopp?\n");
     for (auto it = myMap.getTeam().begin(); it != myMap.getTeam().end(); it++) {
         for (auto player = (*it).getPlayerList().begin() ; player != (*it).getPlayerList().end(); player++) {
+           
             if ((*player).getId() == id) {
                 myMap.getTeam().at(t).getPlayerList().at(i).setPos(sf::Vector2u(x, y));
                 myMap.getTeam().at(t).getPlayerList().at(i).setOrientation(orientation);
+                printf("done\n");
                 return;
             }
             i++;
         }
         t++;
+        i = 0;
     }
 }
 
@@ -172,12 +183,14 @@ void FunctionManager::plv(std::list<std::string> arg, Map &myMap) // plv #n L
             }
             i++;
         }
+        i = 0;
         t++;
     }
 }
 
 void FunctionManager::pin(std::list<std::string> arg, Map &myMap) // pin #n X Y q0 q1 q2 q3 q4 q5 q6
 {
+     printf("pin\n");
     if (arg.size() != 10)
         return;
     auto it = arg.begin();
@@ -213,10 +226,12 @@ void FunctionManager::pin(std::list<std::string> arg, Map &myMap) // pin #n X Y 
                 myMap.getTeam().at(t).getPlayerList().at(i).inventory.PHIRAS = phiras;
                 myMap.getTeam().at(t).getPlayerList().at(i).inventory.SIBUR = sibur;
                 myMap.getTeam().at(t).getPlayerList().at(i).inventory.THYSTAME = thystame;
+                printf("done\n");
                 return;
             }
             i++;
         }
+        i = 0;
         t++;
     }
 }
@@ -273,7 +288,10 @@ void FunctionManager::pic(std::list<std::string> arg, Map &myMap) // pic X Y L #
                     return;
                 }
             }
+            i++;
         }
+        t++;
+        i = 0;
     }
     Player starter = playerList.front();
     playerList.pop_front();
@@ -312,6 +330,7 @@ void FunctionManager::pie(std::list<std::string> arg, Map &myMap) // pie X Y R (
             }
             i++;
         }
+        i = 0;
         t++;
     }
 }

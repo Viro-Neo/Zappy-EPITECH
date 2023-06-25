@@ -38,6 +38,9 @@ class Interface : public sf::Drawable, public sf::Transformable {
             sf::Text _textPhiras;
             sf::Text _textThystame;
         } text_t;
+       
+    protected:
+    private:
         virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const {
                 states.transform *= getTransform();
                 //states.texture = &_tileset;
@@ -50,11 +53,10 @@ class Interface : public sf::Drawable, public sf::Transformable {
                 target.draw(_text._textPhiras);
                 target.draw(_text._textThystame);
         }
-    protected:
-    private:
         text_t _text;
         sf::Font _font;
         struct Tile _tile;
+        std::string _fontTTf = "gui_zappy/assets/fonts/arial.ttf";
 };
 
 #endif /* !INTERFACE_HPP_ */

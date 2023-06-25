@@ -37,14 +37,15 @@ void Gui::guiLoop()
 {
     int updater = 0;
     while (this->_win.isOpen()) {
+        printf("updateGui number of team is = %d\n", this->_map.getTeam().size());
         this->updateGui(updater);
-        if (_interfaceOn == true)
-            printf("tile is cooord is %d %d\n", this->_tileClicked.x, this->_tileClicked.y); 
         this->_map.updateMap();
         this->_map.updateTexture();
         this->eventHandler();
         this->_win.clear(sf::Color::Black);
         this->_win.draw(this->_map);
+        if (_interfaceOn == true)
+           this->_win.draw(this->_interface); 
         this->_win.display();
         updater++;
     }
@@ -75,6 +76,7 @@ void Gui::updateGui(int updater)
     if (updater % (this->_map.getSize().x * this->_map.getSize().y) == 0)
         this->_comm.writeToServer("mct\n");
     for (auto it = this->_map.getTeam().begin(); it != this->_map.getTeam().end(); it++) {
+        printf("name is %s\n", (*it).gatName().data());
         for (auto player = (*it).getPlayerList().begin() ; player != (*it).getPlayerList().end(); player++) {
             this->_comm.writeToServer(std::string("ppo ").append(std::to_string((*player).getId())).append("\n"));
             this->_comm.writeToServer(std::string("pin ").append(std::to_string((*player).getId())).append("\n"));
@@ -116,8 +118,6 @@ void Gui::eventHandler()
                 this->_tileClicked = this->_map.getTileInfo(sf::Mouse::getPosition(this->_win));
                 this->_interfaceOn = true;
                 this->_interface = Interface(this->_tileClicked);
-                this->_interface.print_tile();
-                this->_interface.draw(_win, s);
             } catch (std::exception &e) {
                 e.what();
             }

@@ -14,7 +14,7 @@ Map::Map( int winW, int winH, int sizeX, int sizeY) : _mapRender(sf::Quads, 0)
     this->_sizeX = sizeX;
     this->_sizeY = sizeY;
     this->_tileSize = sf::Vector2u(32, 32);
-    this->_zoom = 4;
+    this->_zoom = 2;
     this->pos = sf::Vector2i(0, 0);
     for (unsigned int i = 0; i < _sizeY; i++)
         for (unsigned int j = 0; j < _sizeX; j++) {
