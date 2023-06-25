@@ -88,6 +88,8 @@ def decide_look(client, response: str):
             if tile_no > 0:
                 setup_movement(client, tile_no)
             return
+    
+    send_forward_command(client)
 
 def decide_inventory(client, response: str):
     client.cmd_buff.remove("Inventory")
