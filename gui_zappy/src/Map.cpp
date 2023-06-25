@@ -116,6 +116,17 @@ void Map::setTile(Tile t)
     this->_map.at(t.y + t.x * this->_sizeY).THYSTAME = t.THYSTAME;
 }
 
+void Map::addEgg(int x, int y, int id)
+{
+    this->_map.at(x + y * this->_sizeX).EGG.push_back(Egg(id, sf::Vector2u(x, y)));
+    this->_eggList.push_back(Egg(id, sf::Vector2u(x, y)));
+}
+
+void Map::removeEgg(int id, int x, int y)
+{
+    this->_map.at(x + y * this->_sizeX).EGG.pop_back();
+}
+
 void Map::zoom(bool zoomin)
 {
     if (zoomin)
@@ -129,9 +140,24 @@ void Map::addTeam(Team t)
     this->team.push_back(t);
 }
 
+sf::Vector2u Map::getSize()
+{
+    return sf::Vector2u(this->_sizeX, this->_sizeY);
+}
+
 std::vector<Team>& Map::getTeam()
 {
     return this->team;
+}
+
+sf::Vector2u Map::getTileSize()
+{
+    return this->_tileSize;
+}
+
+float Map::getZomm()
+{
+    return this->_zoom;
 }
 
 struct Tile &Map::getTileInfo(sf::Vector2i mousePos)
@@ -145,6 +171,11 @@ struct Tile &Map::getTileInfo(sf::Vector2i mousePos)
     throw std::exception();
 }
 
+std::vector<Egg> Map::getEggList()
+{
+    return this->_eggList;
+}
+
 std::vector<Incantation> &Map::getIncantationList()
 {
     return this->_incantationList;
@@ -154,12 +185,16 @@ int Map::chooseText(unsigned int i,unsigned int j)
 {
     Tile t = this->_map.at(i + j * this->_sizeX);
     if (t.PLAYER.empty()) {
-        if (t.FOOD < 2 && t.DERAUMERE < 2)
-            return 0;
-        if (t.FOOD > t.DERAUMERE * 2)
-            return 6;
-        else 
-            return 5;
+        if (t.EGG.empty()) {
+            if (t.FOOD < 2 && t.DERAUMERE < 2)
+                return 0;
+            if (t.FOOD > t.DERAUMERE * 2)
+                return 6;
+            else 
+                return 5;
+        } else {
+            return 7;
+        }
     } else {
         Orientation o = t.PLAYER.front().getOrientation();
         if (o == Orientation::WEST)
