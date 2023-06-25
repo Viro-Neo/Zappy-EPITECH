@@ -8,7 +8,7 @@ from commands.players_commands import *
 from commands.object_commands import *
 from commands.status import *
 from commands.look_movement import setup_movement
-
+import subprocess
 
 def decide_forward(client, response: str):
     client.cmd_buff.remove("Forward")
@@ -138,6 +138,11 @@ def decide_connect_nbr(client, response: str):
 
 def decide_fork(client, response: str):
     client.cmd_buff.remove("Fork")
+    if response == "ko":
+        return
+    command = ["python3", "zappy_ai", "-p", str(client.port), "-n", client.team, "-h", client.machine]
+    print("About to fork to a subprocess")
+    subprocess.Popen(command)
 
 def decide_eject(client, response: str):
     client.cmd_buff.remove("Eject")
