@@ -15,7 +15,7 @@ def network_loop(client: Client):
                 response += client.sock.recv(1024).decode()
             except Exception as e:
                 print(f"Error receiving response: {str(e)}")
-            if (response != "" and response[-1] == '\n'):
+            if response != "" and response[-1] == '\n':
                 print(f"received response : {response}")
                 client.check_response(response)
                 response = ""
@@ -36,6 +36,8 @@ def network_loop(client: Client):
                 send_look_command(client)
             if "Inventory" not in client.cmd_buff:
                 send_inventory_command(client)
+            if "Connect_nbr" not in client.cmd_buff:
+                send_connect_nbr_command(client)
 
         client.sock.close()
 

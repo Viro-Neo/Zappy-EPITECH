@@ -131,6 +131,9 @@ def decide_broadcast(client, response: str):
 
 def decide_connect_nbr(client, response: str):
     client.cmd_buff.remove("Connect_nbr")
+    num = int(response)
+    if num == 0 and client.inventory["food"] > 3:
+        send_fork_command(client)
 
 def decide_fork(client, response: str):
     client.cmd_buff.remove("Fork")
