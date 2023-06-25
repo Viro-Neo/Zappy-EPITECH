@@ -28,7 +28,6 @@ def network_loop(client: Client):
                 continue
             if client.status == JOINING:
                 join_incant()
-                continue
             if client.status == GATHERING:
                 gather()
                 continue
