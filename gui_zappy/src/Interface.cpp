@@ -12,17 +12,18 @@
 Interface::Interface(struct Tile tile)
 {
     _tile = std::move(tile);
-    _font.loadFromFile("gui_zappy/assets/fonts/arial.ttf");
+    this->_font = std::make_shared<sf::Font>(sf::Font());
+    (*_font).loadFromFile("gui_zappy/assets/arial.ttf");
     sf::Vector2f pos = {10, 10};
     sf::Vector2f size = {100, 100};
     setRect(pos, size);
-    // _text._textFood.setFont(_font);
-    // _text._textLinemate.setFont(_font);
-    // _text._textDeraumere.setFont(_font);
-    // _text._textMendiane.setFont(_font);
-    // _text._textSibur.setFont(_font);
-    // _text._textPhiras.setFont(_font);
-    // _text._textThystame.setFont(_font);
+    _text._textFood.setFont(*_font);
+    _text._textLinemate.setFont(*_font);
+    _text._textDeraumere.setFont(*_font);
+    _text._textMendiane.setFont(*_font);
+    _text._textSibur.setFont(*_font);
+    _text._textPhiras.setFont(*_font);
+    _text._textThystame.setFont(*_font);
 }
 
 void Interface::displayInterface()
@@ -36,6 +37,7 @@ void Interface::setTextFood(std::string text, sf::Vector2f pos, int size)
     _text._textFood.setString(text);
     _text._textFood.setPosition(pos);
     _text._textFood.setCharacterSize(size);
+    _text._textFood.setFillColor(sf::Color::Blue);
 }
 
 void Interface::setTextlinemate(std::string text, sf::Vector2f pos, int size)
@@ -49,7 +51,6 @@ void Interface::setTextDeraumere(std::string text, sf::Vector2f pos, int size)
 {
     _text._textDeraumere.setString(text);
     _text._textDeraumere.setPosition(pos);
-    _text._textDeraumere.setFont(_font);
     _text._textDeraumere.setCharacterSize(size);
 }
 
@@ -92,7 +93,8 @@ void Interface::print_tile()
 {
     sf::Vector2f vec = _backRect.getPosition();
     sf::Vector2f rect = _backRect.getSize();
-    setTextFood(std::to_string(_tile.FOOD), vec, 2);
+
+    setTextFood(std::to_string(_tile.FOOD).append("FOOD IS FOOD"), vec, 24);
     vec.x + 1;
     setTextlinemate(std::to_string(_tile.LINEMATE), vec, 2);
     vec.x + 1;
