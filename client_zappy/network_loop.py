@@ -19,7 +19,6 @@ def network_loop(client: Client):
                 break
             if client.status == CHANTING:
                 if "Incantation" not in client.cmd_buff:
-                    print("Test asldkjaslkdjaslkdjaslkdjaslkdjaslkdjaslkdj")
                     send_incantation_command(client)
                     print(f"cmd buff is : {client.cmd_buff}")
                 continue
