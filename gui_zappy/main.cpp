@@ -7,6 +7,7 @@
 
 #include <cstdio>
 
+
 int main(void)
 {
     printf("GUI\n");

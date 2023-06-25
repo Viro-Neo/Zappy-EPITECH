@@ -246,7 +246,7 @@ void FunctionManager::pbc(std::list<std::string> arg, Map &myMap) // pbc #n M
                 myMap.getBroadcastList().push_back(Broadcast(sf::Vector2f(((*player).getPos().x * myMap.getTileSize().x * myMap.getZomm()) + myMap.getPosition().x + 16, ((*player).getPos().y * myMap.getTileSize().y * myMap.getZomm()) + myMap.getPosition().y + 16),16 * myMap.getZomm(), msg));
             }
         }
-    }    
+    }
 }
 
 void FunctionManager::pic(std::list<std::string> arg, Map &myMap) // pic X Y L #n #n #n (looped for each player in the tile)
@@ -262,7 +262,6 @@ void FunctionManager::pic(std::list<std::string> arg, Map &myMap) // pic X Y L #
     it++;
     std::vector<int> playersId;
     std::list<Player> playerList;
-    
     while (it != arg.end()) {
         playersId.push_back(atoi((*it).data()));
         it++;
@@ -304,14 +303,10 @@ void FunctionManager::pie(std::list<std::string> arg, Map &myMap) // pie X Y R (
     int i = 0;
     for (auto it = myMap.getIncantationList().begin(); it !=myMap.getIncantationList().end(); it++) {
         if ((*it).getPos() == sf::Vector2i(x, y)) {
-            printf("finishInc\n");
             myMap.getIncantationList().at(i).finishIncantation(result);
-            printf("pushbac\n");
             listId.push_back((*it).getStarter().getId());
-            printf("beforelistid create\n");
             for (auto id = (*it).getParticipent().begin(); id != (*it).getParticipent().end(); id++)
                  listId.push_back((*id).getId());
-            printf("erasing\n");
             myMap.getIncantationList().erase(it);
             break;
         }
@@ -319,7 +314,6 @@ void FunctionManager::pie(std::list<std::string> arg, Map &myMap) // pie X Y R (
     }
     i = 0;
     int t = 0;
-    printf("loop team\n");
     for (auto it = myMap.getTeam().begin(); it != myMap.getTeam().end(); it++) {
         for (auto player = (*it).getPlayerList().begin() ; player != (*it).getPlayerList().end(); player++) {
             for (auto iteratorID = listId.begin(); iteratorID != listId.end(); iteratorID++) {
@@ -330,7 +324,6 @@ void FunctionManager::pie(std::list<std::string> arg, Map &myMap) // pie X Y R (
         i = 0;
         t++;
     }
-    printf("finished\n");
 }
 
 void FunctionManager::pfk(std::list<std::string> arg, Map &myMap) // pfk #n

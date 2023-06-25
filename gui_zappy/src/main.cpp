@@ -6,7 +6,7 @@
 */
 
 #include "Gui.hpp"
-
+#include <random>
 void printUsage()
 {
     std::cout << "USAGE: ./zappy_gui -p port -h machine" << std::endl;
@@ -16,6 +16,7 @@ void printUsage()
 
 int main(int ac, char **av)
 {
+    srand(time(NULL));
     try {
         Gui gui(ac, av);
         gui.initGui();

@@ -103,6 +103,23 @@ bool Map::updateTexture()
             quad[1].texCoords = sf::Vector2f((tu + 1) * _tileSize.x, tv * _tileSize.y);
             quad[2].texCoords = sf::Vector2f((tu + 1) * _tileSize.x, (tv + 1) * _tileSize.y);
             quad[3].texCoords = sf::Vector2f(tu * _tileSize.x, (tv + 1) * _tileSize.y);
+            if (curr >= 1 && curr <= 4) {
+                for (int x = 0; x < this->team.size();x++) {
+                    for (int y = 0; y < this->team.at(x).getPlayerList().size(); y++) {
+                        if (this->team.at(x).getPlayerList().at(y).getPos() == sf::Vector2u(i, j)) {
+                            quad[0].color = this->team.at(x).getTeamColor();
+                            quad[1].color = this->team.at(x).getTeamColor();
+                            quad[2].color = this->team.at(x).getTeamColor();
+                            quad[3].color = this->team.at(x).getTeamColor();
+                        }
+                    }
+                }
+            } else {
+                quad[0].color = sf::Color::White;
+                quad[1].color = sf::Color::White;
+                quad[2].color = sf::Color::White;
+                quad[3].color = sf::Color::White;
+            }
         }
     return true;
 }

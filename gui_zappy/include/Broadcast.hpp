@@ -8,6 +8,7 @@
 #ifndef BROADCAST_HPP_
 #define BROADCAST_HPP_
     #include <SFML/Graphics.hpp>
+    #include <memory>
 class Broadcast : public sf::Drawable, public sf::Transformable {
     public:
         Broadcast(sf::Vector2f pos, float radius, std::string text);
