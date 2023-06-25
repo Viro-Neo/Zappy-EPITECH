@@ -28,7 +28,6 @@ def check_tile_for_players(client, tile: str):
 tile_order = [0, 2, 1, 3, 6, 12, 5, 7, 11, 13, 4, 8, 10, 14, 9, 15]
 
 def pick_up_decision(client, tile, no) -> bool:
-    print(f"in pick_up decision for tile {no}")
     rarity_sorted = ["food", "linemate", "deraumere", "sibur", "mendiane", "phiras", "thystame"]
     for item in client.missing:
         print(f"checking for item {item}")
@@ -40,14 +39,12 @@ def pick_up_decision(client, tile, no) -> bool:
             return True
     if "food" in tile:
         if no == 0 and "Take" not in client.cmd_buff:
-            print(f"attempting to pick up food")
             send_take_object_command(client, "food")
             client.taking.append("food")
         return True
     for item in rarity_sorted:
         if item in tile:
             if no == 0 and "Take" not in client.cmd_buff:
-                print(f"attempting to pick up {item}")
                 send_take_object_command(client, item)
                 client.taking.append(item)
             return True
@@ -68,11 +65,13 @@ def decide_look(client, response: str):
     for i in range(len(tiles), 16):
         tiles.append([])
     
+    print(f"current tile : {tiles[0]}")
+    
     if check_tile_for_players(client, tiles[0]):
         if (client.status == JOINING or client.status == CALLING):
             client.status = SETTING
             return
-        if (client.status == WAITING) and check_tile_for_needed_items(tiles[0]):
+        if (client.status == WAITING or client.status == NORMAL) and check_tile_for_needed_items(client, tiles[0]):
             client.status = CHANTING
             return
     
@@ -132,7 +131,14 @@ def decide_take(client, response: str):
 def decide_set(client, response: str):
     client.cmd_buff.remove("Set")
 
-def decide_incantation(client, response: str):
+def decide_incantation_start(client, response: str):
+    if response == "ko":
+        client.cmd_buff.remove("Incantation")
+        client.status = 0
+        return
+    print("Elevation has started")
+
+def decide_incantation_end(client, response: str):
     client.cmd_buff.remove("Incantation")
     client.status = 0
     if response == "ko":
@@ -147,4 +153,4 @@ def decide_heard(client, response: str):
     check_broadcast_pattern(response, client)
 
 def decide_ejected(client, response: str):
-    print("Should make decision after being ejected")
+    pass

@@ -18,5 +18,6 @@ def send_incantation_command(client):
     command = "Incantation\n"
 
     if len(client.cmd_buff) < 10:
-        client.cmd_buff.append("Incantation")
+        client.cmd_buff.append("Incantation_start")
+        client.cmd_buff.append("Incantation_end")
         client.write_response_to_socket(command)

@@ -38,13 +38,16 @@ class Client:
         while self.status != DEAD:
             response = ""
             print("trying to get response from server")
+            print(f"client status : {self.status}")
+            print(f"client cmd_buff : {self.cmd_buff}")
+            print(f"client levgel : {self.level}")
             while response == "" or response[-1] != "\n":
                 try:
                     response += self.sock.recv(1024).decode()
                 except Exception as e:
                     print(f"Error receiving response: {str(e)}")
+            print(f"received response : {response}")
             self.check_response(response)
-            print(f"Got a continuous response : {response}")
     
     def check_response(self, response: str) -> int:
         for cmd in self.cmd_buff:

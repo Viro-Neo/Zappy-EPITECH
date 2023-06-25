@@ -18,9 +18,8 @@ def network_loop(client: Client):
             if client.status == DEAD:
                 break
             if client.status == CHANTING:
-                if "Incantation" not in client.cmd_buff:
+                if "Incantation_start" not in client.cmd_buff and "Incantation_end" not in client.cmd_buff:
                     send_incantation_command(client)
-                    print(f"cmd buff is : {client.cmd_buff}")
                 continue
             if client.status == SETTING:
                 if "Set" not in client.cmd_buff:
@@ -60,11 +59,9 @@ def set_needed_items(client: Client):
         else:
             client.status = WAITING
         return
-    print(f"setting items : {client.setting_items}")
     while len(client.setting_items) > 0:
         if len(client.cmd_buff) == 10:
             continue
-        print(f"attempting to set item {client.setting_items[0]}")
         send_set_object_command(client, client.setting_items[0])
         client.setting_items.pop(0)
 
