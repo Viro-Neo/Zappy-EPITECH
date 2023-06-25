@@ -95,7 +95,7 @@ void Interface::setTextThystame(std::string text, sf::Vector2f pos, int size)
 
 void Interface::setRect(sf::Vector2f pos, sf::Vector2f size)
 {
-    sf::Color gray(192, 192, 192);
+    sf::Color gray(72, 72, 72);
     _backRect.setPosition(pos);
     _backRect.setSize(size);
     _backRect.setFillColor(gray);

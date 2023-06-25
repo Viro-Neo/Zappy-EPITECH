@@ -49,8 +49,6 @@ void Gui::guiLoop()
         for (auto i = 0; i < this->_map.getIncantationList().size(); i++) {
             _win.draw(this->_map.getIncantationList().at(i));
         }
-        if ( this->_map.getBroadcastList().size() >= 1)
-            printf("WOOOOOOOO\n");
         for (auto i = 0; i < this->_map.getBroadcastList().size(); i) {
             this->_win.draw(this->_map.getBroadcastList().at(i));
         }
