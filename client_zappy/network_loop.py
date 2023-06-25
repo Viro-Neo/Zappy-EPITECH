@@ -6,19 +6,21 @@ from commands.status import *
 import threading
 
 def network_loop(client: Client):
-        response_thread = threading.Thread(target=client.get_response_continuously)
-        response_thread.start()
+        response = ""
         
         while True:
-            #print(f"client status : {client.status}")
-            #print(f"client level : {client.level}")
-            #print(f"missing items : {client.missing}")
-            #print(f"inventory : {client.inventory}")
-            #print(f"setting items : {client.setting_items}")
             if client.status == DEAD:
                 break
+            try:
+                response += client.sock.recv(1024).decode()
+            except Exception as e:
+                print(f"Error receiving response: {str(e)}")
+            if (response != "" and response[-1] == '\n'):
+                print(f"received response : {response}")
+                client.check_response(response)
+                response = ""
             if client.status == CHANTING:
-                if "Incantation_start" not in client.cmd_buff and "Incantation_end" not in client.cmd_buff:
+                if len(client.cmd_buff) == 0:
                     send_incantation_command(client)
                 continue
             if client.status == SETTING:
@@ -35,7 +37,6 @@ def network_loop(client: Client):
             if "Inventory" not in client.cmd_buff:
                 send_inventory_command(client)
 
-        response_thread.join()
         client.sock.close()
 
 def gather(client: Client):

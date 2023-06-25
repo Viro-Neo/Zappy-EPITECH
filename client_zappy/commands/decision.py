@@ -27,31 +27,34 @@ def check_tile_for_players(client, tile: str):
 
 tile_order = [0, 2, 1, 3, 6, 12, 5, 7, 11, 13, 4, 8, 10, 14, 9, 15]
 
-def pick_up_decision(client, tile, no) -> bool:
+def pick_up_decision(client, tile, no) -> int:
     rarity_sorted = ["food", "linemate", "deraumere", "sibur", "mendiane", "phiras", "thystame"]
     for item in client.missing:
-        print(f"checking for item {item}")
+        if item == "player":
+            continue
         if item in tile:
             if no == 0 and "Take" not in client.cmd_buff:
                 print(f"attempting to pick up {item}")
                 send_take_object_command(client, item)
                 client.taking.append(item)
-            return True
+            return 3
     if "food" in tile:
         if no == 0 and "Take" not in client.cmd_buff:
             send_take_object_command(client, "food")
             client.taking.append("food")
-        return True
+        return 2
     for item in rarity_sorted:
         if item in tile:
             if no == 0 and "Take" not in client.cmd_buff:
                 send_take_object_command(client, item)
                 client.taking.append(item)
-            return True
-    return False
+            return 1
+    return 0
 
 def check_tile_for_needed_items(client, tile):
     for item in ritual_needs[client.level]:
+        if item == "players":
+            continue
         if tile.count(item) < ritual_needs[client.level][item]:
             return False
     return True
@@ -64,11 +67,14 @@ def decide_look(client, response: str):
         tiles.append(tile.strip("[]").split(' '))
     for i in range(len(tiles), 16):
         tiles.append([])
+    pick_up = 0
+    pick_tile = 0
     
     print(f"current tile : {tiles[0]}")
     
     if client.status == NORMAL and client.level == 1 and check_tile_for_needed_items(client, tiles[0]):
-        client.status == CHANTING
+        print("updating status to chant")
+        client.status = CHANTING
         return
 
     if check_tile_for_players(client, tiles[0]):
@@ -83,11 +89,17 @@ def decide_look(client, response: str):
         return
 
     for tile_no in tile_order:
-        if pick_up_decision(client, tiles[tile_no], tile_no):
-            print(f"Deciding to go to tile {tile_no}")
-            if tile_no > 0:
-                setup_movement(client, tile_no)
-            return
+        tmp = pick_up_decision(client, tiles[tile_no], tile_no)
+        if tmp > pick_up:
+            pick_up = tmp
+            pick_tile = tile_no
+    
+    if pick_up > 0:
+        pick_up = 0
+        if pick_tile > 0:
+            setup_movement(client, pick_tile)
+            pick_tile = 0
+        return
     
     send_forward_command(client)
 
