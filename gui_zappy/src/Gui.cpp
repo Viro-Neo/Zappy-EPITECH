@@ -105,6 +105,7 @@ void Gui::eventHandler()
                 this->_interface = Interface(this->_tileClicked);
                 this->_interface.print_tile();
                 this->_interface.draw(_win, s);
+                this->_win.draw(this->_interface);
             } catch (std::exception &e) {
                 e.what();
             }

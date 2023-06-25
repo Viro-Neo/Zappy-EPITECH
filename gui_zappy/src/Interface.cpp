@@ -12,7 +12,7 @@
 Interface::Interface(struct Tile tile)
 {
     _tile = std::move(tile);
-    _font.loadFromFile("assets/arial.ttf");
+    _font.loadFromFile("gui_zappy/assets/fonts/arial.ttf");
     _text._textFood.setFont(_font);
     _text._textLinemate.setFont(_font);
     _text._textDeraumere.setFont(_font);
@@ -82,7 +82,7 @@ void Interface::setRect(sf::Vector2f pos, sf::Vector2f size)
 {
     _backRect.setPosition(pos);
     _backRect.setSize(size);
-    _backRect.setFillColor(sf::Color::Black);
+    _backRect.setFillColor(sf::Color::Red);
 }
 
 void Interface::print_tile()
@@ -102,5 +102,5 @@ void Interface::print_tile()
     setTextPhiras(std::to_string(_tile.PHIRAS), vec, 2);
     vec.x + 1;
     setTextThystame(std::to_string(_tile.THYSTAME), vec, 2);
-    
+
 }
