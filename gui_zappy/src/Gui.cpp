@@ -45,9 +45,11 @@ void Gui::guiLoop()
         this->_win.draw(this->_map);
         if (_interfaceOn == true)
            this->_win.draw(this->_interface);
-        // printf("size of Incantation list is = %ld\n", this->_map.getIncantationList().size());
         for (auto i = 0; i < this->_map.getIncantationList().size(); i++) {
-                _win.draw(this->_map.getIncantationList().at(i));
+            _win.draw(this->_map.getIncantationList().at(i));
+        }
+        for (auto i = 0; i < this->_map.getBroadcastList().size(); i) {
+            this->_win.draw(this->_map.getBroadcastList().at(i));
         }
         this->_win.display();
         updater++;
@@ -70,14 +72,6 @@ void Gui::updateGui(int updater)
     std::string cmd = "";
     while ((cmd = this->_comm.popCmd()) != "")
     {
-        if (cmd.substr(0, 3).compare("pdi") == 0)
-            printf("cmd is %s\n", cmd.data());
-        if (cmd.substr(0, 3).compare("pbc") == 0)
-            printf("cmd is %s\n", cmd.data());
-        if (cmd.substr(0, 3).compare("pic") == 0)
-            printf("cmd is %s\n", cmd.data());
-        if (cmd.substr(0, 3).compare("pie") == 0)
-            printf("cmd is %s\n", cmd.data());
         this->_cmdHandler.callFunction(cmd, this->_map);
     }
     if (updater % (this->_map.getSize().x * this->_map.getSize().y) == 0)

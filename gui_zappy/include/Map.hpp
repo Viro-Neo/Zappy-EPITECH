@@ -57,9 +57,6 @@ class Map : public sf::Drawable, public sf::Transformable {
                 states.transform *= getTransform();
                 states.texture = &_tileset;
                 target.draw(_mapRender, states);
-                for (auto i = 0; i < _boradcastList.size(); i) {
-                    target.draw(_boradcastList.at(i), states);
-                }
         }
         int _sizeX;
         int _sizeY;

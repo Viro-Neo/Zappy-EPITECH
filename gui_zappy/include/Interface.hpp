@@ -9,6 +9,7 @@
 #define INTERFACE_HPP_
 
 #include <SFML/Graphics.hpp>
+#include <memory>
 #include "Map.hpp"
 
 class Interface : public sf::Drawable, public sf::Transformable {
@@ -43,10 +44,9 @@ class Interface : public sf::Drawable, public sf::Transformable {
     private:
         virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const {
                 states.transform *= getTransform();
-                //states.texture = &_tileset;
                 target.draw(_backRect, states);
-                target.draw(_text._textFood);
-                target.draw(_text._textLinemate);
+                target.draw(_text._textFood, states);
+                target.draw(_text._textLinemate, states);
                 target.draw(_text._textDeraumere);
                 target.draw(_text._textSibur);
                 target.draw(_text._textMendiane);
@@ -54,7 +54,7 @@ class Interface : public sf::Drawable, public sf::Transformable {
                 target.draw(_text._textThystame);
         }
         text_t _text;
-        sf::Font _font;
+        std::shared_ptr<sf::Font> _font;
         struct Tile _tile;
         std::string _fontTTf = "gui_zappy/assets/fonts/arial.ttf";
 };

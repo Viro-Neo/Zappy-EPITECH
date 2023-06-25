@@ -9,16 +9,18 @@
 
 Broadcast::Broadcast(sf::Vector2f pos, float radius, std::string text)
 {
-    if (!this->_font.loadFromFile("gui_zappy/assets/arial.ttf"))
+    this->_font = std::make_shared<sf::Font>(sf::Font());
+    if (!(*this->_font).loadFromFile("gui_zappy/assets/arial.ttf"))
         throw std::exception();
     this->_text.setFillColor(sf::Color::Yellow);
-    this->_text.setString(text);
-    this->_text.setFont(this->_font);
+    this->_text.setString("I AM BROADCASTING THIS SHIT");
+    this->_text.setFont(*this->_font);
     this->_text.setCharacterSize(24);
+    this->_text.setPosition(pos.x, pos.y - 10);
     _circle.setPosition(pos);
     _circle.setRadius(radius);
     _circle.setOutlineThickness(2);
-    _circle.setFillColor(sf::Color::Transparent);
+    _circle.setFillColor(sf::Color::White);
     _circle.setOutlineColor(sf::Color::Blue);
     this->_nbScale = 0;
     this->scale = 1;
