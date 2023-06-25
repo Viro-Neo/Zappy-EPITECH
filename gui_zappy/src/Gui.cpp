@@ -37,8 +37,8 @@ void Gui::guiLoop()
 {
     int updater = 0;
     while (this->_win.isOpen()) {
+        printf("updateGui number of team is = %d\n", this->_map.getTeam().size());
         this->updateGui(updater);
-        
         this->_map.updateMap();
         this->_map.updateTexture();
         this->eventHandler();
@@ -69,11 +69,14 @@ void Gui::updateGui(int updater)
     {
         if (cmd.substr(0, 3).compare("pdi") == 0)
             printf("cmd is %s\n", cmd.data());
+        if (cmd.substr(0, 3).compare("pbc") == 0)
+            printf("cmd is %s\n", cmd.data());
         this->_cmdHandler.callFunction(cmd, this->_map);
     }
     if (updater % (this->_map.getSize().x * this->_map.getSize().y) == 0)
         this->_comm.writeToServer("mct\n");
     for (auto it = this->_map.getTeam().begin(); it != this->_map.getTeam().end(); it++) {
+        printf("name is %s\n", (*it).gatName().data());
         for (auto player = (*it).getPlayerList().begin() ; player != (*it).getPlayerList().end(); player++) {
             this->_comm.writeToServer(std::string("ppo ").append(std::to_string((*player).getId())).append("\n"));
             this->_comm.writeToServer(std::string("pin ").append(std::to_string((*player).getId())).append("\n"));

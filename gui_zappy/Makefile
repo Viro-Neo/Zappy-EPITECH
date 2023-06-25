@@ -25,9 +25,9 @@ SRCNAME =	main	\
 SRC =	$(addprefix src/, $(addsuffix .cpp, $(SRCNAME)))
 OBJ =	$(SRC:.cpp=.o)
 
-CSFMLFLAGS	= -lsfml-audio -lsfml-graphics -lsfml-window -lsfml-network -lsfml-system
+SFML	= -lsfml-audio -lsfml-graphics -lsfml-window -lsfml-network 
 CFLAGS	=	-W -Wall -Wextra
-CPPFLAGS +=	-I include -fno-gnu-unique $(CSFMLFLAGS)
+CPPFLAGS +=	-I include -fno-gnu-unique $(SFML) -lsfml-system
 
 NAME =	zappy_gui
 
