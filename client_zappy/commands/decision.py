@@ -131,10 +131,10 @@ def decide_broadcast(client, response: str):
 
 def decide_connect_nbr(client, response: str):
     client.cmd_buff.remove("Connect_nbr")
-    print(f"response to connect_nbr is : {response}")
-    num = int(response)
-    if num == 0 and client.inventory["food"] > 3:
-        send_fork_command(client)
+    #print(f"response to connect_nbr is : {response}")
+    #num = int(response)
+    #if num == 0 and client.inventory["food"] > 3:
+    #    send_fork_command(client)
 
 def decide_fork(client, response: str):
     client.cmd_buff.remove("Fork")
@@ -153,6 +153,8 @@ def decide_take(client, response: str):
         client.taking.pop(0)
         return
     if client.level > 1:
+        if client.taking[0] == "thystame" and client.inventory["food"] > 3:
+            send_fork_command(client)
         send_broadcast_text_command(client, f"{client.team} {client.level} {client.taking[0]}")
     client.taking.pop(0)
 
