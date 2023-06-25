@@ -15,7 +15,7 @@ response_dict = {
     'Look': r'\[([^,\[\]]*\s*,\s*)*([^,\[\]]*)\]',
     'Inventory': r"\[([\w\s]+ \d+)(, [\w\s]+ \d+)*\]",
     'Broadcast': 'ok',
-    'Connect_nbr': r"\b(?:0|[1-9]\d*)\b",
+    'Connect_nbr': r"^\d+$",
     'Fork': 'ok',
     'Eject': r'ok|ko',
     'Take': r'ok|ko',
