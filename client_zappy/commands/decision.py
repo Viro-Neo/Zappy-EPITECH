@@ -53,6 +53,12 @@ def pick_up_decision(client, tile, no) -> bool:
             return True
     return False
 
+def check_tile_for_needed_items(client, tile):
+    for item in ritual_needs[client.level]:
+        if tile.count(item) < ritual_needs[client.level][item]:
+            return False
+    return True
+
 def decide_look(client, response: str):
     client.cmd_buff.remove("Look")
     tile_list = [x.strip() for x in response.split(',')]
@@ -62,8 +68,15 @@ def decide_look(client, response: str):
     for i in range(len(tiles), 16):
         tiles.append([])
     
-    if check_tile_for_players(client, tiles[0]) and client.status == JOINING:
-        client.status == SETTING
+    if check_tile_for_players(client, tiles[0]):
+        if (client.status == JOINING or client.status == CALLING):
+            client.status = SETTING
+            return
+        if (client.status == WAITING) and check_tile_for_needed_items(tiles[0]):
+            client.status = CHANTING
+            return
+    
+    if client.status == JOINING or client.status == CALLING:
         return
 
     for tile_no in tile_order:

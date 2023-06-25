@@ -21,6 +21,7 @@ def ready_for_upgrade_signal(match, client):
     if level != client.level or level == 1:
         return
     compute_direction(k, client)
+    client.gathering = []
     return
 
 def item_found_signal(match, client):
