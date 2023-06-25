@@ -17,6 +17,15 @@ static int *get_random_tile(zappy_server_t *server)
     return server->map[y][x];
 }
 
+static void balance_resource(zappy_server_t *server, int *resources, int i)
+{
+    for (int y = 0; y < server->height; ++y) {
+        for (int x = 0; x < server->width; ++x) {
+            resources[i] -= server->map[y][x][i];
+        }
+    }
+}
+
 void spawn_resources(zappy_server_t *server)
 {
     int resources[7] = {
@@ -31,6 +40,7 @@ void spawn_resources(zappy_server_t *server)
     int *tile = NULL;
 
     for (int i = 0; i < 7; ++i) {
+        balance_resource(server, resources, i);
         while (resources[i] > 0) {
             tile = get_random_tile(server);
             ++tile[i];
