@@ -50,6 +50,11 @@ void kill_player(zappy_client_t *client)
         if (!client->sockclose) {
             dprintf(client->sockfd, "dead\n");
         }
+        if (client->player.elevation
+                && client->player.cmds[0].pcmd != NULL
+                && client->player.cmds[0].pcmd->func == player_incantation) {
+            graphical_pie(client->server, &client->player, 0);
+        }
         graphical_pdi(client->server, &client->player);
         memset(&client->player, 0, sizeof(client->player));
     }
