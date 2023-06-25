@@ -212,5 +212,6 @@ zappy_team_t *get_team(zappy_server_t *server, char *team_name);
 void free_teams(zappy_server_t *server);
 
 int is_number(char* str);
+int modulo(int num, int div);
 
 #endif
