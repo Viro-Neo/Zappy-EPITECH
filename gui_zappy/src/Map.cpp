@@ -14,7 +14,7 @@ Map::Map( int winW, int winH, int sizeX, int sizeY) : _mapRender(sf::Quads, 0)
     this->_sizeX = sizeX;
     this->_sizeY = sizeY;
     this->_tileSize = sf::Vector2u(32, 32);
-    this->_zoom = 1;
+    this->_zoom = 4;
     this->pos = sf::Vector2i(0, 0);
     for (unsigned int i = 0; i < _sizeY; i++)
         for (unsigned int j = 0; j < _sizeX; j++) {
@@ -72,6 +72,14 @@ bool Map::updateMap()
         for (auto player = (*it).getPlayerList().begin(); player != (*it).getPlayerList().end(); player++) {
             this->_map.at((*player).getPos().x + (*player).getPos().y * this->_sizeX).PLAYER.push_back(*player);
         }
+    }
+    int i = 0;
+    for (auto it = _boradcastList.begin() ; it != _boradcastList.end(); it++) {
+        if (_boradcastList.at(i).getScaleNb() < 60)
+            _boradcastList.at(i).scaleCircle();
+        else
+            _boradcastList.erase(it);
+        i++;
     }
     return true;
 }
@@ -153,6 +161,11 @@ std::vector<Team>& Map::getTeam()
 sf::Vector2u Map::getTileSize()
 {
     return this->_tileSize;
+}
+
+std::vector<Broadcast> Map::getBroadcastList()
+{
+    return this->_boradcastList;
 }
 
 float Map::getZomm()

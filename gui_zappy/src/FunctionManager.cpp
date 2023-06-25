@@ -231,6 +231,22 @@ void FunctionManager::pbc(std::list<std::string> arg, Map &myMap) // pbc #n M
 {
     if (arg.size() != 2)
         return;
+    int id = stoi(arg.front());
+    std::string msg = arg.back();
+
+     for (auto it = myMap.getTeam().begin(); it != myMap.getTeam().end(); it++) {
+        for (auto player = (*it).getPlayerList().begin(); player != (*it).getPlayerList().end(); player++) {
+            if ((*player).getId() == id) {
+                sf::CircleShape circle;
+                circle.setPosition(((*player).getPos().x * myMap.getTileSize().x * myMap.getZomm()) + myMap.getPosition().x + 16, ((*player).getPos().y * myMap.getTileSize().y * myMap.getZomm()) + myMap.getPosition().y + 16);
+                circle.setRadius(16 * myMap.getZomm());
+                circle.setFillColor(sf::Color::Transparent);
+                circle.setOutlineColor(sf::Color::Blue);
+                circle.setOutlineThickness(2);
+                myMap.getBroadcastList().push_back(Broadcast(circle, msg));
+            }
+        }
+    }    
 }
 
 void FunctionManager::pic(std::list<std::string> arg, Map &myMap) // pic X Y L #n #n #n (looped for each player in the tile)

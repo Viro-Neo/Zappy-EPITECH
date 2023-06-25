@@ -13,6 +13,7 @@
 #include "Team.hpp"
 #include "Incantation.hpp"
 #include "Egg.hpp"
+#include "Broadcast.hpp"
 
 struct Tile {
     int x;
@@ -44,6 +45,7 @@ class Map : public sf::Drawable, public sf::Transformable {
         sf::Vector2u getSize();
         std::vector<Team> &getTeam();
         sf::Vector2u getTileSize();
+        std::vector<Broadcast> getBroadcastList();
         float getZomm();
         struct Tile &getTileInfo(sf::Vector2i mousePos);
         std::vector<Egg> getEggList();
@@ -59,6 +61,9 @@ class Map : public sf::Drawable, public sf::Transformable {
                     const sf::Sprite sprite = (*it).getSprite();
                     target.draw(sprite, states);
                 }
+                for (auto it = this->_boradcastList.begin(); it != _boradcastList.end(); it++) {
+                    target.draw((*it), states);
+                }
         }
         int _sizeX;
         int _sizeY;
@@ -72,6 +77,7 @@ class Map : public sf::Drawable, public sf::Transformable {
         std::vector<Team> team;
         std::vector<Incantation> _incantationList;
         std::vector<Egg> _eggList;
+        std::vector<Broadcast> _boradcastList;
         int _winWidth;
         int _winHeight;
 };

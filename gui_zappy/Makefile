@@ -19,6 +19,7 @@ SRCNAME =	main	\
 			Team\
 			Incantation\
 			Egg\
+			Broadcast\
 
 
 SRC =	$(addprefix src/, $(addsuffix .cpp, $(SRCNAME)))
