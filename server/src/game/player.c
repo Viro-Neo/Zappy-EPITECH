@@ -30,11 +30,11 @@ void add_player_command(zappy_client_t* client, zappy_pcmd_t *pcmd, char *data)
     if (pcmd->start != NULL && !pcmd->start(client)) {
         return;
     }
-    data_len = (data_len >= 32) ? 31 : data_len;
+    data_len = (data_len >= 64) ? 63 : data_len;
     for (; i < 10; ++i) {
         if (client->player.cmds[i].pcmd == NULL) {
             client->player.cmds[i].pcmd = pcmd;
-            memset(client->player.cmds[i].data, 0, 32);
+            memset(client->player.cmds[i].data, 0, 64);
             memcpy(client->player.cmds[i].data, data, data_len);
             break;
         }

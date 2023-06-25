@@ -41,7 +41,7 @@ typedef struct zappy_team_s {
 
 typedef struct zappy_player_cmd_s {
     zappy_pcmd_t *pcmd;
-    char data[32];
+    char data[64];
 } zappy_player_cmd_t;
 
 typedef struct zappy_player_s {

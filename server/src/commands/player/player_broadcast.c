@@ -42,5 +42,6 @@ void broadcast(zappy_client_t *client, char *data)
             dprintf(cli->sockfd, "%s\n", data);
         }
     }
+    dprintf(client->sockfd, "ok\n");
     graphical_pbc(client->server, &client->player, data);
 }
