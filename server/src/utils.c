@@ -20,3 +20,8 @@ int is_number(char* str)
     }
     return 1;
 }
+
+int modulo(int num, int div)
+{
+    return (num % div) + (num < 0 ? div : 0);
+}

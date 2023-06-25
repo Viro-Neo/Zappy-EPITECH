@@ -14,20 +14,20 @@ static long get_map_unit(zappy_client_t *client, int i, int j)
     unsigned int y = 0;
 
     if (client->player.rot == 1) {
-        x = (client->player.x + j) % client->server->width;
-        y = (client->player.y + i) % client->server->height;
+        x = modulo(client->player.x + j, client->server->width);
+        y = modulo(client->player.y + i, client->server->height);
     }
     if (client->player.rot == 2) {
-        x = (client->player.x + i) % client->server->width;
-        y = (client->player.y + j) % client->server->height;
+        x = modulo(client->player.x + i, client->server->width);
+        y = modulo(client->player.y + j, client->server->height);
     }
     if (client->player.rot == 3) {
-        x = (client->player.x - j) % client->server->width;
-        y = (client->player.y - i) % client->server->height;
+        x = modulo(client->player.x - j, client->server->width);
+        y = modulo(client->player.y - i, client->server->height);
     }
     if (client->player.rot == 4) {
-        x = (client->player.x - i) % client->server->width;
-        y = (client->player.y - j) % client->server->height;
+        x = modulo(client->player.x - i, client->server->width);
+        y = modulo(client->player.y - j, client->server->height);
     }
     return ((long)x << 32) | y;
 }

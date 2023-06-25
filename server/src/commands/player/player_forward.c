@@ -22,8 +22,8 @@ void forward(zappy_client_t *client, int rot)
     if (rot == 4) {
         --client->player.x;
     }
-    client->player.x %= client->server->width;
-    client->player.y %= client->server->height;
+    client->player.x = modulo(client->player.x, client->server->width);
+    client->player.y = modulo(client->player.y, client->server->height);
 }
 
 void player_forward(zappy_client_t *client, char *)
