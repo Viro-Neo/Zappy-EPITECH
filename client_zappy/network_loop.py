@@ -36,8 +36,6 @@ def network_loop(client: Client):
                 send_look_command(client)
             if "Inventory" not in client.cmd_buff:
                 send_inventory_command(client)
-            if "Connect_nbr" not in client.cmd_buff:
-                send_connect_nbr_command(client)
 
         client.sock.close()
 

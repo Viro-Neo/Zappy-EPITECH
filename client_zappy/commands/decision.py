@@ -73,7 +73,6 @@ def decide_look(client, response: str):
     print(f"current tile : {tiles[0]}")
     
     if client.status == NORMAL and client.level == 1 and check_tile_for_needed_items(client, tiles[0]):
-        print("updating status to chant")
         client.status = CHANTING
         return
 
