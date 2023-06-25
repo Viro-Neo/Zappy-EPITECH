@@ -10,6 +10,12 @@
 
 void player_connect_nbr(zappy_client_t *client, char *)
 {
+    int players = get_nb_players_team(client->server, client->player.team);
+    int slots = client->server->clientsNb - players;
+
+    if (slots < 0) {
+        slots = 0;
+    }
     dprintf(client->sockfd, "%d\n"
-            , get_nb_players_team(client->server, client->player.team));
+            , slots);
 }
