@@ -10,14 +10,27 @@ def network_loop(client: Client):
         response_thread.start()
         
         while True:
+            #print(f"client status : {client.status}")
+            #print(f"client level : {client.level}")
+            #print(f"missing items : {client.missing}")
+            #print(f"inventory : {client.inventory}")
+            #print(f"setting items : {client.setting_items}")
             if client.status == DEAD:
                 break
+            if client.status == CHANTING:
+                if "Incantation" not in client.cmd_buff:
+                    send_incantation_command(client)
+                    print(f"cmd buff is : {client.cmd_buff}")
+                continue
             if client.status == SETTING:
                 if "Set" not in client.cmd_buff:
                     set_needed_items(client)
                 continue
             if client.status == JOINING:
                 join_incant()
+                continue
+            if client.status == GATHERING:
+                gather()
                 continue
             if "Look" not in client.cmd_buff:
                 send_look_command(client)
@@ -27,14 +40,32 @@ def network_loop(client: Client):
         response_thread.join()
         client.sock.close()
 
+def gather(client: Client):
+    while len(client.cmd_buff) < 10:
+        if len(client.gathering) > 0:
+            if client.gathering[0] == "Left":
+                send_left_command(client)
+                client.gathering.pop(0)
+            elif client.gathering[0] == "Right":
+                send_right_command(client)
+                client.gathering.pop(0)
+            else:
+                send_forward_command(client)
+                client.gathering.pop(0)
+
 def set_needed_items(client: Client):
     if len(client.setting_items) == 0:
-        client.status = WAITING
+        if client.level == 1:
+            print("set status to chanting")
+            client.status = CHANTING
+        else:
+            client.status = WAITING
         return
     print(f"setting items : {client.setting_items}")
     while len(client.setting_items) > 0:
         if len(client.cmd_buff) == 10:
             continue
+        print(f"attempting to set item {client.setting_items[0]}")
         send_set_object_command(client, client.setting_items[0])
         client.setting_items.pop(0)
 
